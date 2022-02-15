@@ -1,0 +1,22 @@
+on: [pull_request]
+name: "Travel Planner Test"
+jobs:
+  build_test:
+    strategy:
+      matrix:
+        java-version: [11,15]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout Current Code
+        uses: actions/checkout@v2
+      - name: Cache Maven Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build Maven Project
+        run: |
+          cd microservices/tplanner
+          mvn clean package
