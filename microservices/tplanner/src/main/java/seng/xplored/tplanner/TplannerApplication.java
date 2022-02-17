@@ -14,4 +14,4 @@ public class TplannerApplication {
 
 }
 
-heroku config:set MONGODB_URI="mongodb+srv://dbUser:dLaZzRLM0S56WTgO@cluster0.psv3h.mongodb.net/tplanner?retryWrites=true&w=majority"
+// heroku config:set MONGODB_URI="mongodb+srv://dbUser:dLaZzRLM0S56WTgO@cluster0.psv3h.mongodb.net/tplanner?retryWrites=true&w=majority"
