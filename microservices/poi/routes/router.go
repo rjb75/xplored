@@ -15,6 +15,6 @@ func RegisterRoutes(app *fiber.App) {
 
 // function to mount test routes
 func TestRoutes(v fiber.Router) {
-	v.Get("/success", handlers.TestSuccessHandler)
-	v.Get("/fail", handlers.TestFailHandler)
+	v.Get("/success", handlers.SuccessHandler)
+	v.Get("/fail", handlers.FailHandler)
 }
