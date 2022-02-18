@@ -5,11 +5,11 @@ import (
 )
 
 // test success endpoint
-func TestSuccessHandler(c *fiber.Ctx) error {
+func SuccessHandler(c *fiber.Ctx) error {
 	return c.Status(200).JSON(fiber.Map{"status": "success"})
 }
 
 // test failure endpoint
-func TestFailHandler(c *fiber.Ctx) error {
+func FailHandler(c *fiber.Ctx) error {
 	return c.Status(500).JSON(fiber.Map{"status": "fail"})
 }
