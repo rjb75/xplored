@@ -1,3 +1,5 @@
 # enviroment files
 env
 .env
+
+*.exe
