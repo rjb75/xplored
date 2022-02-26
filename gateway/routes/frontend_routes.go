@@ -7,6 +7,7 @@ func FrontendRoutes(app *fiber.App) {
 	const frontendBuildPath = "../frontend/build"
 
 	app.Static("/", frontendBuildPath)
+	app.Static("/login", frontendBuildPath)
 }
 
 // routes requiring the user to be authenticated
