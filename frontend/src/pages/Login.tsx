@@ -2,34 +2,36 @@ import Axios from "axios";
 import { useState } from "react";
 import { signInWithEmailAndPassword, User } from "firebase/auth";
 import { firebaseAuth } from "../firebase/FirebaseConfig";
+import axiosInstance from "../utils/axios";
+import { setCookie } from "../utils/CookieUtils";
 
-const testEndpoint = "http://localhost:3000/api/login";
+const testEndpoint = "/api/v1/success";
 
 function Login() {
   const [user, setUser] = useState<User | null>(null);
 
   function login() {
     const email = (document.getElementById("email") as HTMLInputElement).value;
-    const pass = (document.getElementById("password") as HTMLInputElement).value;
+    const pass = (document.getElementById("password") as HTMLInputElement)
+      .value;
     signInWithEmailAndPassword(firebaseAuth, email, pass).then(
       (userCredential) => {
         setUser(userCredential.user);
+        userCredential.user.getIdToken(true).then((id) => {
+          setCookie("id_token", id);
+          setCookie("access_token", id);
+        });
+        setCookie("refresh_token", userCredential.user.refreshToken);
       }
     );
   }
 
-  async function sendToken() {
-    if (user != null) {
-      await user.getIdToken().then((token) => {
-        console.log(token);
-        Axios.get(testEndpoint, {
-          params: {
-            token: token,
-          },
-        });
-      });
-    }
-  }
+  const testSuccess = () => {
+    axiosInstance
+      .get(testEndpoint)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div>
@@ -48,7 +50,7 @@ function Login() {
         <input type="password" id="password" placeholder="Enter Password" />
 
         <input type="button" value="Login" onClick={login} />
-        <input type="button" value="Send Token" onClick={sendToken} />
+        <input type="button" value="Test API" onClick={testSuccess} />
       </div>
     </div>
   );
