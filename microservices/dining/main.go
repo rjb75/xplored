@@ -8,18 +8,17 @@ import (
 	"strconv"
 	"strings"
 
-	//	"github.com/Risath18/xplored-dining/models"
-
+	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
-	"github.com/kr/pretty"
-	_ "github.com/lib/pq"
 
+	//"github.com/kr/pretty"
+	_ "github.com/lib/pq"
 	"googlemaps.github.io/maps"
 )
 
 
 func main() {
-//	app := fiber.New()
+	app := fiber.New()
 
 	//Setting up Environment Variables
 	err := godotenv.Load("../../.env")
@@ -27,14 +26,31 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	
+	//Configure all Routes
+	RegisterRoutes(app)
 
-	GetDiningOptions("6 Rue René Goscinny", "93000 Bobigny", "France", "10000", "Pasta")
 	//Formatting port
-	// SERVER_PORT := os.Getenv("DINING_PORT")
-	// port := fmt.Sprintf(":%s", SERVER_PORT)
-	// app.Listen(port)
+	SERVER_PORT := os.Getenv("DINING_PORT")
+	port := fmt.Sprintf(":%s", SERVER_PORT)
+	app.Listen(port)
 }
+
+
+/*
+* Function associated with Endpoint to get Dining Data
+*/
+func GetDiningOptions(c *fiber.Ctx) error {
+
+	data := diningOptions(c.Params("address"), c.Params("radius"), c.Params("keyword"))
+	errorStatus := "Success"
+
+	if len(data.Results) <= 0 {
+		errorStatus = "Error"
+	}
+
+	return c.Status(200).JSON(fiber.Map{"status": errorStatus, "data": data})
+}
+
 
 /*
 * GeoCode API to determine Longitude and Latitude of given ADDRESS
@@ -72,6 +88,7 @@ func Places(lc maps.GeocodingResult, radius string, keyword string) maps.PlacesS
 		Lng : lc.Geometry.Location.Lng,
 	}
 
+
 	i, err := strconv.ParseUint(radius, 10, 64)
 	if err != nil {
 		log.Fatalf("fatal error: %s", err)
@@ -81,6 +98,7 @@ func Places(lc maps.GeocodingResult, radius string, keyword string) maps.PlacesS
 		Location  :  loc,
 		Radius : uint(i),
 		Keyword : keyword,
+		Type  : "restaurant",
 
 	}
 	result, err := c.NearbySearch(context.Background(), r)
@@ -92,24 +110,20 @@ func Places(lc maps.GeocodingResult, radius string, keyword string) maps.PlacesS
 }
 
 /*
-* GetDiningOptions with Given Information
+* diningOptions with Given Information
 */
-func GetDiningOptions(street_address string, city string, country string, radius string, keyword string){
+func diningOptions(street_address string, radius string, keyword string) maps.PlacesSearchResponse{
 	//Format Address
 	plusFormattedAddress := strings.ReplaceAll("+" + street_address, " ", "+")
-	plusFormattedCity := strings.ReplaceAll("+" + city, " ", "+")
-	plusFormattedCountry := strings.ReplaceAll("+" + country, " ", "+")
 
 	//Format Keyword
 	plusFormattedKeyword := strings.ReplaceAll("+" + keyword, " ", "+")
 
-	//Combine Address
-	address := fmt.Sprintf("%s+%s+%s", plusFormattedAddress, plusFormattedCity, plusFormattedCountry) 
-
 	//Calculate Longitude & Latitude
-	var lc maps.GeocodingResult = GeoCode(address)[0]
+	var lc maps.GeocodingResult = GeoCode(plusFormattedAddress)[0]
 	//Get Dining Data
-	var Result maps.PlacesSearchResponse = Places(lc, radius, plusFormattedKeyword)
-	pretty.Println(Result)//Debugging Print Statement
+	Result := Places(lc, radius, plusFormattedKeyword)
+//	pretty.Println(Result)//Debugging Print Statement
+	return Result
 }
 
