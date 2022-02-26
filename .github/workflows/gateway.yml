@@ -20,4 +20,4 @@ jobs:
       - name: Run Main File
         run: |
           cd gateway
-          go run main.go
+          go test .
