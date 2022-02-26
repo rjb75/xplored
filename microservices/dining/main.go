@@ -1,17 +1,20 @@
 package main
 
 import (
-	"encoding/json"
+	"context"
 	"fmt"
-	"io/ioutil"
 	"log"
-	"net/http"
 	"os"
+	"strconv"
 	"strings"
 
-	"github.com/Risath18/xplored-dining/models"
+	//	"github.com/Risath18/xplored-dining/models"
+
 	"github.com/joho/godotenv"
+	"github.com/kr/pretty"
 	_ "github.com/lib/pq"
+
+	"googlemaps.github.io/maps"
 )
 
 
@@ -24,15 +27,73 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	GetDiningOptions("461 Skyview Shores Manor", "Calgary", "Alberta", "1000", "Tim Hortons")
 	
+
+	GetDiningOptions("6 Rue René Goscinny", "93000 Bobigny", "France", "10000", "Pasta")
 	//Formatting port
 	// SERVER_PORT := os.Getenv("DINING_PORT")
 	// port := fmt.Sprintf(":%s", SERVER_PORT)
 	// app.Listen(port)
 }
 
+/*
+* GeoCode API to determine Longitude and Latitude of given ADDRESS
+* Returns a struct with Longitude and Latitude
+*/
+func GeoCode(address string) []maps.GeocodingResult{
+	c, err := maps.NewClient(maps.WithAPIKey(os.Getenv("DINING_API")))
+	if err != nil {
+		log.Fatalf("fatal error: %s", err)
+	}
+	r := &maps.GeocodingRequest {
+		Address :  address,
+	}
+	result, err := c.Geocode(context.Background(), r)
+	if err != nil {
+		log.Fatalf("fatal error: %s", err)
+	}
 
+	return result
+	//pretty.Println(result)
+}
+
+/*
+* Places API to determine Dining Options in a fixed RADIUS, KEYWORD with given ADDRESS
+* Returns a struct with information of restaurants and status
+*/
+func Places(lc maps.GeocodingResult, radius string, keyword string) maps.PlacesSearchResponse {
+	c, err := maps.NewClient(maps.WithAPIKey(os.Getenv("DINING_API")))
+	if err != nil {
+		log.Fatalf("fatal error: %s", err)
+	}
+
+	loc := &maps.LatLng {
+		Lat : lc.Geometry.Location.Lat,
+		Lng : lc.Geometry.Location.Lng,
+	}
+
+	i, err := strconv.ParseUint(radius, 10, 64)
+	if err != nil {
+		log.Fatalf("fatal error: %s", err)
+	}
+
+	r := &maps.NearbySearchRequest {
+		Location  :  loc,
+		Radius : uint(i),
+		Keyword : keyword,
+
+	}
+	result, err := c.NearbySearch(context.Background(), r)
+	if err != nil {
+		log.Fatalf("fatal error: %s", err)
+	}
+
+	return result
+}
+
+/*
+* GetDiningOptions with Given Information
+*/
 func GetDiningOptions(street_address string, city string, country string, radius string, keyword string){
 	//Format Address
 	plusFormattedAddress := strings.ReplaceAll("+" + street_address, " ", "+")
@@ -43,95 +104,12 @@ func GetDiningOptions(street_address string, city string, country string, radius
 	plusFormattedKeyword := strings.ReplaceAll("+" + keyword, " ", "+")
 
 	//Combine Address
-	address := fmt.Sprintf("%s,%s,%s", plusFormattedAddress, plusFormattedCity, plusFormattedCountry) 
+	address := fmt.Sprintf("%s+%s+%s", plusFormattedAddress, plusFormattedCity, plusFormattedCountry) 
 
 	//Calculate Longitude & Latitude
-	var lc models.Location_class = GeoCode(address)
-
+	var lc maps.GeocodingResult = GeoCode(address)[0]
 	//Get Dining Data
-	var Result models.Response = Places(lc, radius, plusFormattedKeyword)
-	fmt.Println(Result) //Debugging Print Statement
+	var Result maps.PlacesSearchResponse = Places(lc, radius, plusFormattedKeyword)
+	pretty.Println(Result)//Debugging Print Statement
 }
 
-
-/*
-* GeoCode API to determine Longitude and Latitude of given ADDRESS
-* Returns a struct with Longitude and Latitude
-*/
-func GeoCode(address string) models.Location_class{
-	var lc models.Location_class
-	client := &http.Client{}
-	req, err := http.NewRequest(http.MethodGet, "https://maps.googleapis.com/maps/api/geocode/json?", nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// appending to existing query args
-	q := req.URL.Query()
-	q.Add("address", address) //Formatted Address with requred '+'
-	q.Add("key", os.Getenv("DINING_API")) //API Key
-
-	// assign encoded query string to http request
-	req.URL.RawQuery = q.Encode()
-
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error when sending request to the server")
-		return lc
-	}
-
-	defer resp.Body.Close()
-	responseBody, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var rp models.GCR	
-	json.Unmarshal([]byte(string(responseBody)), &rp)
-	lc = rp.Results[0].Geometry.Location
-	return lc
-}
-
-/*
-* Places API to determine Dining Options in a fixed RADIUS, KEYWORD with given ADDRESS
-* Returns a struct with information of restaurants and status
-*/
-func Places(lc	models.Location_class, radius string, keyword string) models.Response {
-	var Result models.Response
-	client := &http.Client{}
-	req, err := http.NewRequest(http.MethodGet, "https://maps.googleapis.com/maps/api/place/nearbysearch/json?", nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	//Format Coordinates
-	coords := fmt.Sprintf("%f, %f", lc.Lat, lc.Lng)
-
-
-	// appending to existing query args
-	q := req.URL.Query()
-	q.Add("location", coords) //Longitude and Latitude
-	q.Add("radius", radius) //in Meters
-	q.Add("keyword", keyword) //Searching
-	q.Add("key", os.Getenv("DINING_API")) //API Key
-
-	// assign encoded query string to http request
-	req.URL.RawQuery = q.Encode()
-
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error when sending request to the server")
-		return Result
-	}
-
-	defer resp.Body.Close()
-	responseBody, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	//Formatting with Model
-	Result.Json = string(responseBody)
-	Result.Status = resp.Status
-	return Result
-}
