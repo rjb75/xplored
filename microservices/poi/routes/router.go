@@ -7,14 +7,22 @@ import (
 
 // function to register routes to application
 func RegisterRoutes(app *fiber.App) {
-	api := app.Group("/api")
+	poi := app.Group("/poi")
+	api := poi.Group("/api")
 	test := api.Group("/test")
+	v1 := api.Group("/v1")
 
 	TestRoutes(test)
+	PointsOfInterest(v1)
 }
 
 // function to mount test routes
 func TestRoutes(v fiber.Router) {
 	v.Get("/success", handlers.SuccessHandler)
 	v.Get("/fail", handlers.FailHandler)
+}
+
+// function to mount poi routes
+func PointsOfInterest(v fiber.Router) {
+	v.Get("/pois", handlers.GetPointsOfInterest)
 }
