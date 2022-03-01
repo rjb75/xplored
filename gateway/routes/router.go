@@ -42,4 +42,6 @@ func RegisterRoutes(app *fiber.App) {
 
 	// Authenticated routes go here
 	FrontendProtectedRoutes(app)
+
+	DiningRoutes(v1)
 }
