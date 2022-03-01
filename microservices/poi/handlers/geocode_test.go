@@ -35,5 +35,5 @@ func Test_latlon_UofC(t *testing.T) {
 	loc := latlon(&request, client)
 
 	utils.AssertEqual(t, 51.0755455, loc.Lat, "Latitude")
-	utils.AssertEqual(t, -114.129754, loc.Lng, "Longitude")
+	utils.AssertEqual(t, -114.1297544, loc.Lng, "Longitude")
 }
