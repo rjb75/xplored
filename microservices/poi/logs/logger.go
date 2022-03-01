@@ -12,7 +12,7 @@ var (
 
 // method to create log file for normal functionality
 func InitLogs() {
-	logfile, err := os.OpenFile("../../../logs/poi.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	logfile, err := os.OpenFile("../../logs/poi.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 
 	if err != nil {
 		log.Fatal("Error creating log file")
