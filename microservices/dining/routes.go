@@ -15,9 +15,9 @@ func RegisterRoutes(app *fiber.App) {
 	api := microservice.Group("/api") // /api
 	v1 := api.Group("/v1")   // /api/v1
 
-	diningOptions(v1)
+	diningRoutes(v1)
 }
 
-func diningOptions(v fiber.Router) {
+func diningRoutes(v fiber.Router) {
 	v.Get("/:address/:keyword/:radius", GetDiningOptions)
 }
