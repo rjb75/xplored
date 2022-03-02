@@ -11,12 +11,18 @@ import (
 )
 
 // endpoint to get points of interest by address
+// @Title Get Points of Interest
+// @Description Given an address, keyword(s) and a radius return nearby points of interes
+// @Param address query string true "Address to search from"
+// @Param keyword query string true "Keyword of the point of interest"
+// @Param radius query int true "Radius to search from address"
+// @Router /poi [get]
 func GetPointsOfInterest(c *fiber.Ctx) error {
 
 	// create new request structure
 	req := new(models.POIRequest)
 
-	err := c.BodyParser(req)
+	err := c.QueryParser(req)
 
 	if err != nil {
 		logs.ErrorLogger.Println("Couldn't parse body of request")
@@ -29,6 +35,12 @@ func GetPointsOfInterest(c *fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Missing Paramater", "cause": "Address is required for points of interest"})
 	}
 
+	// check that radius isn't 0
+	if req.Radius == 0 {
+		logs.ErrorLogger.Printf("Invalid or malformed radius")
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Missing Paramater", "cause": "Radius is required for points of interest"})
+	}
+
 	// create google maps client
 	client, err := maps.NewClient(maps.WithAPIKey(os.Getenv("POI_GOOGLE_API_KEY")))
 
@@ -38,13 +50,13 @@ func GetPointsOfInterest(c *fiber.Ctx) error {
 	}
 
 	// get latitude and longitude
-	loc := latlon(req, client)
+	loc := Latlon(req, client)
 
 	// format request
 	rq := &maps.NearbySearchRequest{
 		Location: &loc,
-		Radius:   1000,
-		Type:     maps.PlaceType(req.Type),
+		Radius:   uint(req.Radius),
+		Type:     maps.PlaceType(req.Keyword),
 	}
 
 	// execute search to nearby api

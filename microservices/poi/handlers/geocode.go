@@ -9,11 +9,11 @@ import (
 )
 
 // helper function to get latitude and longitude from address
-func latlon(req *models.POIRequest, cli *maps.Client) maps.LatLng {
+func Latlon(req *models.POIRequest, cli *maps.Client) maps.LatLng {
 
 	r := &maps.GeocodingRequest{
 		Address: req.Address,
-		Region:  req.Region,
+		// Region:  req.Region,
 	}
 
 	place, err := cli.Geocode(context.Background(), r)
