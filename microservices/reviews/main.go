@@ -1,19 +1,18 @@
 package main
 
 import (
-	"context"
+	// "context"
 	"fmt"
 	"log"
 	"os"
-	"strconv"
-	"strings"
+	// "strconv"
+	// "strings"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 
 	//"github.com/kr/pretty"
 	_ "github.com/lib/pq"
-	"googlemaps.github.io/maps"
 )
 
 
