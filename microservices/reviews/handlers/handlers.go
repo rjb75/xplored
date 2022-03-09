@@ -10,7 +10,6 @@ import (
 	// "strings"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/kr/pretty"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
