@@ -8,7 +8,6 @@ import (
 	// "strconv"
 	// "strings"
 
-	"github.com/alexishamrak/xplored-reviews/handlers"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 
@@ -25,15 +24,10 @@ func main() {
 	}
 
 	//Configure all Routes
-	// RegisterRoutes(app)
+	RegisterRoutes(app)
 
 	//Formatting port
 	SERVER_PORT := os.Getenv("REVIEWS_PORT")
 	port := fmt.Sprintf(":%s", SERVER_PORT)
-
-	api := app.Group("/api")
-	v1 := api.Group("/v1")
-	v1.Get("/tags", handlers.SearchTag)
-
 	app.Listen(port)
 }
