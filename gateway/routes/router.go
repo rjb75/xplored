@@ -3,6 +3,7 @@ package routes
 import (
 	"context"
 	"log"
+	"os"
 
 	firebase "firebase.google.com/go"
 	"github.com/gofiber/fiber/v2"
@@ -14,9 +15,19 @@ import (
 
 func RegisterRoutes(app *fiber.App) {
 
+	firebase_config := new(firebase.Config)
+
+	// initialize firebase config from environment
+	firebase_config.ProjectID = os.Getenv("FIREBASE_PROJECT_ID")
+	firebase_config.StorageBucket = os.Getenv("FIREBASE_STORAGE_BUCKET")
+
 	// initialize firebase
-	opt := option.WithCredentialsFile("firebase-config.json")
-	fba, err := firebase.NewApp(context.Background(), nil, opt)
+
+	// use API key from environment for authentication
+	opt := option.WithAPIKey(os.Getenv("FIREBASE_API_KEY"))
+
+	// opt := option.WithCredentialsFile("firebase-config.json")
+	fba, err := firebase.NewApp(context.Background(), firebase_config, opt)
 
 	if err != nil {
 		log.Fatal("error connecting to firebase")

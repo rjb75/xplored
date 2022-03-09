@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -11,7 +12,6 @@ func NewAuth(config AuthConfig) fiber.Handler {
 	cfg := configDefault(config)
 
 	return func(c *fiber.Ctx) error {
-		// IDToken := c.Cookies("access_token")
 
 		IDToken := c.Get(fiber.HeaderAuthorization)
 
@@ -20,6 +20,10 @@ func NewAuth(config AuthConfig) fiber.Handler {
 		}
 
 		firebaseAuth, err := cfg.FirebaseApp.Auth(context.Background())
+
+		if err != nil {
+			fmt.Println(err.Error())
+		}
 
 		tkn, err := firebaseAuth.VerifyIDToken(context.Background(), IDToken)
 
