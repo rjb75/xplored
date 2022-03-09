@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"os"
@@ -9,14 +8,10 @@ import (
 	// "strconv"
 	// "strings"
 
+	"github.com/alexishamrak/xplored-reviews/handlers"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 
-	// "go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	// "go.mongodb.org/mongo-driver/mongo/readpref"
-
-	//"github.com/kr/pretty"
 	_ "github.com/lib/pq"
 )
 
@@ -30,29 +25,15 @@ func main() {
 	}
 
 	//Configure all Routes
-	RegisterRoutes(app)
+	// RegisterRoutes(app)
 
 	//Formatting port
 	SERVER_PORT := os.Getenv("REVIEWS_PORT")
 	port := fmt.Sprintf(":%s", SERVER_PORT)
+
+	api := app.Group("/api")
+	v1 := api.Group("/v1")
+	v1.Get("/tags", handlers.SearchTag)
+
 	app.Listen(port)
-
-	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(REVIEWS_DB))
-
-	if err != nil {
-		panic(err)
-	}
-
-	defer func() {
-		if err = client.Disconnect(context.TODO()); err != nil {
-			panic(err)
-		}
-	}()
-
-	//ping primary
-	if err := client.Ping(context.TODO(), readpref.Primary()); err != nil {
-		panic(err)
-	}
-
-	fmt.Println("Successfully connected and pinged")
 }
