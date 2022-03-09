@@ -7,7 +7,7 @@ import { setCookie } from "../utils/CookieUtils";
 
 const testEndpoint = "/api/v1/success";
 
-function Login() {
+const Login = () => {
   const [user, setUser] = useState<User | null>(null);
 
   function login() {
