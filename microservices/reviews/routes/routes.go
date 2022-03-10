@@ -1,4 +1,4 @@
-package main
+package routes
 
 import (
 	//	"fmt"
@@ -11,14 +11,11 @@ import (
 func RegisterRoutes(app *fiber.App) {
 	app.Use(cors.New())
 
-	api := app.Group("/api")
+	//Api Version Configuration
+	microservice := app.Group("/reviews") // /api
+	api := microservice.Group("/api")
 	v1 := api.Group("/v1")
 	v1.Get("/tags", handlers.SearchTag)
-
-	//Api Version Configuration
-	// microservice := app.Group("/reviews") // /api
-	// api := microservice.Group("/api") // /api
-	// v1 := api.Group("/v1")   // /api/v1
 
 	// reviewsRoutes(v1)
 }
