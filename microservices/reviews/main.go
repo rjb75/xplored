@@ -7,7 +7,7 @@ import (
 
 	// "strconv"
 	// "strings"
-
+	"github.com/alexishamrak/xplored-reviews/routes"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 
@@ -24,7 +24,7 @@ func main() {
 	}
 
 	//Configure all Routes
-	RegisterRoutes(app)
+	routes.RegisterRoutes(app)
 
 	//Formatting port
 	SERVER_PORT := os.Getenv("REVIEWS_PORT")

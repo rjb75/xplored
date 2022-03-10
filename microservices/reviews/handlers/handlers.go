@@ -20,7 +20,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func SearchTag(c *fiber.Ctx) error {
+func SearchTag(c *fiber.Ctx) error { //, userTags string) error {
 	reviewsDB := os.Getenv("REVIEWS_DB")
 
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(reviewsDB))
@@ -41,7 +41,7 @@ func SearchTag(c *fiber.Ctx) error {
 	}
 
 	db := client.Database("user_reviews").Collection("reviews")
-	tags := "#paris"
+	tags := "#paris" //userTags
 	// var result bson.M
 
 	findTags := options.Find()
