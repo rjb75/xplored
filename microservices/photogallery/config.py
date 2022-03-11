@@ -6,9 +6,9 @@ import os
 load_dotenv()
 config = load_dotenv(".env")
 
-client_id = os.getenv("photo_client_id")
-client_secret = os.getenv("photo_client_secret")
-redirect_uri = os.getenv("photo_redirect_uri")
+client_id = os.getenv("PHOTO_CLIENT_ID")
+client_secret = os.getenv("PHOTO_CLIENT_SECRET")
+redirect_uri = os.getenv("PHOTO_DIRECT_URI")
 code = ""
 
 #connecting to unsplash api
