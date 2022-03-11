@@ -17,4 +17,4 @@ def get_photo(photo_name):
             "photo_url": photo.urls.raw}
 
 if __name__ == "__main__":
-    uvicorn.run(photoApp, host=os.getenv("photo_host"), port=int(os.getenv("photo_port")))
+    uvicorn.run(photoApp, host=os.getenv("PHOTO_HOST"), port=int(os.getenv("PHOTO_PORT")))
