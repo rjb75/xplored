@@ -24,4 +24,4 @@ async def get_city_recommendations(country_name:str, city_name: str):
 
 
 if __name__ == "__main__":
-    uvicorn.run(recommendationApp, host=os.getenv("recommendation_host"), port=int(os.getenv("recommendation_port")))
+    uvicorn.run(recommendationApp, host=os.getenv("RECOMMENDATION_HOST"), port=int(os.getenv("RECOMMENDATION_PORT")))
