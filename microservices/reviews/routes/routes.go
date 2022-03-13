@@ -1,8 +1,6 @@
 package routes
 
 import (
-	//	"fmt"
-
 	"github.com/alexishamrak/xplored-reviews/handlers"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -18,5 +16,4 @@ func RegisterRoutes(app *fiber.App) {
 	v1.Get("/tags", handlers.SearchTag)
 	v1.Post("/tag", handlers.PostTag)
 	v1.Get("/alltags", handlers.AllReviews)
-	// reviewsRoutes(v1)
 }

@@ -5,8 +5,6 @@ import (
 	"log"
 	"os"
 
-	// "strconv"
-	// "strings"
 	"github.com/alexishamrak/xplored-reviews/routes"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
