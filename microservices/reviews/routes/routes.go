@@ -1,7 +1,8 @@
 package routes
 
 import (
-	"github.com/alexishamrak/xplored-reviews/handlers"
+	// "github.com/alexishamrak/xplored-reviews/handlers"
+	"github.com/alexishamrak/xplored-reviews/microservices/reviews/handlers"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
