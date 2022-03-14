@@ -9,3 +9,8 @@ import (
 func DiningRoutes(r fiber.Router) {
 	r.Get("/dining", handlers.DiningHandler)
 }
+
+// Routes for photo microservice
+func PhotoRoutes(r fiber.Router) {
+	r.Get("/photo", handlers.PhotosHandler)
+}

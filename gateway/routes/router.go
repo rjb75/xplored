@@ -55,4 +55,5 @@ func RegisterRoutes(app *fiber.App) {
 	FrontendProtectedRoutes(app)
 
 	DiningRoutes(v1)
+	PhotoRoutes(v1)
 }
