@@ -10,7 +10,7 @@ function App() {
             <h1>Xplored</h1>
             <Routes>
                 <Route path="/login" element={<Login />} />
-                <Route path="/componenttest" element={<ComponentTest />} />
+                <Route path="/component-test" element={<ComponentTest />} />
             </Routes>
         </div>
     );
