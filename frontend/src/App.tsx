@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "./styles/main.scss"
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import ComponentTest from "./pages/ComponentTest";
