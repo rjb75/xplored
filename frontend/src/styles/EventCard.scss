@@ -1,0 +1,36 @@
+@import "./colors.scss";
+
+.eventCard {
+  width: auto;
+  height: auto;
+  color: $color-white;
+  display: flex;
+  flex-direction: row;
+  border-radius: 4.73px;
+  justify-content: space-between;
+
+
+  .leftSide {
+    width: 80%;
+    display: flex;
+
+    img {
+      margin: 2% 0 2% 2%;
+    }
+
+    .headerContainers {
+      margin: 2% 0 2% 2%;
+
+      h1 {
+        font-family: 'Roboto';
+      }
+
+      h2 {
+      }
+    }
+  }
+
+  p {
+      margin: 2% 2% 0 2%;
+  }
+}
