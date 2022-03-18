@@ -1,0 +1,30 @@
+@import './colors.scss';
+@import './fonts.scss';
+
+.travelPlannerWrapper {
+  width: 100%;
+  height: 100%;
+  border: 2px solid black;
+  display: flex;
+  flex-flow: column nowrap;
+
+  .planenrNavbar{
+      display: flex;
+      justify-content: space-around;
+      height: 5%;
+      width: 100%;
+      background-color: $color-purple;
+      
+      img{
+          display: flex;
+          flex-direction: row;
+      }
+
+      .plannerNavbarDate{
+          h1{
+              font-family: 'Roboto';
+              color: $color-white;
+          }
+      }
+  }
+}
