@@ -11,14 +11,13 @@ export enum eventTypes {
 }
 
 type AppProps = {
-  color: string;
   time: string;
   title: string;
   duration: string;
   type: eventTypes;
 };
 
-export const EventCard = ({ color, type, time, title, duration }: AppProps) => {
+export const EventCard = ({ type, time, title, duration }: AppProps) => {
   function getIcon(eventType: eventTypes) {
     switch (eventType) {
       case "food":
@@ -30,8 +29,9 @@ export const EventCard = ({ color, type, time, title, duration }: AppProps) => {
   }
 
   return (
-    <div className="eventCard" style={{ backgroundColor: color }}>
-      <div className="leftSide">
+    <div className={"eventCard " + type}>
+      <div className="leftSide"></div>
+      <div className="middle">
         {getIcon(type)}
         <div className="headerContainers">
           <h1>{time}</h1>
