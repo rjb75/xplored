@@ -30,7 +30,7 @@ export const EventCard = ({ type, time, title, duration }: AppProps) => {
 
   return (
     <div className={"eventCard " + type}>
-      <div className="leftSide"></div>
+      {/*<div className="leftSide"></div>*/}
       <div className="middle">
         {getIcon(type)}
         <div className="headerContainers">
