@@ -8,26 +8,30 @@
   flex-direction: row;
   border-radius: 4.73px;
   justify-content: space-between;
+  padding: 2%;
 
+  /* to do later
   .leftSide{
     width: 5px;
+    height: 120%;
     background-color: black; // Change to darker version of background color
     border-radius: 4.73px 0 0 4.73px;
   }
+  */
 
   .middle {
     width: 80%;
     display: flex;
 
     img {
-      margin: 2% 0 2% 1%;
+      //margin: 2% 0 2% 1%;
     }
 
     .headerContainers {
-      margin: 2% 0 2% 2%;
+      margin: 0 0 0 2%;
       display: flex;
       flex-direction: column;
-      justify-items: center;
+      justify-content: center;
 
       h1 {
         font-family: 'Roboto', sans-serif;
@@ -42,7 +46,8 @@
   }
 
   p {
-      margin: 2% 2% 0 2%;
+    font-family: 'Roboto', sans-serif;
+    font-size: 8.27px;
   }
 }
 
