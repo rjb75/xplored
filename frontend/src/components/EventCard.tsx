@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/EventCard.scss";
 import foodIcon from "../assets/lunchIcon.svg";
+import { useDrag } from "react-dnd";
 
 export enum eventTypes {
   FOOD = "food",
@@ -8,6 +9,10 @@ export enum eventTypes {
   FLIGHT = "flight",
   ACCOMODATION = "accomodation",
   POI = "poi",
+}
+
+const Events = {
+  EVENT: 'event',
 }
 
 type AppProps = {
@@ -27,6 +32,15 @@ export const EventCard = ({ type, time, title, duration }: AppProps) => {
         break;
     }
   }
+
+  /*
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: Events.EVENT,
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging()
+    })
+  }))
+  */
 
   return (
     <div className={"eventCard " + type}>

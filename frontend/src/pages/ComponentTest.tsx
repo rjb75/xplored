@@ -13,8 +13,8 @@ import { eventTypes } from "../components/EventCard";
 
 function ComponentTest() {
     return (
-        <div style={{height:`40%`, width: `40%`, margin:`auto`}}>
-            <EventCard  color="pink" title="Test event" time="8:25 am" type={eventTypes.FOOD} duration="1 hour"/>
+        <div style={{height:`100vh`, width: `100%`, margin:`auto`}}>
+            <TravelPlanner />
         </div>
     );
 }
