@@ -1,0 +1,66 @@
+@import "../styles/colors.scss";
+
+.navbar {
+    .navbar {
+        &--container {
+            display: flex;
+            flex-direction: column;
+            padding: 0.5em 1em;
+        }
+        
+        &--primary-row {
+            display: flex;
+            margin: 2em 1em;
+        }
+
+        &--trip-fields {
+            border: 2px solid $color-pink;
+            border-radius: 6em;
+            padding: 0.5em;
+            width: 70%;
+            box-shadow: 0px 18px 39px rgba(0, 0, 0, 0.07), 0px 6.03776px 18.5609px rgba(0, 0, 0, 0.0870857), 0px 2.82777px 9.32026px rgba(0, 0, 0, 0.0496034);
+            display: flex;
+            .react-datepicker-wrapper {
+                width: 25%;
+                .navbar--trip-field {
+                    width: 100%;
+                }
+            }
+        }
+
+        &--trip-field {
+            border-right: 1px solid $color-grey-light;
+            padding: 0 0.5em;
+            width: 25%;
+        }
+
+        &--left-control, &--right-control {
+            display: flex;
+            width: 15%;
+            align-items: flex-end;
+        }
+
+        &--left-control {
+            justify-items: flex-start;
+        }
+
+        &--right-control {
+            justify-content: flex-end;
+        }
+
+        &--type-selector {
+            border-top: 1px solid $color-grey-light;
+            margin: 1em;
+            display: flex;
+            justify-content: center;
+        }
+
+        &--type-icon {
+            padding: 1em;
+            &.active {
+                background-color: $color-purple;
+                color: $color-white;
+            }
+        }
+    }
+}
