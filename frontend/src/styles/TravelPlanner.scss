@@ -1,30 +1,111 @@
-@import './colors.scss';
-@import './fonts.scss';
+@import "./colors.scss";
+@import "./fonts.scss";
 
 .travelPlannerWrapper {
   width: 100%;
   height: 100%;
-  border: 2px solid black;
   display: flex;
   flex-flow: column nowrap;
 
-  .planenrNavbar{
+  .plannerNavbar {
+    display: flex;
+    justify-content: space-around;
+    height: 6%;
+    width: 100%;
+    background-color: $color-purple;
+
+    img {
       display: flex;
-      justify-content: space-around;
-      height: 5%;
-      width: 100%;
-      background-color: $color-purple;
-      
-      img{
-          display: flex;
-          flex-direction: row;
+      flex-direction: row;
+    }
+
+    .plannerNavbarDate {
+      display: flex;
+      width: 33.3%;
+      height: 70%;
+      align-self: center;
+      justify-content: center;
+      align-items: center;
+
+      .dateWrapper {
+        display: flex;
+        gap: 10px;
+        background-color: #9c95ec;
+        padding: 8px 30px 8px 30px;
+        border-radius: 9px;
       }
 
-      .plannerNavbarDate{
-          h1{
-              font-family: 'Roboto';
-              color: $color-white;
-          }
+      h1 {
+        font-family: "Roboto";
+        color: $color-white;
       }
+    }
+    .arrowWrapper {
+      display: flex;
+      width: 33.3%;
+      justify-content: end;
+      gap: 10px;
+      margin: 10px 10px 10px 0;
+    }
+  }
+
+  .planner {
+    display: grid;
+    grid-template-columns: 100px auto;
+    grid-template-areas: "times table";
+    margin: 0 0 0 15%; // Use this to shift table
+
+    .timeWrapper {
+      grid-area: times;
+      display: flex;
+      flex-direction: column;
+      margin-top: 50px;
+
+      .time{
+          height: 50px;
+          font-size: 12px;
+          font-family: 'Roboto';
+          padding-top: 5px;
+      }
+    }
+
+    .table {
+      grid-area: table;
+      overflow-x: auto;
+      display: grid;
+      grid-template-areas:
+        "days"
+        "cells";
+    grid-template-rows: 50px auto;
+
+      .daysWrapper {
+        grid-area: days;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: auto;
+
+        h1 {
+          font-family: "Roboto";
+          color: black;
+          font-weight: bolder;
+          font-size: 16.69px;
+        }
+      }
+
+      .cellWrapper {
+        grid-area: cells;
+        .cellContainer {
+          display: flex;
+          justify-content: space-evenly;
+          width: 1601px;
+          .cell {
+            height: 50px;
+            width: 100%;
+            border: 1px solid black;
+          }
+        }
+      }
+    }
   }
 }
