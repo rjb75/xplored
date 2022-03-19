@@ -66,6 +66,9 @@
           font-size: 12px;
           font-family: 'Roboto';
           padding-top: 5px;
+          color: $color-grey-light;
+          border-top: 1px solid #e5e5e5;
+          border-right: 1px solid #e5e5e5;
       }
     }
 
@@ -102,7 +105,8 @@
           .cell {
             height: 50px;
             width: 100%;
-            border: 1px solid black;
+            border-top: 1px solid #e5e5e5;
+            border-right: 1px solid #e5e5e5;
           }
         }
       }
