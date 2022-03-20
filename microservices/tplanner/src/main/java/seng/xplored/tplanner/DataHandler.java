@@ -2,7 +2,7 @@ package seng.xplored.tplanner;
 
 
 public class DataHandler {
-    EnvironmentLoader env;
+    private EnvironmentLoader env;
 
 
     public DataHandler(EnvironmentLoader env){
