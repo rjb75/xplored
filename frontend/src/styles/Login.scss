@@ -1,25 +1,42 @@
 @import '../styles/main.scss';
 
-.LoginBackground {
-  background-color: blue;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
 }
 
-.LoginDialog {
-  min-width: 300px;
-  min-height: 450px;
-  max-width: 500px;
-  max-height: 700px;
-  width: 30vw;
-  height: 60vh;
-  margin: 20vh 10vw;
-  right: 0;
-  top: 0;
+.LoginPage {
+  display: flex;
+  align-content: stretch;
+  flex-flow: row;
+  justify-content: center;
+  background: blue;
+  width: 100vw;
+  height: 100vh;
   position: absolute;
+  padding: 70px;
+}
+
+.LoginPage .LoginDialog {
+  align-self: center;
+  justify-self: stretch;
+  display: flex;
+  min-height: max-content;
+  min-width: max-content;
+  max-width: 500px;
+  max-height: 800px;
+  width: 40%;
+  height: 90%;
+  margin: 70px;
+  padding: 35px;
+  text-align: center;
+  position: absolute;
+  display: flex;
   background: #ffffff80;
   border-radius: 47px;
+}
+
+.LoginDialog .WelcomeMessage {
+  font-face: 'Roboto';
 }
