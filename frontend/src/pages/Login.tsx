@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword, User } from "firebase/auth";
 import { firebaseAuth } from "../firebase/FirebaseConfig";
 import axiosInstance from "../utils/axios";
 import { setCookie } from "../utils/CookieUtils";
+import "../styles/Login.scss";
 
 const testEndpoint = "/api/v1/success";
 
@@ -34,7 +35,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="LoginDialog">
       <h1>{user === null ? "Not logged in" : "logged in as: " + user.email}</h1>
       <div
         style={{
@@ -54,6 +55,6 @@ const Login = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Login;
