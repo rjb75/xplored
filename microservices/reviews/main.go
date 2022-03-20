@@ -6,6 +6,7 @@ import (
 	"os"
 
 	// "github.com/alexishamrak/xplored-reviews/routes"
+	"github.com/alexishamrak/xplored-reviews/microservices/reviews/handlers"
 	"github.com/alexishamrak/xplored-reviews/microservices/reviews/routes"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
@@ -22,6 +23,7 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
+	handlers.DBConnect()
 	//Configure all Routes
 	routes.RegisterRoutes(app)
 
