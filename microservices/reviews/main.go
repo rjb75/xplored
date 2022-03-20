@@ -5,9 +5,8 @@ import (
 	"log"
 	"os"
 
-	// "github.com/alexishamrak/xplored-reviews/routes"
-	"github.com/alexishamrak/xplored-reviews/microservices/reviews/handlers"
-	"github.com/alexishamrak/xplored-reviews/microservices/reviews/routes"
+	"github.com/alexishamrak/xplored-reviews/handlers"
+	"github.com/alexishamrak/xplored-reviews/routes"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 
