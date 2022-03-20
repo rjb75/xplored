@@ -35,23 +35,27 @@ const Login = () => {
   };
 
   return (
-    <div className="LoginDialog">
-      <h1>{user === null ? "Not logged in" : "logged in as: " + user.email}</h1>
-      <div
-        style={{
-          display: `flex`,
-          flexDirection: `column`,
-          alignItems: `center`,
-        }}
-      >
-        <label>UserName</label>
-        <input type="text" id="email" placeholder="Enter Username" />
+    <div className="LoginPage">
+      <div className="LoginDialog">
+        <h1>
+          {user === null ? "Not logged in" : "logged in as: " + user.email}
+        </h1>
+        <div
+          style={{
+            display: `flex`,
+            flexDirection: `column`,
+            alignItems: `center`,
+          }}
+        >
+          <label>UserName</label>
+          <input type="text" id="email" placeholder="Enter Username" />
 
-        <label>Password</label>
-        <input type="password" id="password" placeholder="Enter Password" />
+          <label>Password</label>
+          <input type="password" id="password" placeholder="Enter Password" />
 
-        <input type="button" value="Login" onClick={login} />
-        <input type="button" value="Test API" onClick={testSuccess} />
+          <input type="button" value="Login" onClick={login} />
+          <input type="button" value="Test API" onClick={testSuccess} />
+        </div>
       </div>
     </div>
   );
