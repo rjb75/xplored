@@ -35,29 +35,48 @@ const Login = () => {
   };
 
   return (
-    <div className="LoginPage">
-      <div className="LoginDialog">
-        <h1>
-          {user === null ? "Not logged in" : "logged in as: " + user.email}
-        </h1>
-        <div
-          style={{
-            display: `flex`,
-            flexDirection: `column`,
-            alignItems: `center`,
-          }}
-        >
-          <label>UserName</label>
-          <input type="text" id="email" placeholder="Enter Username" />
+    <>
+      <div className="LoginPage">
+        <div className="blur"></div>
+        <div className="LoginDialog">
+          <h1 className="LoginContent WelcomeMessage">Login</h1>
+          <h1 className="LoginContent StatusMessage">
+            {user === null ? "Not logged in" : "logged in as: " + user.email}
+          </h1>
 
-          <label>Password</label>
-          <input type="password" id="password" placeholder="Enter Password" />
+          <label className="LoginContent InputTitle">UserName</label>
+          <input
+            className="LoginContent InputSpace"
+            type="text"
+            id="email"
+            placeholder="Enter Username"
+          />
 
-          <input type="button" value="Login" onClick={login} />
-          <input type="button" value="Test API" onClick={testSuccess} />
+          <label className="LoginContent InputTitle">Password</label>
+          <input
+            className="LoginContent InputSpace"
+            type="password"
+            id="password"
+            placeholder="Enter Password"
+          />
+
+          <div className="LoginContent BottomActionButtons">
+            <input
+              className="LoginButton"
+              type="button"
+              value="Login"
+              onClick={login}
+            />
+            <input
+              className="LoginButton"
+              type="button"
+              value="Test API"
+              onClick={testSuccess}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
