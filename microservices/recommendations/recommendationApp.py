@@ -1,26 +1,27 @@
-from fastapi import FastAPI
-import config, model, uvicorn, os
+from fastapi import FastAPI, HTTPException
+import config
+import model
+import uvicorn, os
 
 recommendationApp = FastAPI()
 
-# Root endpoint
+# Our root endpoint
 @recommendationApp.get("/")
 def index():
     return {"message": "Hello World"}
 
-#Gets recommendations for the given city if it exists
-@recommendationApp.get("/recom/api/v1/{country_name}", response_description= "Getting recommendation about a Country", response_model=model.RecomendationModel)
-async def get_country_recommendations(country_name: str):
-    if (recommendation := config.db["recommendations"].find_one({"country": country_name})) is not None:
+#returns recommendations about a location whether it be a city or a country.
+@recommendationApp.get("/recom/api/v1/{location_name}", response_description= "Getting recommendation about a Country", response_model=model.RecomendationModel)
+async def get_location_recommendations(location_name: str):
+    #for case insensitive search
+    location = location_name.title()
+    if (recommendation := config.db["recommendations"].find_one({"country": location})) is not None:
         return recommendation
-    return
+    elif (recommendation := config.db["recommendations"].find_one({"city": location})) is not None:
+        return recommendation
+    else:
+        raise HTTPException(status_code=404, detail="Location not found")
 
-#Gets recommendations for the given country if it exists
-@recommendationApp.get("/recom/api/v1/{country_name}/{city_name}", response_description= "Getting recommendation about a City", response_model=model.RecomendationModel)
-async def get_city_recommendations(country_name:str, city_name: str):
-    if (recommendation := config.db["recommendations"].find_one({"city": city_name})) is not None:
-        return recommendation
-    return
 
 
 if __name__ == "__main__":
