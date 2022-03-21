@@ -3,3 +3,15 @@
 @import "./font.css";
 
 @import "~react-datepicker/dist/react-datepicker.css";
+
+.LogoHeader {
+  position: absolute;
+  background: transparent;
+  top: 2vh;
+  height: 40px;
+
+  right: 0;
+  left: 2vh;
+  width: auto;
+  z-index: 10;
+}
