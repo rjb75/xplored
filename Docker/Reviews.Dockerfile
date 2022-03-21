@@ -18,6 +18,6 @@ WORKDIR /xplored/microservices/reviews
 
 COPY --from=build /go/src/reviews/reviews .
 
-EXPOSE 3005
+EXPOSE 3004
 
 CMD ["./reviews"]
