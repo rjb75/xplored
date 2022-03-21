@@ -19,7 +19,7 @@ export type plannerEvent = {
   title: String;
   duration: String;
   type: eventTypes;
-  parent: JSX.Element;
+  id: String;
 };
 
 export const EventCard = ({

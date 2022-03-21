@@ -24,7 +24,7 @@ export const PlannerCell = ({day, time, children, test}: AppProps) => {
     function ifEvent(){
         if(event !== undefined || test){
             return(
-                <EventCard type={event?.type || eventTypes.FOOD} title={event?.title || "Test"} time={event?.time || "6:30 pm"}  duration={event?.duration || "1 Hour"} date={event?.date || "0"} cleanupFunction={removeEvent}  />
+                <EventCard id="1" type={event?.type || eventTypes.FOOD} title={event?.title || "Test"} time={event?.time || "6:30 pm"}  duration={event?.duration || "1 Hour"} date={event?.date || "0"} />
             );
         }
     }
@@ -38,7 +38,7 @@ export const PlannerCell = ({day, time, children, test}: AppProps) => {
     }), [day, time])
 
     return(
-        <div ref={drop} className="cell">{ifEvent()}</div>
+        <div ref={drop} className="cell">{children}</div>
     );
 }
 
