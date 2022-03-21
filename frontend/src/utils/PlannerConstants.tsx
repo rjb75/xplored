@@ -1,3 +1,7 @@
+export const ItemTypes = {
+  EVENT: 'event'
+}
+
 export const days: { name: String }[] = [
   {
     name: "Monday",

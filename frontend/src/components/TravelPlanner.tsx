@@ -2,11 +2,16 @@ import React from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { days, timeRows } from "../utils/PlannerConstants";
-
+//@ts-ignore
 import leftArrow from "../assets/plannerPageLeftArrow.svg";
+//@ts-ignore
 import rightArrow from "../assets/plannerPageRightArrow.svg";
+//@ts-ignore
 import calendarIcon from "../assets/calendarIcon.svg";
 import "../styles/TravelPlanner.scss";
+import EventCard from "./EventCard";
+import { eventTypes } from "./EventCard";
+import PlannerCell from "./PlannerCell";
 
 export const TravelPlanner = () => (
   <DndProvider backend={HTML5Backend}>
@@ -38,16 +43,16 @@ export const TravelPlanner = () => (
             })}
           </div>
           <div className="cellWrapper">
-            {timeRows.map((row) => {
+            {timeRows.map((row, index) => {
               return (
                 <div className="cellContainer">
-                  <div className="cell"></div>
-                  <div className="cell"></div>
-                  <div className="cell"></div>
-                  <div className="cell"></div>
-                  <div className="cell"></div>
-                  <div className="cell"></div>
-                  <div className="cell"></div>
+                  <PlannerCell test day="1" time={index} ></PlannerCell>
+                  <PlannerCell day="2" time={index} ></PlannerCell>
+                  <PlannerCell day="3" time={index} ></PlannerCell>
+                  <PlannerCell day="4" time={index} ></PlannerCell>
+                  <PlannerCell day="5" time={index} ></PlannerCell>
+                  <PlannerCell day="6" time={index} ></PlannerCell>
+                  <PlannerCell day="7" time={index} ></PlannerCell>
                 </div>
               );
             })}

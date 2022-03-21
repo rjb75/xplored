@@ -1,7 +1,9 @@
 import React from "react";
 import "../styles/EventCard.scss";
+//@ts-ignore
 import foodIcon from "../assets/lunchIcon.svg";
 import { useDrag } from "react-dnd";
+import { ItemTypes } from "../utils/PlannerConstants";
 
 export enum eventTypes {
   FOOD = "food",
@@ -11,18 +13,24 @@ export enum eventTypes {
   POI = "poi",
 }
 
-const Events = {
-  EVENT: 'event',
-}
-
-type AppProps = {
-  time: string;
-  title: string;
-  duration: string;
+export type plannerEvent = {
+  time: String;
+  date: String;
+  title: String;
+  duration: String;
   type: eventTypes;
+  parent: JSX.Element;
 };
 
-export const EventCard = ({ type, time, title, duration }: AppProps) => {
+export const EventCard = ({
+  type,
+  time,
+  title,
+  duration,
+  date,
+  parent,
+}: plannerEvent): JSX.Element => {
+
   function getIcon(eventType: eventTypes) {
     switch (eventType) {
       case "food":
@@ -33,18 +41,19 @@ export const EventCard = ({ type, time, title, duration }: AppProps) => {
     }
   }
 
-  /*
   const [{ isDragging }, drag] = useDrag(() => ({
-    type: Events.EVENT,
+    type: ItemTypes.EVENT,
     collect: (monitor) => ({
-      isDragging: !!monitor.isDragging()
-    })
-  }))
-  */
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
 
   return (
-    <div className={"eventCard " + type}>
-      {/*<div className="leftSide"></div>*/}
+    <div
+      className={"eventCard " + type}
+      ref={drag}
+      style={{ opacity: isDragging ? 0.5 : 1 }}
+    >
       <div className="middle">
         {getIcon(type)}
         <div className="headerContainers">
