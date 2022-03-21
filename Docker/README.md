@@ -2,6 +2,14 @@
 
 The Xplored project utilizes a containerized approach for microservices. In the deployed implementation each microservice has it's own container which is then networked with the gateway container. This means that only the gateway container will be exposed when the project is hosted.
 
+## Deploying the Application
+
+The deployment of the application is completed using `docker-compose` which aggregates each container and connects them. If your `.env` is properly configured in the root directory the entire application can be ran using the following command in the project root:
+
+```bash
+$ docker-compose -f Docker/docker-compose.yml up --build
+```
+
 ## Building Individual Containers
 
 To build an individual container navigate to the root project folder and run the following command:
