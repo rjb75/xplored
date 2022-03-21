@@ -1,14 +1,15 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 
 export interface InputFieldProps {
     onChangeHandler?: Function,
     placeholder: string,
     name: string,
     type?: string,
-    className?: string
+    className?: string,
+    id?: string
 }
 
-const InputField: React.FC<InputFieldProps> = ({className = '', name = '', onChangeHandler = null, placeholder = '', type = 'text'}) => {
+const InputField: React.FC<InputFieldProps> = ({className = '', id = '', name = '', onChangeHandler = null, placeholder = '', type = 'text'}) => {
 
     const [value, setValue] = useState<string>('')
 
@@ -20,7 +21,7 @@ const InputField: React.FC<InputFieldProps> = ({className = '', name = '', onCha
     }
 
     return (
-        <input className={className} name={name} onChange={changeHandler} placeholder={placeholder} value={value} type={type} ></input>
+        <input className={className} id={id} name={name} onChange={changeHandler} placeholder={placeholder} value={value} type={type} ></input>
     );
 };
 
