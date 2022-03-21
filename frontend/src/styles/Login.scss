@@ -12,7 +12,7 @@
   src: url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
 }
 
-$background-image: url(../components/sea-g55d07c3d4_1920.jpg);
+$background-image: url(../components/thunderstorm-3440450_1920.jpg);
 
 
 
@@ -41,12 +41,14 @@ $background-image: url(../components/sea-g55d07c3d4_1920.jpg);
   align-self: center;
   justify-self: stretch;
   display: flex;
-  max-width: 400px;
-  max-height: 600px;
+  min-width: 250px;
+  min-height: 400px;
+  max-width: 350px;
+  max-height: 500px;
   width: 40vw;
   height: 80vw;
   margin: 70px;
-  padding: 5vh 5vh;
+  padding: 30px;
   display: flex;
   border-radius: 47px;
   text-align: center;
@@ -62,20 +64,20 @@ $background-image: url(../components/sea-g55d07c3d4_1920.jpg);
   align-self: center;
   justify-self: stretch;
   display: flex;
-  min-height: max-content;
-  min-width: max-content;
-  max-width: 400px;
-  max-height: 700px;
+  min-width: 200px;
+  min-height: 350px;
+  max-width: 350px;
+  max-height: 500px;
   width: 40vw;
-  height: 90vw;
+  height: 80vw;
   margin: 70px;
-  padding: 10vh 10vw;
+  padding: 30px;
   display: flex;
   border-radius: 47px;
   background-image: $background-image;
   background-repeat: no-repeat;
   background-position: center;
-  filter: blur(10px) blur(15px) blur(10px) contrast(110%) brightness(90%);
+  filter: blur(10px) contrast(120%) brightness(120%);
 }
 
 
@@ -93,7 +95,7 @@ $background-image: url(../components/sea-g55d07c3d4_1920.jpg);
 .LoginContent.WelcomeMessage {
   font-family: 'Roboto';
   font-size: 44px;
-  color: $color-grey-dark;
+  color: $color-white;
   font-weight: 800;
   justify-self: flex-start;
   flex-grow: 1;
@@ -102,7 +104,7 @@ $background-image: url(../components/sea-g55d07c3d4_1920.jpg);
 .LoginContent.StatusMessage {
   font-family: 'Manrope';
   font-size: 24px;
-  color: $color-grey-light;
+  color: $color-white;
   font-weight: 500;
   flex-grow: 1;
   margin: -10% 0 0 0;
@@ -111,13 +113,8 @@ $background-image: url(../components/sea-g55d07c3d4_1920.jpg);
 .LoginContent.InputTitle {
   font-family: 'Roboto';
   font-size: 18px;
-  color: $color-grey-light;
+  color: $color-white;
   font-weight: 500;
-  //flex-grow: 1;
-  // background-color: aqua;
-  // height: 20px;
-  // align-self: center;
-  // justify-self: center;
   padding: 0;
   margin: 0 0 -4% 0;
 }
@@ -157,8 +154,13 @@ $background-image: url(../components/sea-g55d07c3d4_1920.jpg);
   height: min-content;
   margin: 0 0 4% 0;
   width: 100%;
+  padding: 0 15%;
+  max-height: 50px;
+  text-align: center;
 }
 
 .LoginContent.InputSpace:focus {
   color: $color-grey-dark;
+  text-align: left;
+
 }
