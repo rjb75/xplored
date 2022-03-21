@@ -14,7 +14,6 @@ export const PlannerCell = ({day, time, children, test}: AppProps) => {
     const [event, setEvents] = useState<plannerEvent | undefined>();
 
     function moveEvent(item: plannerEvent){
-        item.cleanupFunction();
         setEvents(item);
     }
 
