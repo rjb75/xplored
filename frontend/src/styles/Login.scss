@@ -12,11 +12,9 @@
   src: url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
 }
 
-.LoginBackground {
-  background-image: url(../components/bananas-gff2081b3e_1920.jpg);
-  background-repeat: no-repeat;
-  background-position: center;
-}
+$background-image: url(../components/sea-g55d07c3d4_1920.jpg);
+
+
 
 .LoginPage {
   display: flex;
@@ -29,7 +27,7 @@
   position: absolute;
   padding: 70px;
 
-  background-image: url(../components/bananas-gff2081b3e_1920.jpg);
+  background-image: $background-image;
   background-position: center;
   background-repeat: no-repeat;
   // background-position: 100vmin;
@@ -39,26 +37,21 @@
 }
 
 
-
-
-
 .LoginPage .LoginDialog {
   align-self: center;
   justify-self: stretch;
   display: flex;
-  min-height: max-content;
-  min-width: max-content;
-  max-width: 500px;
-  max-height: 800px;
+  max-width: 400px;
+  max-height: 600px;
   width: 40vw;
-  height: 90vw;
+  height: 80vw;
   margin: 70px;
-  padding: 55px 35px;
+  padding: 5vh 5vh;
+  display: flex;
+  border-radius: 47px;
   text-align: center;
   position: absolute;
-  display: flex;
-  background: #ffffff60;
-  border-radius: 47px;
+  background: #ffffff80;
   flex-flow: column;
   justify-content: space-around;
   align-items: center;
@@ -71,15 +64,15 @@
   display: flex;
   min-height: max-content;
   min-width: max-content;
-  max-width: 500px;
-  max-height: 800px;
+  max-width: 400px;
+  max-height: 700px;
   width: 40vw;
   height: 90vw;
   margin: 70px;
-  padding: 55px 35px;
+  padding: 10vh 10vw;
   display: flex;
   border-radius: 47px;
-  background-image: url(../components/bananas-gff2081b3e_1920.jpg);
+  background-image: $background-image;
   background-repeat: no-repeat;
   background-position: center;
   filter: blur(10px) blur(15px) blur(10px) contrast(110%) brightness(90%);
@@ -99,8 +92,8 @@
 
 .LoginContent.WelcomeMessage {
   font-family: 'Roboto';
-  font-size: 64px;
-  color: $color-white;
+  font-size: 44px;
+  color: $color-grey-dark;
   font-weight: 800;
   justify-self: flex-start;
   flex-grow: 1;
@@ -109,15 +102,16 @@
 .LoginContent.StatusMessage {
   font-family: 'Manrope';
   font-size: 24px;
-  color: $color-white;
+  color: $color-grey-light;
   font-weight: 500;
   flex-grow: 1;
+  margin: -10% 0 0 0;
 }
 
 .LoginContent.InputTitle {
   font-family: 'Roboto';
-  font-size: 28px;
-  color: $color-white;
+  font-size: 18px;
+  color: $color-grey-light;
   font-weight: 500;
   //flex-grow: 1;
   // background-color: aqua;
@@ -125,7 +119,7 @@
   // align-self: center;
   // justify-self: center;
   padding: 0;
-  margin: 0;
+  margin: 0 0 -4% 0;
 }
 
 .LoginContent.BottomActionButtons {
@@ -145,7 +139,7 @@
   justify-self: stretch;
   align-self: center;
   background: $color-purple;
-  font-size: xx-large;
+  font-size: 20px;
   padding: 2% 12%;
   width: max-content;
   border-radius: 47px;
@@ -155,10 +149,16 @@
 }
 
 .LoginContent.InputSpace {
-  font-family: 'Robobot';
-  font-size: 24px;
-  color: $color-white;
+  font-family: 'Roboto';
+  font-size: 14px;
+  color: $color-grey-light;
   flex-grow: 2;
-  background-color: #ffffff80;
+  background-color: #ffffff;
   height: min-content;
+  margin: 0 0 4% 0;
+  width: 100%;
+}
+
+.LoginContent.InputSpace:focus {
+  color: $color-grey-dark;
 }
