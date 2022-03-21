@@ -145,6 +145,14 @@ $background-image: url(../assets/bananas-gff2081b3e_1920.jpg);
   color: $color-white;
 }
 
+.LoginButton:hover {
+  background: $color-purple-lightened;
+}
+
+.LoginButton:active {
+  background: $color-purple-shaded;
+}
+
 .LoginContent.InputSpace {
   font-family: 'Roboto';
   font-size: 14px;
@@ -156,7 +164,6 @@ $background-image: url(../assets/bananas-gff2081b3e_1920.jpg);
   width: 100%;
   padding: 0 15%;
   max-height: 50px;
-  text-align: center;
 }
 
 .LoginContent.InputSpace:focus {
