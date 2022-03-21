@@ -2,6 +2,8 @@ $color-grey-light: #979797;
 $color-grey-dark: #453F3F;
 $color-pink: #F07495;
 $color-purple: #776EDE;
+$color-purple-shaded: #544cac;
+$color-purple-lightened: #968fe2;
 $color-white: #FFFFFF;
 
 // Event colors
@@ -16,8 +18,7 @@ $color-dark-turquoise: #00798C;
 $color-salmon: #EC6E7F;
 $color-dark-salmon: #D1495B;
 
-$colors: (
-    'grey-light': $color-grey-light,
+$colors: ('grey-light': $color-grey-light,
     'grey-dark': $color-grey-dark,
     'pink': $color-pink,
     'purple': $color-purple,
