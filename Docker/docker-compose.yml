@@ -1,0 +1,35 @@
+services:
+  reviews:
+    tty: true
+    container_name: xplored-ms-reviews
+    build:
+      context: ../
+      dockerfile: docker/Reviews.Dockerfile
+    expose:
+      - 3004
+  poi:
+    tty: true
+    container_name: xplored-ms-poi
+    build:
+      context: ../
+      dockerfile: docker/POI.Dockerfile
+    expose:
+      - 3005
+  dining:
+    tty: true
+    container_name: xplored-ms-dining
+    build:
+      context: ../
+      dockerfile: docker/Dining.Dockerfile
+    expose:
+      - 3002
+  gateway:
+    tty: true
+    container_name: xplored-gateway
+    build:
+      context: ../
+      dockerfile: docker/Gateway.Dockerfile
+    ports:
+      - 8000:8000
+
+  
