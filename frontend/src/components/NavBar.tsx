@@ -3,6 +3,7 @@ import InputField from "./inputs/InputField";
 import DatePicker from "react-datepicker";
 import "./NavBar.scss"
 import Logo from "../images/logo.svg";
+import Select, { StylesConfig } from "react-select";
 
 const NavBar: React.FC = () => {
 
@@ -29,8 +30,8 @@ const NavBar: React.FC = () => {
     }]
 
     const trips = [{
-        name: 'Seattle Trip',
-        id: 'seattle'
+        label: 'Seattle Trip',
+        value: 'seattle'
     }]
 
     const [selectedMode, setSelectedMode] = useState<String>('Flights')
@@ -44,16 +45,8 @@ const NavBar: React.FC = () => {
         <div className="navbar navbar--container">
             <div className="navbar--primary-row">
                 <div className="navbar--left-control">
-                    <img src={Logo} />
-                    <select className="navbar--trip-selector">
-                        {
-                            trips.map((e, i) => {
-                                return (
-                                    <option key={i} value={e.id}>{e.name}</option>
-                                )
-                            })
-                        }
-                    </select>
+                    <img src={Logo} alt={`Xplored Logo`} />
+                    <Select className="navbar--trip-selector" options={trips} defaultValue={trips[0]} />
                 </div>
                 <div className="navbar--trip-fields">
                     <div className="navbar--trip-field-container">
