@@ -1,8 +1,7 @@
-@import "./reset.css";
-@import "./colors.scss";
-@import "./font.css";
-
+@import "../styles/font.css";
 @import "~react-datepicker/dist/react-datepicker.css";
+@import "../styles/colors.scss";
+@import "../styles/reset.css";
 
 .LogoHeader {
   position: absolute;
