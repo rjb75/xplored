@@ -33,8 +33,9 @@ $background-image: url(../assets/test_background_field.jpg);
 }
 
 
-.LoginPage .LoginDialog,
-.LoginPage .blur {
+
+
+.LoginPage .LoginDialog {
 
   align-self: center;
   justify-self: flex-end;
@@ -58,12 +59,12 @@ $background-image: url(../assets/test_background_field.jpg);
 }
 
 
-.LoginPage .LoginDialog {
+.LoginPage .LoginDialog.DialogFront {
   background: #ffffff80;
 }
 
 
-.blur {
+.LoginPage .LoginDialog.DialogBlur {
   background-image: $background-image;
   background-repeat: no-repeat;
   background-position: 90% 50%;

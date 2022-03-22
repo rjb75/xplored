@@ -37,49 +37,51 @@ const Login = () => {
   return (
     <>
       <div className="LoginPage">
-        <div className=" blur"></div>
         <div className="LoginDialog">
-          <h1 className="LoginContent WelcomeMessage">Login</h1>
-          <h1 className="LoginContent StatusMessage">
-            {user === null ? "Not logged in" : "logged in as: " + user.email}
-          </h1>
-          <div className="LoginContent Spacer" />
-          <div className="LoginContent Spacer" />
+          <div className="LoginDialog DialogBlur" />
+          <div className="LoginDialog DialogFront">
+            <h1 className="LoginContent WelcomeMessage">Login</h1>
+            <h1 className="LoginContent StatusMessage">
+              {user === null ? "Not logged in" : "logged in as: " + user.email}
+            </h1>
+            <div className="LoginContent Spacer" />
+            <div className="LoginContent Spacer" />
 
-          <div className="LoginContent TextInput">
-            <label className=" TextLabel">Username</label>
-            <input
-              className="TextText"
-              type="text"
-              id="email"
-              placeholder="Username"
-            />
-          </div>
+            <div className="LoginContent TextInput">
+              <label className=" TextLabel">Username</label>
+              <input
+                className="TextText"
+                type="text"
+                id="email"
+                placeholder="Username"
+              />
+            </div>
 
-          <div className="LoginContent TextInput">
-            <label className="TextLabel">Password</label>
-            <input
-              className="TextText"
-              type="password"
-              id="password"
-              placeholder="Password"
-            />
-          </div>
-          <div className="LoginContent Spacer" />
-          <div className="LoginContent BottomActionButtons">
-            <input
-              className="LoginButton"
-              type="button"
-              value="Login"
-              onClick={login}
-            />
+            <div className="LoginContent TextInput">
+              <label className="TextLabel">Password</label>
+              <input
+                className="TextText"
+                type="password"
+                id="password"
+                placeholder="Password"
+              />
+            </div>
+            <div className="LoginContent Spacer" />
+            <div className="LoginContent BottomActionButtons">
+              <input
+                className="LoginButton"
+                type="button"
+                value="Login"
+                onClick={login}
+              />
 
-            {/* <input
+              {/* <input
               className="LoginButton"
               type="button"
               value="Test API"
               onClick={testSuccess}
             /> */}
+            </div>
           </div>
         </div>
       </div>
