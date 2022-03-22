@@ -18,9 +18,9 @@ $background-image: url(../assets/test_background_field.jpg);
 
 .LoginPage {
   display: flex;
-  align-content: stretch;
+  align-content: center;
   flex-flow: row;
-  justify-content: center;
+  justify-content: stretch;
   width: 100vw;
   height: 100vh;
   position: absolute;
@@ -29,18 +29,47 @@ $background-image: url(../assets/test_background_field.jpg);
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-color: #000;
+  column-gap: 10vw;
 
 }
 
+.LoginPage .PageMessage {
+  align-self: flex-start;
+  align-items: center;
+  justify-items: center;
+  justify-self: center;
+  align-content: center;
+  justify-content: center;
+  text-align: left;
+  overflow: hidden;
+  font-family: 'Roboto';
+  display: flex;
+  flex-flow: column;
+  row-gap: 0px;
+  margin-top: 20vh;
+  margin-left: 1vw;
+  color: $color-white;
 
 
+  //background-color: aquamarine;
+  position: relative;
+}
+
+.PageMessage .TopLine {
+  font-size: 64px;
+  font-weight: 700;
+}
+
+.PageMessage .BottomLine {
+  font-size: 52px;
+  font-weight: 400;
+}
 
 .LoginPage .LoginDialog {
-
   align-self: center;
   justify-self: flex-end;
   display: flex;
-  right: 8vw;
+  right: 5vw;
   width: 21vw;
   min-width: 400px;
   max-width: 450px;
@@ -60,6 +89,7 @@ $background-image: url(../assets/test_background_field.jpg);
 
 
 .LoginPage .LoginDialog.DialogFront {
+
   background: #ffffff80;
 }
 
