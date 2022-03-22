@@ -7,31 +7,18 @@ type AppProps = {
     day: String,
     time: number,
     children?: JSX.Element,
+    dropCallback: Function,
     test?: boolean,
 }
 
-export const PlannerCell = ({day, time, children, test}: AppProps) => {
-    const [event, setEvents] = useState<plannerEvent | undefined>();
-
-    function moveEvent(item: plannerEvent){
-        setEvents(item);
-    }
-
-    function removeEvent(item: plannerEvent){
-        console.log(test)
-    }
-
-    function ifEvent(){
-        if(event !== undefined || test){
-            return(
-                <EventCard id="1" type={event?.type || eventTypes.FOOD} title={event?.title || "Test"} time={event?.time || "6:30 pm"}  duration={event?.duration || "1 Hour"} date={event?.date || "0"} />
-            );
-        }
-    }
+export const PlannerCell = ({day, time, children, test, dropCallback}: AppProps) => {
 
     const [{ isOver }, drop] = useDrop(() => ({
         accept: ItemTypes.EVENT,
-        drop: (item: plannerEvent) => moveEvent(item),
+        drop: (item: plannerEvent, monitor) => {
+            console.log(monitor.getItem());
+            dropCallback(item, day, time);
+        },
         collect: monitor => ({
             isOver: !!monitor.isOver(),
         }),

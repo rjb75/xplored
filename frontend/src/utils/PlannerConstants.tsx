@@ -1,6 +1,8 @@
+import { eventTypes } from "../components/EventCard";
+
 export const ItemTypes = {
-  EVENT: 'event'
-}
+  EVENT: "event"
+};
 
 export const days: { name: String }[] = [
   {
