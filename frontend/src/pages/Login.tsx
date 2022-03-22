@@ -37,6 +37,10 @@ const Login = () => {
   return (
     <>
       <div className="LoginPage">
+        <div className="PageMessage">
+          <h1 className=" TopLine">This is the top line</h1>
+          <h1 className=" BottomLine">Bottom line, babyyyyyy</h1>
+        </div>
         <div className="LoginDialog">
           <div className="LoginDialog DialogBlur" />
           <div className="LoginDialog DialogFront">
