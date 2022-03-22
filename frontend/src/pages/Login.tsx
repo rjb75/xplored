@@ -86,18 +86,17 @@ const Login = () => {
                 value="Log In"
                 onClick={Login}
               />
-
-              {/* <input
-              className="LoginButton"
-              type="button"
-              value="Test API"
-              onClick={testSuccess}
-            /> */}
             </div>
           </div>
         </div>
-        <img className="LogoHeader" src={XploredLogo} alt="Xplored Logo" />
-        <a href="/component-test" className="ChangeAuthLink">
+        <a href="/login">
+          <img
+            className="LogoHeader"
+            src={XploredLogo}
+            alt="Xplored Logo"
+          ></img>
+        </a>
+        <a href="/signup" className="ChangeAuthLink">
           Sign Up
         </a>
       </div>
