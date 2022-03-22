@@ -84,7 +84,7 @@ const Login = () => {
                 className="AuthButton"
                 type="button"
                 value="Log In"
-                onClick={Login}
+                onClick={() => Login}
               />
             </div>
           </div>

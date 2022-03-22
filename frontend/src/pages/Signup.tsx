@@ -6,12 +6,13 @@ import axiosInstance from "../utils/axios";
 import { setCookie } from "../utils/CookieUtils";
 import "../pages/UserAuth.scss";
 import XploredLogo from "../assets/Logo.svg";
-import AuthBackgroundImage from "../assets/test_background_field.jpg";
+import AuthBackgroundImage from "../assets/artworks-wpjEfwDX6jaLMClh-kzMM8w-t500x500.jpg";
 
 const testEndpoint = "/api/v1/success";
 
 const Signup = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [authMessage, setAuthMessage] = useState<string>(" ");
 
   function Signup() {
     const email = (document.getElementById("email") as HTMLInputElement).value;
@@ -27,6 +28,19 @@ const Signup = () => {
         setCookie("refresh_token", userCredential.user.refreshToken);
       }
     );
+  }
+
+  function checkPasswordMatch() {
+    const confirmPassword = (
+      document.getElementById("confirmPassword") as HTMLInputElement
+    ).value;
+    const password = (document.getElementById("password") as HTMLInputElement)
+      .value;
+    if (password !== confirmPassword) {
+      setAuthMessage("Passwords do not match");
+    } else {
+      setAuthMessage(" ");
+    }
   }
 
   return (
@@ -47,9 +61,7 @@ const Signup = () => {
         <div className="AuthDialog">
           <div className="AuthDialog DialogFront">
             <h1 className="AuthContent WelcomeMessage">Sign Up</h1>
-            <h1 className="AuthContent StatusMessage">
-              {user === null ? "Not logged in" : "logged in as: " + user.email}
-            </h1>
+
             <div className="AuthContent Spacer" />
             <div className="AuthContent TextInput">
               <label className=" TextLabel">Username</label>
@@ -76,25 +88,19 @@ const Signup = () => {
               <input
                 className="TextText"
                 type="password"
-                id="password"
+                id="confirmPassword"
                 placeholder="Password"
+                onChange={() => checkPasswordMatch()}
               />
             </div>
-            <div className="AuthContent Spacer" />
+            <h1 className="AuthContent ErrorMessage">{authMessage}</h1>
             <div className="AuthContent BottomActionButtons">
               <input
                 className="AuthButton"
                 type="button"
                 value="Sign Up"
-                onClick={Signup}
+                onClick={() => Signup}
               />
-
-              {/* <input
-              className="LoginButton"
-              type="button"
-              value="Test API"
-              onClick={testSuccess}
-            /> */}
             </div>
           </div>
         </div>

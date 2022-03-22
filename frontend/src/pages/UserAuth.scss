@@ -127,14 +127,12 @@ $background-image: url(../assets/test_background_field.jpg);
 
 
 .AuthPage .AuthDialog.DialogFront {
-
   background: #ffffff78;
 }
 
 
 
 .AuthDialog .AuthContent {
-
   margin: 0;
   padding: 0;
   border-radius: 47px;
@@ -154,6 +152,14 @@ $background-image: url(../assets/test_background_field.jpg);
   font-family: 'Manrope';
   font-size: 24px;
   color: $color-white;
+  font-weight: 500;
+  flex-grow: 1;
+}
+
+.AuthContent.ErrorMessage {
+  font-family: 'Manrope';
+  font-size: 24px;
+  color: $color-error;
   font-weight: 500;
   flex-grow: 1;
 }
