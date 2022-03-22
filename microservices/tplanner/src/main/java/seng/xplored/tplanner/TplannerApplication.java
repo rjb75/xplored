@@ -17,8 +17,8 @@ public class TplannerApplication {
           .singletonMap("server.port", env.getPORT()));
         app.run(args);
 
-		DataHandler program = new DataHandler(env);
-		DBConnect db = new DBConnect(env);
+	//	DataHandler program = new DataHandler(env);
+	//	DBConnect db = new DBConnect(env);
 	}
 
 }
