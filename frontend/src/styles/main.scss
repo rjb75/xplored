@@ -2,15 +2,3 @@
 @import "~react-datepicker/dist/react-datepicker.css";
 @import "../styles/colors.scss";
 @import "../styles/reset.css";
-
-.LogoHeader {
-  position: absolute;
-  background: transparent;
-  top: 4vh;
-  height: 80px;
-
-  right: 0;
-  left: 4vh;
-  width: auto;
-  z-index: 10;
-}

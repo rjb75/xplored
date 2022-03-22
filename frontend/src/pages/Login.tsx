@@ -5,6 +5,7 @@ import { firebaseAuth } from "../firebase/FirebaseConfig";
 import axiosInstance from "../utils/axios";
 import { setCookie } from "../utils/CookieUtils";
 import "../pages/Login.scss";
+import XploredLogo from "../assets/Logo.svg";
 
 const testEndpoint = "/api/v1/success";
 
@@ -88,6 +89,7 @@ const Login = () => {
             </div>
           </div>
         </div>
+        <img className="LogoHeader" src={XploredLogo} alt="Xplored Logo" />
       </div>
     </>
   );
