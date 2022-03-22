@@ -28,7 +28,7 @@ export const EventCard = ({
   title,
   duration,
   date,
-  parent,
+  id,
 }: plannerEvent): JSX.Element => {
 
   function getIcon(eventType: eventTypes) {
@@ -43,8 +43,17 @@ export const EventCard = ({
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.EVENT,
+    item: {
+      id: id,
+      type: type,
+      time: time,
+      title: title,
+      duration: duration,
+      date: date,
+    },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
+      item: monitor.getItem(),
     }),
   }));
 

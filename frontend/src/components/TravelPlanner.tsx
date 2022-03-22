@@ -67,7 +67,23 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     return res;
   }
 
-  moveEvent(item: plannerEvent, x: number, y: number) {}
+  moveEvent(item: plannerEvent, day: String, time: String) {
+    console.log(this.state.events);
+    console.log(item.id);
+    this.state.events.forEach((e, index) => {
+      if(item.id === e.id){
+        let prevItems = [...this.state.events];
+        let i = prevItems[index];
+        i.date = day;
+        i.time = time.toString();
+        prevItems[index] = i;
+        console.log(prevItems);
+        this.setState({events: prevItems});
+      }
+    })
+
+    // Update backend
+  }
 
   render() {
     return (
@@ -103,13 +119,13 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                 {timeRows.map((row, index) => {
                   return (
                     <div className="cellContainer">
-                      <PlannerCell day={"1"} time={index}>{this.placeEvents("1", index.toString())}</PlannerCell>
-                      <PlannerCell day={"2"} time={index}>{this.placeEvents("2", index.toString())}</PlannerCell>
-                      <PlannerCell day={"3"} time={index}>{this.placeEvents("3", index.toString())}</PlannerCell>
-                      <PlannerCell day={"4"} time={index}>{this.placeEvents("4", index.toString())}</PlannerCell>
-                      <PlannerCell day={"5"} time={index}>{this.placeEvents("5", index.toString())}</PlannerCell>
-                      <PlannerCell day={"6"} time={index}>{this.placeEvents("6", index.toString())}</PlannerCell>
-                      <PlannerCell day={"7"} time={index}>{this.placeEvents("7", index.toString())}</PlannerCell>
+                      <PlannerCell dropCallback={this.moveEvent} day={"1"} time={index}>{this.placeEvents("1", index.toString())}</PlannerCell>
+                      <PlannerCell dropCallback={this.moveEvent} day={"2"} time={index}>{this.placeEvents("2", index.toString())}</PlannerCell>
+                      <PlannerCell dropCallback={this.moveEvent} day={"3"} time={index}>{this.placeEvents("3", index.toString())}</PlannerCell>
+                      <PlannerCell dropCallback={this.moveEvent} day={"4"} time={index}>{this.placeEvents("4", index.toString())}</PlannerCell>
+                      <PlannerCell dropCallback={this.moveEvent} day={"5"} time={index}>{this.placeEvents("5", index.toString())}</PlannerCell>
+                      <PlannerCell dropCallback={this.moveEvent} day={"6"} time={index}>{this.placeEvents("6", index.toString())}</PlannerCell>
+                      <PlannerCell dropCallback={this.moveEvent} day={"7"} time={index}>{this.placeEvents("7", index.toString())}</PlannerCell>
                     </div>
                   );
                 })}
