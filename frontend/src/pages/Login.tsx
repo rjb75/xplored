@@ -38,11 +38,13 @@ const Login = () => {
     <>
       <div className="LoginPage">
         <div className=" blur"></div>
-        <div className=" front">
+        <div className="LoginDialog">
           <h1 className="LoginContent WelcomeMessage">Login</h1>
           <h1 className="LoginContent StatusMessage">
             {user === null ? "Not logged in" : "logged in as: " + user.email}
           </h1>
+          <div className="LoginContent Spacer" />
+          <div className="LoginContent Spacer" />
 
           <div className="LoginContent TextInput">
             <label className=" TextLabel">Username</label>
@@ -63,7 +65,7 @@ const Login = () => {
               placeholder="Password"
             />
           </div>
-
+          <div className="LoginContent Spacer" />
           <div className="LoginContent BottomActionButtons">
             <input
               className="LoginButton"
@@ -71,6 +73,7 @@ const Login = () => {
               value="Login"
               onClick={login}
             />
+
             {/* <input
               className="LoginButton"
               type="button"
