@@ -37,22 +37,22 @@ const Login = () => {
 
   return (
     <>
-      <div className="LoginPage">
+      <div className="AuthPage">
         <div className="PageMessage">
           <h1 className=" TopLine">This is the top line</h1>
           <h1 className=" BottomLine">Bottom line, babyyyyyy</h1>
         </div>
-        <div className="LoginDialog">
-          <div className="LoginDialog DialogBlur" />
-          <div className="LoginDialog DialogFront">
-            <h1 className="LoginContent WelcomeMessage">Login</h1>
-            <h1 className="LoginContent StatusMessage">
+        <div className="AuthDialog">
+          <div className="AuthDialog DialogBlur" />
+          <div className="AuthDialog DialogFront">
+            <h1 className="AuthContent WelcomeMessage">Log In</h1>
+            <h1 className="AuthContent StatusMessage">
               {user === null ? "Not logged in" : "logged in as: " + user.email}
             </h1>
-            <div className="LoginContent Spacer" />
-            <div className="LoginContent Spacer" />
+            <div className="AuthContent Spacer" />
+            <div className="AuthContent Spacer" />
 
-            <div className="LoginContent TextInput">
+            <div className="AuthContent TextInput">
               <label className=" TextLabel">Username</label>
               <input
                 className="TextText"
@@ -62,7 +62,7 @@ const Login = () => {
               />
             </div>
 
-            <div className="LoginContent TextInput">
+            <div className="AuthContent TextInput">
               <label className="TextLabel">Password</label>
               <input
                 className="TextText"
@@ -71,12 +71,12 @@ const Login = () => {
                 placeholder="Password"
               />
             </div>
-            <div className="LoginContent Spacer" />
-            <div className="LoginContent BottomActionButtons">
+            <div className="AuthContent Spacer" />
+            <div className="AuthContent BottomActionButtons">
               <input
-                className="LoginButton"
+                className="AuthButton"
                 type="button"
-                value="Login"
+                value="Log In"
                 onClick={login}
               />
 
