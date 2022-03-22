@@ -1,3 +1,4 @@
+import { Sign } from "crypto";
 import React from "react";
 import { Accommodation } from "../components/Accommodation";
 import { Auth } from "../components/Auth";
@@ -23,6 +24,7 @@ function ComponentTest() {
       }}
     >
       <TravelMap />
+      <TravelPlanner />
     </div>
   );
 }
