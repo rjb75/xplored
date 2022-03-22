@@ -27,6 +27,22 @@ $background-image: url(../assets/test_background_field.jpg);
   z-index: 10;
 }
 
+.ChangeAuthLink {
+  position: absolute;
+  background: transparent;
+  top: 6vh;
+  height: 80px;
+  left: 0;
+  padding-right: 4vw;
+  width: 100vw;
+  z-index: 10;
+  font-size: 24px;
+  font-family: 'Manrope';
+  font-weight: 500;
+  color: $color-white;
+  text-align: right;
+}
+
 .PageBackground {
   object-fit: cover;
   position: absolute;
@@ -39,26 +55,25 @@ $background-image: url(../assets/test_background_field.jpg);
   display: flex;
   align-content: center;
   flex-flow: row;
-  justify-content: stretch;
-  width: 100vw;
+  justify-content: center;
+  width: 90vw;
   height: 100vh;
   position: absolute;
-  padding: 70px;
+  padding: 80px;
   // background-image: $background-image;
   // background-position: 50% 50%;
   // background-repeat: no-repeat;
   // background-color: #000;
-  column-gap: 10vw;
+  column-gap: 8vw;
 
 }
 
 .AuthPage .PageMessage {
   align-self: flex-start;
-  align-items: center;
-  justify-items: center;
-  justify-self: center;
-  align-content: center;
-  justify-content: center;
+  justify-self: stretch;
+  justify-items: stretch;
+  align-content: stretch;
+  justify-content: stretch;
   text-align: left;
   overflow: hidden;
   font-family: 'Roboto';
@@ -68,6 +83,8 @@ $background-image: url(../assets/test_background_field.jpg);
   margin-top: 20vh;
   margin-left: 1vw;
   color: $color-white;
+  flex-shrink: 2;
+  flex-grow: 1;
 
 
   //background-color: aquamarine;
@@ -75,37 +92,37 @@ $background-image: url(../assets/test_background_field.jpg);
 }
 
 .PageMessage .TopLine {
-  font-size: 64px;
+  font-size: 44px;
   font-weight: 700;
 }
 
 .PageMessage .BottomLine {
-  font-size: 52px;
+  font-size: 36px;
   font-weight: 400;
 }
 
 .AuthPage .AuthDialog {
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   justify-items: center;
   align-content: center;
   align-self: center;
   justify-self: flex-end;
   display: flex;
-  right: 5vw;
+  right: 8vw;
   width: 21vw;
   min-width: 400px;
   max-width: 450px;
   max-height: 800px;
   min-height: 600px;
   height: 64vh;
-  padding: 70px 40px;
+  padding: 70px 60px;
   display: flex;
   border-radius: 47px;
   text-align: center;
-  position: absolute;
   flex-flow: column;
-  row-gap: 24px;
+  row-gap: 18px;
+  flex-grow: 2;
 }
 
 
@@ -116,12 +133,8 @@ $background-image: url(../assets/test_background_field.jpg);
 
 
 
-
-
 .AuthDialog .AuthContent {
-  // align-self: center;
-  // justify-self: center;
-  // vertical-align: middle;
+
   margin: 0;
   padding: 0;
   border-radius: 47px;
