@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 //Combination of event and EventType
-@Document("event")
+@Document(collection = "event")
 public class Event{
     @Id
     private String event_id;
