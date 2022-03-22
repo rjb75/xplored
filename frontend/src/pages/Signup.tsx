@@ -39,8 +39,11 @@ const Signup = () => {
         />
         <div className="AuthPage">
           <div className="PageMessage">
-            <h1 className=" TopLine">This is the top line</h1>
-            <h1 className=" BottomLine">Bottom line, babyyyyyy</h1>
+            <h1 className=" TopLine">Making trip planning easy</h1>
+            <h1 className=" BottomLine">
+              Integrated with our transportation, accomodation, food and
+              activity planner.
+            </h1>
           </div>
           <div className="AuthDialog">
             <div className="AuthDialog DialogFront">

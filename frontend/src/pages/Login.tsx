@@ -6,7 +6,7 @@ import axiosInstance from "../utils/axios";
 import { setCookie } from "../utils/CookieUtils";
 import "../pages/UserAuth.scss";
 import XploredLogo from "../assets/Logo.svg";
-import { Link } from "react-router-dom";
+import AuthBackgroundImage from "../assets/test_background_field.jpg";
 
 const testEndpoint = "/api/v1/success";
 
@@ -38,6 +38,11 @@ const Login = () => {
 
   return (
     <>
+      <img
+        className="PageBackground"
+        src={AuthBackgroundImage}
+        alt="Background"
+      />
       <div className="AuthPage">
         <div className="PageMessage">
           <h1 className=" TopLine">This is the top line</h1>
@@ -50,7 +55,7 @@ const Login = () => {
             <h1 className="AuthContent StatusMessage">
               {user === null ? "Not logged in" : "logged in as: " + user.email}
             </h1>
-            <div className="AuthContent Spacer" />
+
             <div className="AuthContent Spacer" />
 
             <div className="AuthContent TextInput">
