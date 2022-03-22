@@ -16,6 +16,18 @@
 $background-image: url(../assets/test_background_field.jpg);
 
 
+.LogoHeader {
+  position: absolute;
+  background: transparent;
+  top: 6vh;
+  height: 80px;
+
+  right: 0;
+  left: 4vw;
+  width: auto;
+  z-index: 10;
+}
+
 .LoginPage {
   display: flex;
   align-content: center;
