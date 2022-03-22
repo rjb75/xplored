@@ -2,6 +2,14 @@ import React from "react";
 import "../styles/EventCard.scss";
 //@ts-ignore
 import foodIcon from "../assets/lunchIcon.svg";
+//@ts-ignore
+import carIcon from "../assets/carIcon.svg";
+//@ts-ignore
+import flightIcon from "../assets/flightIcon.svg";
+//@ts-ignore
+import POIIcon from "../assets/POIIcon.svg";
+//@ts-ignore
+import accommodationIcon from "../assets/accommodationIcon.svg";
 import { useDrag } from "react-dnd";
 import { ItemTypes } from "../utils/PlannerConstants";
 
@@ -9,7 +17,7 @@ export enum eventTypes {
   FOOD = "food",
   CAR = "car",
   FLIGHT = "flight",
-  ACCOMODATION = "accomodation",
+  ACCOMODATION = "accommodation",
   POI = "poi",
 }
 
@@ -30,12 +38,18 @@ export const EventCard = ({
   date,
   id,
 }: plannerEvent): JSX.Element => {
-
   function getIcon(eventType: eventTypes) {
     switch (eventType) {
       case "food":
         return <img src={foodIcon} alt="" />;
-
+      case "car":
+        return <img src={carIcon} alt="" />;
+      case "flight":
+        return <img src={flightIcon} alt="" />;
+      case "accommodation":
+        return <img src={accommodationIcon} alt="" />;
+      case "poi":
+        return <img src={POIIcon} alt="" />;
       default:
         break;
     }
