@@ -30,84 +30,80 @@ const Signup = () => {
   }
 
   return (
-    <div>
-      <>
-        <img
-          className="PageBackground"
-          src={AuthBackgroundImage}
-          alt="Background"
-        />
-        <div className="AuthPage">
-          <div className="PageMessage">
-            <h1 className=" TopLine">Making trip planning easy</h1>
-            <h1 className=" BottomLine">
-              Integrated with our transportation, accomodation, food and
-              activity planner.
+    <>
+      <img
+        className="PageBackground"
+        src={AuthBackgroundImage}
+        alt="Background"
+      />
+      <div className="AuthPage">
+        <div className="PageMessage">
+          <h1 className=" TopLine">Making trip planning easy</h1>
+          <h1 className=" BottomLine">
+            Integrated with our transportation, accomodation, food and activity
+            planner.
+          </h1>
+        </div>
+        <div className="AuthDialog">
+          <div className="AuthDialog DialogFront">
+            <h1 className="AuthContent WelcomeMessage">Sign Up</h1>
+            <h1 className="AuthContent StatusMessage">
+              {user === null ? "Not logged in" : "logged in as: " + user.email}
             </h1>
-          </div>
-          <div className="AuthDialog">
-            <div className="AuthDialog DialogFront">
-              <h1 className="AuthContent WelcomeMessage">Sign Up</h1>
-              <h1 className="AuthContent StatusMessage">
-                {user === null
-                  ? "Not logged in"
-                  : "logged in as: " + user.email}
-              </h1>
-              <div className="AuthContent Spacer" />
-              <div className="AuthContent TextInput">
-                <label className=" TextLabel">Username</label>
-                <input
-                  className="TextText"
-                  type="text"
-                  id="email"
-                  placeholder="Username"
-                />
-              </div>
+            <div className="AuthContent Spacer" />
+            <div className="AuthContent TextInput">
+              <label className=" TextLabel">Username</label>
+              <input
+                className="TextText"
+                type="text"
+                id="email"
+                placeholder="Username"
+              />
+            </div>
 
-              <div className="AuthContent TextInput">
-                <label className="TextLabel">Password</label>
-                <input
-                  className="TextText"
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                />
-              </div>
+            <div className="AuthContent TextInput">
+              <label className="TextLabel">Password</label>
+              <input
+                className="TextText"
+                type="password"
+                id="password"
+                placeholder="Password"
+              />
+            </div>
 
-              <div className="AuthContent TextInput">
-                <label className="TextLabel">Confirm Password</label>
-                <input
-                  className="TextText"
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                />
-              </div>
-              <div className="AuthContent Spacer" />
-              <div className="AuthContent BottomActionButtons">
-                <input
-                  className="AuthButton"
-                  type="button"
-                  value="Sign Up"
-                  onClick={Signup}
-                />
+            <div className="AuthContent TextInput">
+              <label className="TextLabel">Confirm Password</label>
+              <input
+                className="TextText"
+                type="password"
+                id="password"
+                placeholder="Password"
+              />
+            </div>
+            <div className="AuthContent Spacer" />
+            <div className="AuthContent BottomActionButtons">
+              <input
+                className="AuthButton"
+                type="button"
+                value="Sign Up"
+                onClick={Signup}
+              />
 
-                {/* <input
+              {/* <input
               className="LoginButton"
               type="button"
               value="Test API"
               onClick={testSuccess}
             /> */}
-              </div>
             </div>
           </div>
-          <img className="LogoHeader" src={XploredLogo} alt="Xplored Logo" />
-          <a href="/login" className="ChangeAuthLink">
-            Log In
-          </a>
         </div>
-      </>
-    </div>
+        <img className="LogoHeader" src={XploredLogo} alt="Xplored Logo" />
+        <a href="/login" className="ChangeAuthLink">
+          Log In
+        </a>
+      </div>
+    </>
   );
 };
 

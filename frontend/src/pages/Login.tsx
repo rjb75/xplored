@@ -45,19 +45,19 @@ const Login = () => {
       />
       <div className="AuthPage">
         <div className="PageMessage">
-          <h1 className=" TopLine">This is the top line</h1>
-          <h1 className=" BottomLine">Bottom line, babyyyyyy</h1>
+          <h1 className=" TopLine">Making trip planning easy</h1>
+          <h1 className=" BottomLine">
+            Integrated with our transportation, accomodation, food and activity
+            planner.
+          </h1>
         </div>
         <div className="AuthDialog">
-          <div className="AuthDialog DialogBlur" />
           <div className="AuthDialog DialogFront">
             <h1 className="AuthContent WelcomeMessage">Log In</h1>
             <h1 className="AuthContent StatusMessage">
               {user === null ? "Not logged in" : "logged in as: " + user.email}
             </h1>
-
             <div className="AuthContent Spacer" />
-
             <div className="AuthContent TextInput">
               <label className=" TextLabel">Username</label>
               <input
@@ -77,13 +77,14 @@ const Login = () => {
                 placeholder="Password"
               />
             </div>
+
             <div className="AuthContent Spacer" />
             <div className="AuthContent BottomActionButtons">
               <input
                 className="AuthButton"
                 type="button"
                 value="Log In"
-                onClick={login}
+                onClick={Login}
               />
 
               {/* <input
@@ -96,7 +97,9 @@ const Login = () => {
           </div>
         </div>
         <img className="LogoHeader" src={XploredLogo} alt="Xplored Logo" />
-        <a href="/component-test">Sign Up</a>
+        <a href="/component-test" className="ChangeAuthLink">
+          Sign Up
+        </a>
       </div>
     </>
   );
