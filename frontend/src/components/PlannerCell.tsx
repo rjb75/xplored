@@ -5,7 +5,7 @@ import EventCard, { eventTypes, plannerEvent } from "./EventCard";
 
 type AppProps = {
     day: String,
-    time: number,
+    time: String,
     children?: JSX.Element,
     dropCallback: Function,
     test?: boolean,
