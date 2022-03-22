@@ -71,6 +71,10 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     this.moveEvent = this.moveEvent.bind(this);
   }
 
+  changeWeek(){
+
+  }
+
   placeEvents(day: String, time: String) {
     let res;
     this.state.events.map((e) => {
@@ -118,8 +122,8 @@ export class TravelPlanner extends React.Component<IProps, IState> {
               </div>
             </div>
             <div className="arrowWrapper">
-              <img src={leftArrow} alt="" />
-              <img src={rightArrow} alt="" />
+              <img src={leftArrow} alt="" onClick={this.changeWeek}/>
+              <img src={rightArrow} alt="" onClick={this.changeWeek}/>
             </div>
           </div>
 

@@ -3,7 +3,8 @@
 
 .eventCard {
   width: auto;
-  height: auto;
+  z-index: 1;
+  height: 100%;
   color: $color-white;
   display: flex;
   flex-direction: row;
@@ -24,6 +25,7 @@
   .middle {
     width: 80%;
     display: flex;
+    max-height: 35px;
 
     img {
       //margin: 2% 0 2% 1%;
