@@ -3,6 +3,7 @@ package middleware
 import (
 	"context"
 	"fmt"
+	"regexp"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -12,6 +13,16 @@ func NewAuth(config AuthConfig) fiber.Handler {
 	cfg := configDefault(config)
 
 	return func(c *fiber.Ctx) error {
+
+		// handle paths that should be ignored
+		if cfg.IgnorePaths != nil {
+			for _, s := range cfg.IgnorePaths {
+				match, _ := regexp.MatchString(s, c.Path())
+				if match == true {
+					return c.Next()
+				}
+			}
+		}
 
 		IDToken := c.Get(fiber.HeaderAuthorization)
 
