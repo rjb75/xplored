@@ -6,6 +6,7 @@ import axiosInstance from "../utils/axios";
 import { setCookie } from "../utils/CookieUtils";
 import "../pages/UserAuth.scss";
 import XploredLogo from "../assets/Logo.svg";
+import AuthBackgroundImage from "../assets/test_background_field.jpg";
 
 const testEndpoint = "/api/v1/success";
 
@@ -31,13 +32,17 @@ const Signup = () => {
   return (
     <div>
       <>
+        <img
+          className="PageBackground"
+          src={AuthBackgroundImage}
+          alt="Background"
+        />
         <div className="AuthPage">
           <div className="PageMessage">
             <h1 className=" TopLine">This is the top line</h1>
             <h1 className=" BottomLine">Bottom line, babyyyyyy</h1>
           </div>
           <div className="AuthDialog">
-            <div className="AuthDialog DialogBlur" />
             <div className="AuthDialog DialogFront">
               <h1 className="AuthContent WelcomeMessage">Sign Up</h1>
               <h1 className="AuthContent StatusMessage">
@@ -46,7 +51,6 @@ const Signup = () => {
                   : "logged in as: " + user.email}
               </h1>
               <div className="AuthContent Spacer" />
-
               <div className="AuthContent TextInput">
                 <label className=" TextLabel">Username</label>
                 <input
@@ -95,6 +99,9 @@ const Signup = () => {
             </div>
           </div>
           <img className="LogoHeader" src={XploredLogo} alt="Xplored Logo" />
+          <a href="/login" className="ChangeAuthLink">
+            Log In
+          </a>
         </div>
       </>
     </div>
