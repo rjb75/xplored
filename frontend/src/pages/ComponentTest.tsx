@@ -10,11 +10,13 @@ import { Recommendations } from "../components/Recommendations";
 import { Transportation } from "../components/Transportation";
 import { TravelPlanner } from "../components/TravelPlanner";
 import { eventTypes } from "../components/EventCard";
+import TravelMap from "../components/TravelMap";
 
 function ComponentTest() {
     return (
-        <div style={{height:`100vh`, width: `100%`, margin:`auto`}}>
+        <div style={{ height: `100vh`, width: `100%`, margin: `auto` }}>
             <TravelPlanner />
+            <TravelMap />
         </div>
     );
 }
