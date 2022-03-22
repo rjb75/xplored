@@ -4,10 +4,32 @@ $color-pink: #F07495;
 $color-purple: #776EDE;
 $color-white: #FFFFFF;
 
+// Event colors
+$color-magenta: #E44D90;
+$color-dark-magenta: #BF3271;
+$color-yellow: #F8C86D;
+$color-dark-yellow: #EDAE49;
+$color-blue: #3A8Ed6;
+$color-dark-blue: #30638E;
+$color-turquoise: #2B9DAF;
+$color-dark-turquoise: #00798C;
+$color-salmon: #EC6E7F;
+$color-dark-salmon: #D1495B;
+
 $colors: (
     'grey-light': $color-grey-light,
     'grey-dark': $color-grey-dark,
     'pink': $color-pink,
     'purple': $color-purple,
-    'white': $color-white
+    'white': $color-white,
+    'magenta': $color-magenta,
+    'dark-magenta': $color-dark-magenta,
+    'yellow': $color-yellow,
+    'dark-yellow': $color-dark-yellow,
+    'blue': $color-blue,
+    'dark-blue': $color-dark-blue,
+    'turquoise': $color-turquoise,
+    'dark-turquoise': $color-dark-turquoise,
+    'salmon': $color-salmon,
+    'dark-salmon': $color-dark-salmon,
 );
