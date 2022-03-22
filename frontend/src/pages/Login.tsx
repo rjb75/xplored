@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword, User } from "firebase/auth";
 import { firebaseAuth } from "../firebase/FirebaseConfig";
 import axiosInstance from "../utils/axios";
 import { setCookie } from "../utils/CookieUtils";
-import "../pages/Login.scss";
+import "../pages/UserAuth.scss";
 import XploredLogo from "../assets/Logo.svg";
 
 const testEndpoint = "/api/v1/success";
