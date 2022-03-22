@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/EventCard.scss";
 //@ts-ignore
 import foodIcon from "../assets/lunchIcon.svg";
@@ -38,6 +38,8 @@ export const EventCard = ({
   date,
   id,
 }: plannerEvent): JSX.Element => {
+  const [size, setSize] = useState<string>();
+
   function getIcon(eventType: eventTypes) {
     switch (eventType) {
       case "food":
@@ -54,6 +56,14 @@ export const EventCard = ({
         break;
     }
   }
+
+  function getSize(){
+    return "150%";
+  }
+
+  useEffect(() => {
+    setSize(getSize);
+  }, [])
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.EVENT,
@@ -75,7 +85,7 @@ export const EventCard = ({
     <div
       className={"eventCard " + type}
       ref={drag}
-      style={{ opacity: isDragging ? 0.5 : 1 }}
+      style={{ opacity: isDragging ? 0.5 : 1 , height: size}}
     >
       <div className="middle">
         {getIcon(type)}

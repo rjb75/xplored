@@ -13,6 +13,9 @@
     height: 6%;
     width: 100%;
     background-color: $color-purple;
+    position: sticky;
+    top: 0;
+    z-index: 5;
 
     img {
       display: flex;
@@ -46,6 +49,10 @@
       justify-content: end;
       gap: 10px;
       margin: 10px 10px 10px 0;
+
+      img{
+        cursor: pointer;
+      }
     }
   }
 
@@ -87,6 +94,8 @@
         justify-content: space-around;
         align-items: center;
         height: auto;
+        position: sticky;
+        top: 0;
 
         h1 {
           font-family: "Roboto";
