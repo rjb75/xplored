@@ -15,6 +15,11 @@ func PhotoRoutes(r fiber.Router) {
 	r.Get("/photo", handlers.PhotosHandler)
 }
 
+// Routes for POI microservice
+func POIsRoutes(r fiber.Router) {
+	r.Get("/pois", handlers.POIsHandler)
+}
+
 // Routes for reviews microservice
 func ReviewsRoutes(r fiber.Router) {
 	r.Get("/reviews", handlers.ReviewsHandler)
