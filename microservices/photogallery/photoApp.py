@@ -12,10 +12,10 @@ def index():
 #raw, full, regular, small, thumb, small_s3
 #obtains one photo according to the photo name and takes in an optional query for photo size
 #takes in optional query for photo height and width as well
-@photoApp.get("/photo/api/v1/{photo_name}")
-def get_photo(photo_name, width: int | None = None, height: int | None = None, photoType: str | None = None):
+@photoApp.get("/photo/api/v1/photo")
+def get_photo(name: str, width: int | None = None, height: int | None = None, photoType: str | None = None):
     #create query for photo
-    querystring = {"query":photo_name,"page":"1", "per_page":"1"}
+    querystring = {"query":name,"page":"1", "per_page":"1"}
     #send GET request to unsplash api
     response = requests.request("GET", config.photo_url, params=querystring)
     
