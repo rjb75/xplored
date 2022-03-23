@@ -55,4 +55,5 @@ func RegisterRoutes(app *fiber.App) {
 
 	DiningRoutes(v1)
 	PhotoRoutes(v1)
+	ReviewsRoutes(v1)
 }

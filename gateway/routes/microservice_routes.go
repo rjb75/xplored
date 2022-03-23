@@ -14,3 +14,10 @@ func DiningRoutes(r fiber.Router) {
 func PhotoRoutes(r fiber.Router) {
 	r.Get("/photo", handlers.PhotosHandler)
 }
+
+// Routes for reviews microservice
+func ReviewsRoutes(r fiber.Router) {
+	r.Get("/reviews", handlers.ReviewsHandler)
+	r.Get("/reviews/all", handlers.AllReviewsHandler)
+	r.Post("/review", handlers.CreateReviewsHandler)
+}
