@@ -60,7 +60,7 @@
     display: grid;
     grid-template-columns: 100px auto;
     grid-template-areas: "times table";
-    margin: 0 0 0 15%; // Use this to shift table
+    margin: 0 0 0 25%; // Use this to shift table
 
     .timeWrapper {
       grid-area: times;
@@ -87,6 +87,7 @@
         "days"
         "cells";
     grid-template-rows: 50px auto;
+    height: fit-content;
 
       .daysWrapper {
         grid-area: days;
