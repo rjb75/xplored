@@ -5,27 +5,30 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/rjb75/xplored-api-gateway/models"
 )
 
 const PhotoURI = "http://localhost:3006/photo/api/v1/"
 
 func PhotosHandler(c *fiber.Ctx) error {
-	req := new(models.PhotoRequest)
 
-	err := c.QueryParser(req)
+	PhotoURI := fmt.Sprintf("http://%s:%s/photo/api/v1/photo", os.Getenv("PHOTO_HOST"), os.Getenv("PHOTO_PORT"))
 
-	if len(req.Name) == 0 {
-		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Request Error", "cause": "Missing request properties", "origin": "gateway"})
-	}
+	params := c.Request().URI().QueryString()
+
+	query, err := http.NewRequest("GET", PhotoURI, nil)
 
 	if err != nil {
-		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Request Error", "cause": "Unable to parse malformed request", "origin": "gateway"})
+		return c.Status(500).JSON(fiber.Map{"status": "fail", "type": "Server Error", "cause": "Couldn't form request", "origin": "gateway", "reason": err.Error()})
 	}
 
-	resp, err := http.Get(fmt.Sprintf("%s%s", PhotoURI, req.Name))
+	query.URL.RawQuery = string(params)
+
+	client := &http.Client{}
+
+	resp, err := client.Do(query)
 
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{"status": "fail", "type": "Server Error", "cause": "Couldn't make request", "origin": "gateway", "reason": err.Error()})
@@ -43,6 +46,10 @@ func PhotosHandler(c *fiber.Ctx) error {
 
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{"status": "fail", "type": "Server Error", "cause": "Couldn't send parsed response", "origin": "gateway", "reason": err.Error()})
+	}
+
+	if resp.StatusCode != 200 {
+		return c.Status(resp.StatusCode).JSON(body_resp)
 	}
 
 	return c.Status(200).JSON(body_resp)
