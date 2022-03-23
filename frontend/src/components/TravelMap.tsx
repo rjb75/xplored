@@ -10,7 +10,7 @@ const render = (status: Status) => {
 };
 
 interface MapProps extends google.maps.MapOptions {
-    style: { [key: string]: string };
+    style?: { [key: string]: string };
     onClick?: (e: google.maps.MapMouseEvent) => void;
     onIdle?: (map: google.maps.Map) => void;
 }
@@ -20,6 +20,7 @@ const Map: React.FC<MapProps> = ({
     onIdle,
     children,
     style,
+    mapId,
     ...options
 }) => {
     const ref = React.useRef<HTMLDivElement>(null);
@@ -27,9 +28,9 @@ const Map: React.FC<MapProps> = ({
 
     React.useEffect(() => {
         if (ref.current && !map) {
-            setMap(new window.google.maps.Map(ref.current, {}));
+            setMap(new window.google.maps.Map(ref.current, { mapId }));
         }
-    }, [ref, map]);
+    }, [ref, map, mapId]);
 
     // because React does not do deep comparisons, a custom hook is used
     // see discussion in https://github.com/googlemaps/js-samples/issues/946
@@ -110,10 +111,10 @@ function TravelMap() {
     });
 
     // Not doing anything with these yet but we could add support for users placing map markers
-    const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
+    const [markers, setMarkers] = React.useState<google.maps.LatLng[]>([]);
 
     const onClick = (e: google.maps.MapMouseEvent) => {
-        setClicks([...clicks, e.latLng!]);
+        // setMarkers([...markers, e.latLng!]);
     };
 
     const onIdle = (m: google.maps.Map) => {
@@ -122,15 +123,49 @@ function TravelMap() {
     };
 
     return (
-        <Wrapper apiKey={process.env.FRONTEND_MAPS_API} render={render}>
-            <Map
-                center={center}
-                onClick={onClick}
-                onIdle={onIdle}
-                zoom={zoom}
-                style={{ width: "100%", height: "20rem" }}></Map>
-        </Wrapper>
+        <div style={{ width: "100%", height: "30rem" }}>
+            <Wrapper apiKey={process.env.FRONTEND_MAPS_API} render={render}>
+                <Map
+                    center={center}
+                    onClick={onClick}
+                    onIdle={onIdle}
+                    zoom={zoom}
+                    style={{ width: "100%", height: "100%" }}
+                    mapId={process.env.FRONTEND_MAP_ID}
+                    disableDefaultUI={true}>
+                    {markers.map((latLng, i) => (
+                        <Marker key={i} position={latLng} />
+                    ))}
+                </Map>
+            </Wrapper>
+        </div>
     );
 }
 
 export default TravelMap;
+
+/* Marker Component */
+const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
+    const [marker, setMarker] = React.useState<google.maps.Marker>();
+
+    React.useEffect(() => {
+        if (!marker) {
+            setMarker(new google.maps.Marker());
+        }
+
+        // remove marker from map on unmount
+        return () => {
+            if (marker) {
+                marker.setMap(null);
+            }
+        };
+    }, [marker]);
+
+    React.useEffect(() => {
+        if (marker) {
+            marker.setOptions(options);
+        }
+    }, [marker, options]);
+
+    return null;
+};
