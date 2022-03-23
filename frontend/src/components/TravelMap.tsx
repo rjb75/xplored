@@ -123,7 +123,7 @@ function TravelMap() {
     };
 
     return (
-        <div style={{ width: "100%", height: "30rem" }}>
+        <div style={{ width: "100%", height: "100%" }}>
             <Wrapper apiKey={process.env.FRONTEND_MAPS_API} render={render}>
                 <Map
                     center={center}
