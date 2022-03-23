@@ -1,12 +1,10 @@
 import Axios from "axios";
 import React, { useState } from "react";
+import TravelPlanner from "../components/TravelPlanner";
 
 const Home = ()  => {
-
   return (
-    <div>
-        <h1>Home Page</h1>
-    </div>
+    <TravelPlanner />
   );
 }
 
