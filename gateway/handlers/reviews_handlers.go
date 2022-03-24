@@ -15,7 +15,7 @@ import (
 // handler for getting reviews by tag
 func ReviewsHandler(c *fiber.Ctx) error {
 
-	ReviewsURI := fmt.Sprintf("http://%s:%s/reviews/api/v1/", os.Getenv("REVIEWS_HOST"), os.Getenv("REVIEWS_PORT"))
+	ReviewsURI := fmt.Sprintf("http://%s:%s/reviews/api/v1/", os.Getenv("GATEWAY_REVIEWS_HOST"), os.Getenv("REVIEWS_PORT"))
 
 	req := new(models.ReviewTagQuery)
 
@@ -55,7 +55,7 @@ func ReviewsHandler(c *fiber.Ctx) error {
 // handler for getting reviews by tag
 func AllReviewsHandler(c *fiber.Ctx) error {
 
-	ReviewsURI := fmt.Sprintf("http://%s:%s/reviews/api/v1/alltags", os.Getenv("REVIEWS_HOST"), os.Getenv("REVIEWS_PORT"))
+	ReviewsURI := fmt.Sprintf("http://%s:%s/reviews/api/v1/alltags", os.Getenv("GATEWAY_REVIEWS_HOST"), os.Getenv("REVIEWS_PORT"))
 
 	resp, err := http.Get(ReviewsURI)
 
@@ -73,7 +73,7 @@ func AllReviewsHandler(c *fiber.Ctx) error {
 }
 
 func CreateReviewsHandler(c *fiber.Ctx) error {
-	ReviewsURI := fmt.Sprintf("http://%s:%s/reviews/api/v1/tag", os.Getenv("REVIEWS_HOST"), os.Getenv("REVIEWS_PORT"))
+	ReviewsURI := fmt.Sprintf("http://%s:%s/reviews/api/v1/tag", os.Getenv("GATEWAY_REVIEWS_HOST"), os.Getenv("REVIEWS_PORT"))
 
 	req := new(models.ReviewCreation)
 

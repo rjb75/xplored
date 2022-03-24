@@ -12,7 +12,7 @@ import (
 
 func RecommendationHandler(c *fiber.Ctx) error {
 
-	RecommendationURI := fmt.Sprintf("http://%s:%s/recom/api/v1/", os.Getenv("RECOMMENDATION_HOST"), os.Getenv("RECOMMENDATION_PORT"))
+	RecommendationURI := fmt.Sprintf("http://%s:%s/recom/api/v1/", os.Getenv("GATEWAY_RECOMMENDATION_HOST"), os.Getenv("RECOMMENDATION_PORT"))
 
 	params := c.Request().URI().QueryString()
 

@@ -12,7 +12,7 @@ import (
 
 func PhotosHandler(c *fiber.Ctx) error {
 
-	PhotoURI := fmt.Sprintf("http://%s:%s/photo/api/v1/photo", os.Getenv("PHOTO_HOST"), os.Getenv("PHOTO_PORT"))
+	PhotoURI := fmt.Sprintf("http://%s:%s/photo/api/v1/photo", os.Getenv("GATEWAY_PHOTO_HOST"), os.Getenv("PHOTO_PORT"))
 
 	params := c.Request().URI().QueryString()
 

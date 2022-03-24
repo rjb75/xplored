@@ -12,7 +12,7 @@ import (
 // handler for getting reviews by tag
 func POIsHandler(c *fiber.Ctx) error {
 
-	POIsURI := fmt.Sprintf("http://%s:%s/poi/api/v1/pois", os.Getenv("POI_HOST"), os.Getenv("POI_PORT"))
+	POIsURI := fmt.Sprintf("http://%s:%s/poi/api/v1/pois", os.Getenv("GATEWAY_POI_HOST"), os.Getenv("POI_PORT"))
 
 	params := c.Request().URI().QueryString()
 
