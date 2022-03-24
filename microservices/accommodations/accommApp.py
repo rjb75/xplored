@@ -22,28 +22,28 @@ def index():
 
 #order_by options are 
 @accommodationApp.get("/accom/api/v1/")
-def getHotelInfo(location: str, number_of_adults: int, number_of_children: int, check_in_date: datetime.date, 
-number_of_rooms: int, checkout_date: datetime.date, currency: str, order_by: str | None = None):
+def getHotelInfo(location: str, no_of_adults: int, no_of_children: int, no_of_rooms: int,
+ check_in: datetime.date, checkout: datetime.date, currency: str, order_by: str | None = None):
 
     hotel_list = []
     location_id = accommFunctions.getLocationID(location)
 
-    if order_by is None and number_of_children > 0:
-        hotel_search_query = {"dest_id": location_id, "units": "metric", "order_by": "price", "adults_number": number_of_adults, "checkin_date": check_in_date, 
-    "locale": "en-gb", "dest_type": "city", "filter_by_currency": "AED", "room_number": number_of_rooms, "checkout_date": checkout_date, 
-    "page_number":"0","include_adjacency":"true", "children_number":number_of_children}
-    elif order_by is None and number_of_children == 0:
-        hotel_search_query = {"dest_id": location_id, "units": "metric", "order_by": "price", "adults_number": number_of_adults, "checkin_date": check_in_date, 
-    "locale": "en-gb", "dest_type": "city", "filter_by_currency": "AED", "room_number": number_of_rooms, "checkout_date": checkout_date, 
+    if order_by is None and no_of_children > 0:
+        hotel_search_query = {"dest_id": location_id, "units": "metric", "order_by": "price", "adults_number": no_of_adults, "checkin_date": check_in, 
+    "locale": "en-gb", "dest_type": "city", "filter_by_currency": "AED", "room_number": no_of_rooms, "checkout_date": checkout, 
+    "page_number":"0","include_adjacency":"true", "children_number":no_of_children}
+    elif order_by is None and no_of_children == 0:
+        hotel_search_query = {"dest_id": location_id, "units": "metric", "order_by": "price", "adults_number": no_of_adults, "checkin_date": check_in, 
+    "locale": "en-gb", "dest_type": "city", "filter_by_currency": "AED", "room_number": no_of_rooms, "checkout_date": checkout, 
     "page_number":"0","include_adjacency":"true"}
-    elif order_by is not None and number_of_children == 0:
-        hotel_search_query = {"dest_id": location_id, "units": "metric", "order_by": order_by, "adults_number": number_of_adults, "checkin_date": check_in_date, 
-    "locale": "en-gb", "dest_type": "city", "filter_by_currency": "AED", "room_number": number_of_rooms, "checkout_date": checkout_date, 
+    elif order_by is not None and no_of_children == 0:
+        hotel_search_query = {"dest_id": location_id, "units": "metric", "order_by": order_by, "adults_number": no_of_adults, "checkin_date": check_in, 
+    "locale": "en-gb", "dest_type": "city", "filter_by_currency": "AED", "room_number": no_of_rooms, "checkout_date": checkout, 
     "page_number":"0","include_adjacency":"true"}
     else:
-        hotel_search_query = {"dest_id": location_id, "units": "metric", "order_by": order_by, "adults_number": number_of_adults, "checkin_date": check_in_date, 
-    "locale": "en-gb", "dest_type": "city", "filter_by_currency": "AED", "room_number": number_of_rooms, "checkout_date": checkout_date, 
-    "page_number":"0","include_adjacency":"true", "children_number":number_of_children}
+        hotel_search_query = {"dest_id": location_id, "units": "metric", "order_by": order_by, "adults_number": no_of_adults, "checkin_date": check_in, 
+    "locale": "en-gb", "dest_type": "city", "filter_by_currency": "AED", "room_number": no_of_rooms, "checkout_date": checkout, 
+    "page_number":"0","include_adjacency":"true", "children_number":no_of_children}
 
     hotel_response = config.requests.request("GET", config.hotel_info_url, headers=config.headers, params=hotel_search_query)
     hotel_information = hotel_response.json()['result']
