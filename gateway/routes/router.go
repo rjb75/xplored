@@ -26,7 +26,6 @@ func RegisterRoutes(app *fiber.App) {
 	// use API key from environment for authentication
 	opt := option.WithAPIKey(os.Getenv("FIREBASE_API_KEY"))
 
-	// opt := option.WithCredentialsFile("firebase-config.json")
 	fba, err := firebase.NewApp(context.Background(), firebase_config, opt)
 
 	if err != nil {
@@ -56,5 +55,6 @@ func RegisterRoutes(app *fiber.App) {
 	DiningRoutes(v1)
 	PhotoRoutes(v1)
 	POIsRoutes(v1)
+	RecommendationsRoutes(v1)
 	ReviewsRoutes(v1)
 }

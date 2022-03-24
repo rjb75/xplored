@@ -10,13 +10,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func PhotosHandler(c *fiber.Ctx) error {
+func RecommendationHandler(c *fiber.Ctx) error {
 
-	PhotoURI := fmt.Sprintf("http://%s:%s/photo/api/v1/photo", os.Getenv("PHOTO_HOST"), os.Getenv("PHOTO_PORT"))
+	RecommendationURI := fmt.Sprintf("http://%s:%s/recom/api/v1/", os.Getenv("RECOMMENDATION_HOST"), os.Getenv("RECOMMENDATION_PORT"))
 
 	params := c.Request().URI().QueryString()
 
-	query, err := http.NewRequest("GET", PhotoURI, nil)
+	query, err := http.NewRequest("GET", RecommendationURI, nil)
 
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{"status": "fail", "type": "Server Error", "cause": "Couldn't form request", "origin": "gateway", "reason": err.Error()})

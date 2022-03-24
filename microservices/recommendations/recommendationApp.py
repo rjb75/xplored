@@ -11,7 +11,7 @@ def index():
     return {"message": "Hello World"}
 
 #returns recommendations about a location whether it be a city or a country.
-@recommendationApp.get("/recom/api/v1/{location_name}", response_description= "Getting recommendation about a Country", response_model=model.RecomendationModel)
+@recommendationApp.get("/recom/api/v1/", response_description= "Getting recommendation about a Country", response_model=model.RecomendationModel)
 async def get_location_recommendations(location_name: str):
     #for case insensitive search
     location = location_name.title()
