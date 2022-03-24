@@ -23,6 +23,22 @@ services:
       dockerfile: Docker/Dining.Dockerfile
     expose:
       - 3002
+  photo:
+    tty: true
+    container_name: xplored-ms-photogallery
+    build:
+      context: ../
+      dockerfile: Docker/Photogallery.Dockerfile
+    expose:
+      - 3006
+  recom:
+    tty: true
+    container_name: xplored-ms-recommendations
+    build:
+      context: ../
+      dockerfile: Docker/Recommendations.Dockerfile
+    expose:
+      - 3007
   gateway:
     tty: true
     container_name: xplored-gateway
