@@ -6,7 +6,7 @@ import axiosInstance from "../utils/axios";
 import { setCookie } from "../utils/CookieUtils";
 import "../pages/UserAuth.scss";
 import XploredLogo from "../assets/Logo.svg";
-import AuthBackgroundImage from "../assets/artworks-wpjEfwDX6jaLMClh-kzMM8w-t500x500.jpg";
+import AuthBackgroundImage from "../assets/test_background_field.jpg";
 
 const testEndpoint = "/api/v1/success";
 
