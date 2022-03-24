@@ -1,22 +1,29 @@
 import React, { useState } from "react";
 import Draggable from "react-draggable";
 import "../styles/PlannerSwitcher.scss";
+//@ts-ignore
 import calendar from "../assets/calendarIcon.svg";
+//@ts-ignore
 import mapIcon from "../assets/mapIcon.svg";
 
 interface view {
   view: String;
 }
 
-export const PlannerSwitcher = () => {
+interface PlannerSwitcherProps{
+  switchFunction: Function,
+}
+
+export const PlannerSwitcher = ({switchFunction}: PlannerSwitcherProps) => {
   const [plannerOrMap, setPlannerOrMap] = useState<view>({ view: "planner" }); // True for planner
 
   function switchView(view: String) {
     setPlannerOrMap({ view: view });
+    switchFunction(view);
   }
 
   return (
-    <Draggable defaultPosition={{x: 1800, y: -800}} bounds={{}}>
+    <Draggable>
       <div className="PlannerSwitcherWrapper">
         <div
           className={
