@@ -11,18 +11,21 @@ import { Transportation } from "../components/Transportation";
 import { TravelPlanner } from "../components/TravelPlanner";
 import { eventTypes } from "../components/EventCard";
 import TravelMap from "../components/TravelMap";
+import PlannerSwitcher from "../components/PlannerSwitcher";
 
 function ComponentTest() {
-    return (
-        <div
-            style={{
-                height: `calc(100vh - 12.75rem)`,
-                width: `100%`,
-                margin: `auto`,
-            }}>
-            <TravelPlanner />
-        </div>
-    );
+  return (
+    <div
+      style={{
+        height: `calc(100vh - 12.75rem)`,
+        width: `100%`,
+        margin: `auto`,
+      }}
+    >
+      <TravelPlanner />
+      <PlannerSwitcher />
+    </div>
+  );
 }
 
 export default ComponentTest;
