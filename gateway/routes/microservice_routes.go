@@ -20,6 +20,11 @@ func POIsRoutes(r fiber.Router) {
 	r.Get("/pois", handlers.POIsHandler)
 }
 
+// Routes for recommendations microservice
+func RecommendationsRoutes(r fiber.Router) {
+	r.Get("/recommendations", handlers.RecommendationHandler)
+}
+
 // Routes for reviews microservice
 func ReviewsRoutes(r fiber.Router) {
 	r.Get("/reviews", handlers.ReviewsHandler)
