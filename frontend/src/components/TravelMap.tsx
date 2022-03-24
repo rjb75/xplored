@@ -120,17 +120,26 @@ function TravelMap() {
     const onIdle = (m: google.maps.Map) => {
         setZoom(m.getZoom()!);
         setCenter(m.getCenter()!.toJSON());
+        // Get the markers from the api here and update setMarkers
     };
 
     return (
-        <div style={{ width: "100%", height: "100%" }}>
+        <div
+            style={{
+                width: "100%",
+                height: "100%",
+            }}>
             <Wrapper apiKey={process.env.FRONTEND_MAPS_API} render={render}>
                 <Map
                     center={center}
                     onClick={onClick}
                     onIdle={onIdle}
                     zoom={zoom}
-                    style={{ width: "100%", height: "100%" }}
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        overflow: "hidden",
+                    }}
                     mapId={process.env.FRONTEND_MAP_ID}
                     disableDefaultUI={true}>
                     {markers.map((latLng, i) => (
