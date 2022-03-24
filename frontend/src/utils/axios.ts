@@ -6,7 +6,6 @@ import { getCookie } from "./CookieUtils";
 const axiosDefaultHeaders: AxiosRequestHeaders = {
     "Content-type": "application/json",
     "Sec-Fetch-Mode": "no-cors",
-    "Access-Control-Allow-Origin":"*"
 }
 
 // default axios config values
