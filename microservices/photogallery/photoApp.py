@@ -1,13 +1,23 @@
 import config, uvicorn, os, requests
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 photoApp = FastAPI()
+
+origins = ["http://localhost:8000"]
+photoApp.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 #root endpoint
 @photoApp.get("/")
 def index():
     return {"message": "Hello World"}
-    
+
 #photo types:
 #raw, full, regular, small, thumb, small_s3
 #obtains one photo according to the photo name and takes in an optional query for photo size
@@ -15,10 +25,10 @@ def index():
 @photoApp.get("/photo/api/v1/photo")
 def get_photo(name: str, width: int | None = None, height: int | None = None, photoType: str | None = None):
     #create query for photo
-    querystring = {"query":name,"page":"1", "per_page":"1"}
+    querystring = {"query":name,"page":"1", "per_page":"5"}
     #send GET request to unsplash api
     response = requests.request("GET", config.photo_url, params=querystring)
-    
+
     results_dict = response.json()['results'][0]
     urls_dict = results_dict['urls']
 
@@ -26,8 +36,8 @@ def get_photo(name: str, width: int | None = None, height: int | None = None, ph
 
     if None not in (width, height):
         photoUrl = "https://source.unsplash.com/{photo_ID}/{width}x{height}".format(photo_ID = str(photo_id), width = str(width), height = str(height))
-        return {"photo_id" : photo_id, 
-                "photo_url" : photoUrl}    
+        return {"photo_id" : photo_id,
+                "photo_url" : photoUrl}
     elif photoType is not None:
         return {"photo_id": photo_id,
                 "photo_url": urls_dict[photoType]}
