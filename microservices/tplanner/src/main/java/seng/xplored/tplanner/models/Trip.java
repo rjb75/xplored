@@ -1,15 +1,15 @@
 package seng.xplored.tplanner.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-@Document("trip")
+@Document(collection = "trip")
 public class Trip {
     @Id
     private String trip_id;
     private String name;
     private String photo_URL;
-    private Event[] events;
+    private String[] events;
 
-    public Trip(String trip_id, String name, String photo_URL, Event[] events) {
+    public Trip(String trip_id, String name, String photo_URL, String[] events) {
         this.trip_id = trip_id;
         this.name = name;
         this.photo_URL = photo_URL;
@@ -41,11 +41,11 @@ public class Trip {
         this.photo_URL = photo_URL;
     }
 
-    public Event[] getEvents() {
+    public String[] getEvents() {
         return this.events;
     }
 
-    public void setEvents(Event[] events) {
+    public void setEvents(String[] events) {
         this.events = events;
     }
     

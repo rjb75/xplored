@@ -8,57 +8,135 @@ import seng.xplored.tplanner.models.*;
 
 @RestController
 public class RESTManager {
-
     private final String baseURL = "/planner/api/v1";
+
+
+    @Autowired
+    private TripRepository tripRepository;
 
     @Autowired
     private EventRepository eventRepository;
 
-    // @RequestMapping(value = "/ex/foos", method = RequestMethod.GET)
-    // @ResponseBody
-    // public String getFoosBySimplePath() {
-    //     return "Get some Foos";
-    // }   
+    @Autowired
+    private UserRepository userRepository;
 
-    private String endpoint(String url){
-        return baseURL + url;
-    }
-
-    // Get Event
-    @RequestMapping(baseURL + "/event")
-    public String getEvent(){
-       return "Get Event";
-    } 
-
-    @PostMapping("/event")
-    public String addEvent(@RequestBody Event event){
+    //Post Event
+    @PostMapping(baseURL + "/event")
+    public String addEvent(@RequestBody Event event, @RequestParam("tripid") String tripid){
         eventRepository.save(event);
-        return "Added book with id:" + event.getEvent_id();
+
+        Trip trip =  tripRepository.findById(tripid).get(); //Gets the User with Id
+        String[] events= trip.getEvents(); //Gets users Trips
+        List<String> stringEvents=new ArrayList<>(Arrays.asList(events));
+
+        Event myEvent = eventRepository.findById(event.getEvent_id()).get(); 
+        String newEventId = myEvent.getEvent_id();
+
+        stringEvents.add(newEventId);
+
+        String[] str = new String[stringEvents.size()];
+
+        for (int i = 0; i < stringEvents.size(); i++) {
+            str[i] = stringEvents.get(i);
+        }
+
+        trip.setEvents(str);
+        tripRepository.save(trip);        
+        
+        return "Added event with id:" + event.getEvent_id();
     }
 
-    @GetMapping("/events")
+    //Get Events
+    @GetMapping(baseURL + "/events")
     public List<Event> getEvents(){
-        System.out.println("HEY");
-        System.out.println(eventRepository.findAll());
         return eventRepository.findAll();
     }
 
-
-    @GetMapping("/event/{id}")
-    public Optional<Event> getEvent(@PathVariable String id){
+    //Get Event
+    @GetMapping(baseURL + "/event")
+    public Optional<Event> getEvent(@RequestParam String id){
         return eventRepository.findById(id);
     }
 
-    // Create Event   
+    
+    //Post User
+    @PostMapping(baseURL + "/user")
+    public String addTrip(@RequestBody Trip trip){
+        tripRepository.save(trip);
+        return "Added trip with id:" + trip.getTrip_id();
+    }
 
-    //POST REQUEST
 
-    // Delete Event
+    //Planner
 
-    // Get Trip
+    //Post Trip
+    @PostMapping(baseURL + "/trip")
+    public String addTrip(@RequestBody Trip trip, @RequestParam("userid") String userid){
+        tripRepository.save(trip); //Add Trip
+        User user =  userRepository.findById(userid).get(); //Gets the User with Id
+        String[] trips= user.getTrips(); //Gets users Trips
+        List<String> stringTrips=new ArrayList<>(Arrays.asList(trips));
 
-    // Create Trip
+        System.out.println(stringTrips);
+
+        Trip myTrip = tripRepository.findById(trip.getTrip_id()).get(); 
+        String newTripId = myTrip.getTrip_id();
+
+        stringTrips.add(newTripId);
+
+        String[] str = new String[stringTrips.size()];
+
+        for (int i = 0; i < stringTrips.size(); i++) {
+            str[i] = stringTrips.get(i);
+        }
+
+        user.setTrips(str);
+        userRepository.save(user);
+        return "Added trip with id:" + trip.getTrip_id();
+    }
+
+    //Get All Trips
+    @GetMapping(baseURL + "/trips")
+    public List<Trip> getTrips(){
+        System.out.println(tripRepository.findAll());
+        return tripRepository.findAll();
+    }
+
+    //Get Single Trip
+    @GetMapping(baseURL + "/trip")
+    public Optional<Trip> getTrip(@RequestParam String id){
+        return tripRepository.findById(id);
+    }
 
     // Delete Trip
+    //first loop through all events and delete them
+    //then delete the trip
+
+     
+    // //Get user's trips
+    @GetMapping(baseURL + "/usertrips")
+    public List<Trip> getTrips(@RequestParam String userid){
+        User user =  userRepository.findById(userid).get();
+        String trips[] = user.getTrips();
+        List<Trip> trip = new ArrayList<>();
+        for(int i =0; i<trips.length; i++){
+            System.out.println(tripRepository.findById(trips[i]).get());
+            trip.add(tripRepository.findById(trips[i]).get());
+        }
+        return trip;        
+    }
+
+    //Get All Events in a Trip
+    @GetMapping(baseURL + "/alltrips")
+    public List<Event> getAllEventsInTrip(@RequestParam String tripid){
+        Trip trip =  tripRepository.findById(tripid).get();
+        String events[] = trip.getEvents();
+        List<Event> event = new ArrayList<>();
+        for(int i =0; i<events.length; i++){
+            event.add(eventRepository.findById(events[i]).get());
+        }
+        return event;        
+    }
+
 
 }
