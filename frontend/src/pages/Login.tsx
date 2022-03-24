@@ -10,8 +10,11 @@ import AuthBackgroundImage from "../assets/test_background_field.jpg";
 
 const testEndpoint = "/api/v1/success";
 
-const Login = () => {
+const Login: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
+
+  const [bgImgURL, setBgImgURL] = useState<String>("");
+  const photoAPIRequest = "http://localhost:3006/photo/api/v1/photo?name=paris";
 
   function login() {
     const email = (document.getElementById("email") as HTMLInputElement).value;
@@ -36,11 +39,23 @@ const Login = () => {
       .catch((err) => console.log(err));
   };
 
+  const GetImageURL = () => {
+    axiosInstance
+      .get(photoAPIRequest)
+      .then((res) => {
+        console.log(res.data);
+        setBgImgURL(res.data.photo_url);
+      })
+      .catch((err) => console.log(err));
+    return bgImgURL.toString;
+  };
+
+  window.onloadstart = GetImageURL();
   return (
     <>
       <img
         className="PageBackground"
-        src={AuthBackgroundImage}
+        src={bgImgURL.toString()}
         alt="Background"
       />
       <div className="AuthPage">
@@ -84,7 +99,7 @@ const Login = () => {
                 className="AuthButton"
                 type="button"
                 value="Log In"
-                onClick={() => Login}
+                onClick={() => GetImageURL()}
               />
             </div>
           </div>
