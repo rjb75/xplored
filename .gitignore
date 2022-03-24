@@ -5,3 +5,4 @@ env
 *.exe
 # logs
 logs/*.txt
+microservices/tplanner/src/main/resources/application.properties

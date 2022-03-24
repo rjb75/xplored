@@ -16,9 +16,6 @@ public class TplannerApplication {
         app.setDefaultProperties(Collections
           .singletonMap("server.port", env.getPORT()));
         app.run(args);
-
-	//	DataHandler program = new DataHandler(env);
-	//	DBConnect db = new DBConnect(env);
 	}
 
 }

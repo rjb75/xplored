@@ -2,13 +2,13 @@ package seng.xplored.tplanner.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-@Document("user")
+@Document(collection = "user")
 public class User {
     @Id
     private String id;
-    private Trip[] trips;
+    private String[] trips;
 
-    public User(String id, Trip[] trips) {
+    public User(String id, String[] trips) {
         this.id = id;
         this.trips = trips;
     }
@@ -21,11 +21,11 @@ public class User {
         this.id = id;
     }
 
-    public Trip[] getTrips() {
+    public String[] getTrips() {
         return this.trips;
     }
 
-    public void setTrips(Trip[] trips) {
+    public void setTrips(String[] trips) {
         this.trips = trips;
     }
 
