@@ -16,7 +16,7 @@ export const PlannerSwitcher = () => {
   }
 
   return (
-    <Draggable>
+    <Draggable defaultPosition={{x: 1800, y: -800}} bounds={{}}>
       <div className="PlannerSwitcherWrapper">
         <div
           className={
