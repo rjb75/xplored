@@ -14,9 +14,13 @@ import TravelMap from "../components/TravelMap";
 
 function ComponentTest() {
     return (
-        <div style={{ height: `100vh`, width: `100%`, margin: `auto` }}>
+        <div
+            style={{
+                height: `calc(100vh - 12.75rem)`,
+                width: `100%`,
+                margin: `auto`,
+            }}>
             <TravelPlanner />
-            <TravelMap />
         </div>
     );
 }
