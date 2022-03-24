@@ -12,6 +12,7 @@ import { TravelPlanner } from "../components/TravelPlanner";
 import { eventTypes } from "../components/EventCard";
 import TravelMap from "../components/TravelMap";
 import PlannerSwitcher from "../components/PlannerSwitcher";
+import TravelMap from "../components/TravelMap";
 
 function ComponentTest() {
   return (
