@@ -1,0 +1,63 @@
+services:
+  reviews:
+    tty: true
+    container_name: xplored-ms-reviews
+    build:
+      context: ../
+      dockerfile: Docker/Reviews.Dockerfile
+    expose:
+      - 3004
+  poi:
+    tty: true
+    container_name: xplored-ms-poi
+    build:
+      context: ../
+      dockerfile: Docker/POI.Dockerfile
+    expose:
+      - 3005
+  dining:
+    tty: true
+    container_name: xplored-ms-dining
+    build:
+      context: ../
+      dockerfile: Docker/Dining.Dockerfile
+    expose:
+      - 3002
+  photo:
+    tty: true
+    container_name: xplored-ms-photogallery
+    build:
+      context: ../
+      dockerfile: Docker/Photogallery.Dockerfile
+    expose:
+      - 3006
+  recom:
+    tty: true
+    container_name: xplored-ms-recommendations
+    build:
+      context: ../
+      dockerfile: Docker/Recommendations.Dockerfile
+    expose:
+      - 3007
+  frontend:
+    tty: true
+    container_name: xplored-frontend
+    build:
+      context: ../
+      dockerfile: Docker/Frontend.dev.Dockerfile
+    volumes:
+      - ../frontend:/xplored/frontend
+      - /xplored/frontend/node_modules
+  gateway:
+    tty: true
+    stdin_open: true
+    container_name: xplored-gateway
+    build:
+      context: ../
+      dockerfile: Docker/Gateway.dev.Dockerfile
+    volumes:
+      - ../frontend/build:/xplored/frontend/build
+    ports:
+      - 8000:8000
+
+  
