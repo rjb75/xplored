@@ -22,8 +22,7 @@ function ComponentTest() {
         margin: `auto`,
       }}
     >
-      <TravelPlanner />
-      <PlannerSwitcher />
+      <TravelMap />
     </div>
   );
 }

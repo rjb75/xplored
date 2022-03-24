@@ -48,6 +48,7 @@
       display: flex;
       border-left: 1px solid $color-grey-light;
       align-items: baseline;
+      z-index: 10;
     }
 
     &--trip-field-icon {
@@ -92,6 +93,7 @@
       padding: 0.75em 1.75em;
       color: $color-grey-dark;
       font-size: 1.5em;
+      cursor: pointer;
       &.active {
         background-color: $color-purple;
         color: $color-white;
