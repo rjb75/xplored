@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -38,19 +37,11 @@ func PhotosHandler(c *fiber.Ctx) error {
 		return c.Status(500).JSON(fiber.Map{"status": "fail", "type": "Server Error", "cause": "Couldn't parse response", "origin": "gateway", "reason": err.Error()})
 	}
 
-	var body_resp map[string]interface{}
-
-	err = json.Unmarshal(body, &body_resp)
-
-	if err != nil {
-		return c.Status(500).JSON(fiber.Map{"status": "fail", "type": "Server Error", "cause": "Couldn't send parsed response", "origin": "gateway", "reason": err.Error()})
-	}
-
 	if resp.StatusCode != 200 {
-		return c.Status(resp.StatusCode).JSON(body_resp)
+		return c.Status(resp.StatusCode).JSON(body)
 	}
 
-	return c.Status(200).JSON(body_resp)
+	return c.Status(200).JSON(body)
 
 }
 
@@ -82,18 +73,10 @@ func RandomPhotoHandler(c *fiber.Ctx) error {
 		return c.Status(500).JSON(fiber.Map{"status": "fail", "type": "Server Error", "cause": "Couldn't parse response", "origin": "gateway", "reason": err.Error()})
 	}
 
-	var body_resp map[string]interface{}
-
-	err = json.Unmarshal(body, &body_resp)
-
-	if err != nil {
-		return c.Status(500).JSON(fiber.Map{"status": "fail", "type": "Server Error", "cause": "Couldn't send parsed response", "origin": "gateway", "reason": err.Error()})
-	}
-
 	if resp.StatusCode != 200 {
-		return c.Status(resp.StatusCode).JSON(body_resp)
+		return c.Status(resp.StatusCode).JSON(body)
 	}
 
-	return c.Status(200).JSON(body_resp)
+	return c.Status(200).JSON(body)
 
 }
