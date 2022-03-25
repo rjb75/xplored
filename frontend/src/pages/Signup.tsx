@@ -1,4 +1,3 @@
-import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, User } from "firebase/auth";
 import { firebaseAuth } from "../firebase/FirebaseConfig";
@@ -6,9 +5,6 @@ import axiosInstance from "../utils/axios";
 import { setCookie } from "../utils/CookieUtils";
 import "../pages/UserAuth.scss";
 import XploredLogo from "../assets/Logo.svg";
-import AuthBackgroundImage from "../assets/test_background_field.jpg";
-
-const testEndpoint = "/api/v1/success";
 
 const Signup = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -77,6 +73,10 @@ const Signup = () => {
   }, []);
 
   function Signup() {
+    if (!checkPasswordMatch()) {
+      // Prevents signup if the password field inputs don't match
+      return;
+    }
     const email = (document.getElementById("email") as HTMLInputElement).value;
     const pass = (document.getElementById("password") as HTMLInputElement)
       .value;
@@ -100,8 +100,10 @@ const Signup = () => {
       .value;
     if (password !== confirmPassword) {
       setAuthMessage("Passwords do not match");
+      return false;
     } else {
       setAuthMessage(" ");
+      return true;
     }
   }
 
