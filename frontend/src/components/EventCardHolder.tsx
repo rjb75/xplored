@@ -4,6 +4,8 @@ import DatePicker from "react-datepicker";
 import FlightCard from "./FlightCard";
 import CarCard from "./CarCard";
 import FoodCard from "./FoodCard";
+import HotelsCard from "./HotelsCard";
+import AttractionCard from "./AttractionCard";
 import Chevron from "../assets/chevron.svg";
 
 interface CardHolderProps {
@@ -311,13 +313,21 @@ export default function EventCardHolder({
                             />
                         </li>
                         <li>
-                            <FlightCard addCardFunction={eventHandler} />
+                            <HotelsCard
+                                name={"Raddison"}
+                                image={Chevron}
+                                address={"1613 Bitch Street"}
+                                price={"$500"}
+                                link={""}
+                            />
                         </li>
                         <li>
-                            <FlightCard addCardFunction={eventHandler} />
-                        </li>
-                        <li>
-                            <FlightCard addCardFunction={eventHandler} />
+                            <AttractionCard
+                                name={"Eiffel Tower"}
+                                image={Chevron}
+                                address={"1613 Bitch Street"}
+                                link={""}
+                            />
                         </li>
                     </ul>
                 </div>
