@@ -43,7 +43,7 @@ func RegisterRoutes(app *fiber.App) {
 	// Check user authentication status
 	app.Use(middleware.NewAuth(middleware.AuthConfig{
 		FirebaseApp: fba,
-		IgnorePaths: []string{"/login$", "/robots.txt$", "/manifest.json$"},
+		IgnorePaths: []string{"/login$", "/robots.txt$", "/manifest.json$", "/api/v1/photo"},
 	}))
 
 	v1.Get("/success", handlers.SuccessHandler)
