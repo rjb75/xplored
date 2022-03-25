@@ -1,5 +1,5 @@
 import Axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { signInWithEmailAndPassword, User } from "firebase/auth";
 import { firebaseAuth } from "../firebase/FirebaseConfig";
 import axiosInstance from "../utils/axios";
@@ -13,8 +13,47 @@ const testEndpoint = "/api/v1/success";
 const Login: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
 
+  const locations = [
+    "London",
+    "Barcelona",
+    "Madrid",
+    "Italy",
+    "Vienna",
+    "Brusells",
+    "Stockholm",
+    "Helsinki",
+    "Moscow",
+    "Rome",
+    "Milan",
+    "Malta",
+    "Oslo",
+    "Amsterdam",
+    "Vienna",
+    "Rabat",
+    "Mexicocity",
+    "Banff",
+    "Calgary",
+    "Toronto",
+    "Vancouver",
+    "NYC",
+    "LA",
+    "Seattle",
+    "CapeTown",
+    "Singapore",
+    "Tokyo",
+    "Sydney",
+    "Dubai",
+    "Cairo",
+    "Hongkong",
+    "Malta",
+    "Rio",
+    "Santiago",
+    "Lima",
+    "Havana",
+  ];
+
   const [bgImgURL, setBgImgURL] = useState<String>("");
-  const photoAPIRequest = "http://localhost:3006/photo/api/v1/photo?name=paris";
+  const photoAPIRequestBase = "/api/v1/photo/random?name=";
 
   function login() {
     const email = (document.getElementById("email") as HTMLInputElement).value;
@@ -40,17 +79,23 @@ const Login: React.FC = () => {
   };
 
   const GetImageURL = () => {
+    const cityIndex = Math.floor(Math.random() * locations.length);
+    const photoAPIRequest =
+      photoAPIRequestBase + locations[cityIndex].toString();
     axiosInstance
       .get(photoAPIRequest)
       .then((res) => {
         console.log(res.data);
-        setBgImgURL(res.data.photo_url);
+        setBgImgURL(res.data.url);
       })
       .catch((err) => console.log(err));
     return bgImgURL.toString;
   };
 
-  window.onloadstart = GetImageURL();
+  useEffect(() => {
+    GetImageURL();
+  }, []);
+
   return (
     <>
       <img
