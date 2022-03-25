@@ -1,4 +1,3 @@
-import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { signInWithEmailAndPassword, User } from "firebase/auth";
 import { firebaseAuth } from "../firebase/FirebaseConfig";
@@ -6,9 +5,6 @@ import axiosInstance from "../utils/axios";
 import { setCookie } from "../utils/CookieUtils";
 import "../pages/UserAuth.scss";
 import XploredLogo from "../assets/Logo.svg";
-import AuthBackgroundImage from "../assets/test_background_field.jpg";
-
-const testEndpoint = "/api/v1/success";
 
 const Login: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -57,6 +53,25 @@ const Login: React.FC = () => {
   );
   const photoAPIRequestBase = "/api/v1/photo/random?name=";
 
+  const GetImageURL = () => {
+    const cityIndex = Math.floor(Math.random() * locations.length);
+    const photoAPIRequest =
+      photoAPIRequestBase + locations[cityIndex].toString();
+    axiosInstance
+      .get(photoAPIRequest)
+      .then((res) => {
+        console.log(res.data);
+        setBgImgURL(res.data.url);
+      })
+      .catch((err) => console.log(err));
+    return bgImgURL.toString;
+  };
+
+  // Used to get image only ONCE on loading the page.
+  useEffect(() => {
+    GetImageURL();
+  }, []);
+
   function login() {
     const email = (document.getElementById("email") as HTMLInputElement).value;
     const pass = (document.getElementById("password") as HTMLInputElement)
@@ -72,31 +87,6 @@ const Login: React.FC = () => {
       }
     );
   }
-
-  const testSuccess = () => {
-    axiosInstance
-      .get(testEndpoint)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  };
-
-  const GetImageURL = () => {
-    const cityIndex = Math.floor(Math.random() * locations.length);
-    const photoAPIRequest =
-      photoAPIRequestBase + locations[cityIndex].toString();
-    axiosInstance
-      .get(photoAPIRequest)
-      .then((res) => {
-        console.log(res.data);
-        setBgImgURL(res.data.url);
-      })
-      .catch((err) => console.log(err));
-    return bgImgURL.toString;
-  };
-
-  useEffect(() => {
-    GetImageURL();
-  }, []);
 
   return (
     <>
