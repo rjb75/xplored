@@ -53,7 +53,9 @@ const Signup = () => {
     "Havana",
   ];
 
-  const [bgImgURL, setBgImgURL] = useState<String>("");
+  const [bgImgURL, setBgImgURL] = useState<String>(
+    "https://images.unsplash.com/photo-1635609164465-80955113c703?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+  );
   const photoAPIRequestBase = "/api/v1/photo/random?name=";
 
   const GetImageURL = () => {
@@ -107,7 +109,7 @@ const Signup = () => {
     <>
       <img
         className="PageBackground"
-        src={AuthBackgroundImage}
+        src={bgImgURL.toString()}
         alt="Background"
       />
       <div className="AuthPage">

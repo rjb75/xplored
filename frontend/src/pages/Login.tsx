@@ -52,7 +52,9 @@ const Login: React.FC = () => {
     "Havana",
   ];
 
-  const [bgImgURL, setBgImgURL] = useState<String>("");
+  const [bgImgURL, setBgImgURL] = useState<String>(
+    "https://images.unsplash.com/photo-1473042904451-00171c69419d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1499&q=80"
+  );
   const photoAPIRequestBase = "/api/v1/photo/random?name=";
 
   function login() {
