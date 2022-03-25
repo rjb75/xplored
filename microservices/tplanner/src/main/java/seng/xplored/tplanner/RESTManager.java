@@ -2,6 +2,7 @@ package seng.xplored.tplanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import seng.xplored.tplanner.Repositories.*;
 import java.util.*;
 import seng.xplored.tplanner.models.*;
@@ -54,8 +55,8 @@ public class RESTManager {
 
     //Get Event
     @GetMapping(baseURL + "/event")
-    public Optional<Event> getEvent(@RequestParam String id){
-        return eventRepository.findById(id);
+    public Optional<Event> getEvent(@RequestParam("eventid") String eventid){
+        return eventRepository.findById(eventid);
     }
 
     
@@ -108,10 +109,6 @@ public class RESTManager {
         return tripRepository.findById(id);
     }
 
-    // Delete Trip
-    //first loop through all events and delete them
-    //then delete the trip
-
      
     // //Get user's trips
     @GetMapping(baseURL + "/usertrips")
@@ -123,7 +120,7 @@ public class RESTManager {
             System.out.println(tripRepository.findById(trips[i]).get());
             trip.add(tripRepository.findById(trips[i]).get());
         }
-        return trip;        
+        return trip;
     }
 
     //Get All Events in a Trip
@@ -138,5 +135,47 @@ public class RESTManager {
         return event;        
     }
 
+    //Edit an Event
+    @PostMapping(baseURL + "/editevent")
+    public Event editEvent(@RequestParam String eventid, @RequestBody Event myEvent){
+        Event event = eventRepository.findById(eventid).get();
+
+        event.setEvent_id(eventid);
+        event.setPhoto_URL(myEvent.getPhoto_URL());
+        event.setType(myEvent.getType());
+        event.setStart_time(myEvent.getStart_time());
+        event.setEnd_time(myEvent.getEnd_time());
+        event.setName(myEvent.getName());
+        event.setAddress(myEvent.getAddress());
+        event.setLink(myEvent.getLink());
+        event.setEnd_time(myEvent.getEnd_time());
+        event.setData(myEvent.getData());
+
+        return eventRepository.save(event);
+    }
+
+    //Delete an event
+    @DeleteMapping(baseURL + "/event")
+    public String deleteEvent(@RequestParam("eventid") String eventid){
+        eventRepository.deleteById(eventid);
+        return "Success";
+    }
+    
+    // //Delete a trip
+    @DeleteMapping(baseURL + "/trip")
+    public String deleteTrip(@RequestParam String tripid){
+        Trip trip =  tripRepository.findById(tripid).get();
+
+        String events[] = trip.getEvents();
+
+        if(events.length != 0){
+            for(int i = 0; i < events.length; i++){ //get all events for the trip, delete the events
+                eventRepository.deleteById(events[i]);
+            }
+        }
+
+        tripRepository.deleteById(tripid); //delete the trip
+        return "Success";
+    }
 
 }
