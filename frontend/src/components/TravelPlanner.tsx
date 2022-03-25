@@ -12,8 +12,11 @@ import "../styles/TravelPlanner.scss";
 import EventCard, { plannerEvent } from "./EventCard";
 import { eventTypes } from "./EventCard";
 import PlannerCell from "./PlannerCell";
+import EventCardHolder from "./EventCardHolder";
 
-interface IProps {}
+interface IProps {
+  mode: string,
+}
 
 interface IState {
   events: plannerEvent[];
@@ -69,6 +72,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     };
 
     this.moveEvent = this.moveEvent.bind(this);
+    this.newEvent = this.newEvent.bind(this);
   }
 
   changeWeek(){
@@ -109,6 +113,10 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     // Update backend
   }
 
+  newEvent(title: string){
+    console.log(this.props.mode, title);
+  }
+
   render() {
     return (
       <DndProvider backend={HTML5Backend}>
@@ -128,6 +136,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
           </div>
 
           <div className="planner">
+            <EventCardHolder selectedMode={this.props.mode} eventHandler={this.newEvent} />
             <div className="timeWrapper">
               {timeRows.map((row) => {
                 return <div className="time">{row.time}</div>;
@@ -143,13 +152,13 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                 {timeRows.map((row, index) => {
                   return (
                     <div className="cellContainer">
-                      <PlannerCell dropCallback={this.moveEvent} day={"1"} time={row.time}>{this.placeEvents("1", row.time)}</PlannerCell>
-                      <PlannerCell dropCallback={this.moveEvent} day={"2"} time={row.time}>{this.placeEvents("2", row.time)}</PlannerCell>
-                      <PlannerCell dropCallback={this.moveEvent} day={"3"} time={row.time}>{this.placeEvents("3", row.time)}</PlannerCell>
-                      <PlannerCell dropCallback={this.moveEvent} day={"4"} time={row.time}>{this.placeEvents("4", row.time)}</PlannerCell>
-                      <PlannerCell dropCallback={this.moveEvent} day={"5"} time={row.time}>{this.placeEvents("5", row.time)}</PlannerCell>
-                      <PlannerCell dropCallback={this.moveEvent} day={"6"} time={row.time}>{this.placeEvents("6", row.time)}</PlannerCell>
-                      <PlannerCell dropCallback={this.moveEvent} day={"7"} time={row.time}>{this.placeEvents("7", row.time)}</PlannerCell>
+                      <PlannerCell dropCallbackMove={this.moveEvent} dropCallbackNewEvent={this.newEvent} day={"1"} time={row.time}>{this.placeEvents("1", row.time)}</PlannerCell>
+                      <PlannerCell dropCallbackMove={this.moveEvent} dropCallbackNewEvent={this.newEvent} day={"2"} time={row.time}>{this.placeEvents("2", row.time)}</PlannerCell>
+                      <PlannerCell dropCallbackMove={this.moveEvent} dropCallbackNewEvent={this.newEvent} day={"3"} time={row.time}>{this.placeEvents("3", row.time)}</PlannerCell>
+                      <PlannerCell dropCallbackMove={this.moveEvent} dropCallbackNewEvent={this.newEvent} day={"4"} time={row.time}>{this.placeEvents("4", row.time)}</PlannerCell>
+                      <PlannerCell dropCallbackMove={this.moveEvent} dropCallbackNewEvent={this.newEvent} day={"5"} time={row.time}>{this.placeEvents("5", row.time)}</PlannerCell>
+                      <PlannerCell dropCallbackMove={this.moveEvent} dropCallbackNewEvent={this.newEvent} day={"6"} time={row.time}>{this.placeEvents("6", row.time)}</PlannerCell>
+                      <PlannerCell dropCallbackMove={this.moveEvent} dropCallbackNewEvent={this.newEvent} day={"7"} time={row.time}>{this.placeEvents("7", row.time)}</PlannerCell>
                     </div>
                   );
                 })}

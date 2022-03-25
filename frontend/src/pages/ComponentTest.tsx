@@ -13,12 +13,11 @@ import { eventTypes } from "../components/EventCard";
 import EventCardHolder from "../components/EventCardHolder";
 
 function ComponentTest() {
-    return (
-        <div style={{ height: `100vh`, width: `100%`, margin: `auto` }}>
-            <TravelPlanner />
-            <EventCardHolder selectedMode="Flights" />
-        </div>
-    );
+  return (
+    <div style={{ height: `100vh`, width: `100%`, margin: `auto` }}>
+      <TravelPlanner />
+    </div>
+  );
 }
 
 export default ComponentTest;

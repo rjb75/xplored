@@ -6,10 +6,12 @@ import Chevron from "../assets/chevron.svg";
 
 interface CardHolderProps {
     selectedMode: string;
+    eventHandler: Function;
 }
 
 export default function EventCardHolder({
     selectedMode = "Flights",
+    eventHandler,
 }: CardHolderProps) {
     const [holderOpen, setHolderOpen] = React.useState(false);
 
@@ -292,22 +294,22 @@ export default function EventCardHolder({
                     <ul className="card--holder-list">
                         {/* TODO: add the list of cards from the api */}
                         <li>
-                            <FlightCard />
+                            <FlightCard addCardFunction={eventHandler} />
                         </li>
                         <li>
-                            <FlightCard />
+                            <FlightCard addCardFunction={eventHandler} />
                         </li>
                         <li>
-                            <FlightCard />
+                            <FlightCard addCardFunction={eventHandler} />
                         </li>
                         <li>
-                            <FlightCard />
+                            <FlightCard addCardFunction={eventHandler} />
                         </li>
                         <li>
-                            <FlightCard />
+                            <FlightCard addCardFunction={eventHandler} />
                         </li>
                         <li>
-                            <FlightCard />
+                            <FlightCard addCardFunction={eventHandler} />
                         </li>
                     </ul>
                 </div>
