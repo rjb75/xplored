@@ -7,6 +7,8 @@ import seng.xplored.tplanner.Repositories.*;
 import java.util.*;
 import seng.xplored.tplanner.models.*;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 @RestController
 public class RESTManager {
     private final String baseURL = "/planner/api/v1";
@@ -23,7 +25,7 @@ public class RESTManager {
 
     //Post Event
     @PostMapping(baseURL + "/event")
-    public String addEvent(@RequestBody Event event, @RequestParam("tripid") String tripid){
+    public ResponseEntity<Trip> addEvent(@RequestBody Event event, @RequestParam("tripid") String tripid){
         eventRepository.save(event);
 
         Trip trip =  tripRepository.findById(tripid).get(); //Gets the User with Id
@@ -44,7 +46,10 @@ public class RESTManager {
         trip.setEvents(str);
         tripRepository.save(trip);        
         
-        return "Added event with id:" + event.getEvent_id();
+        HttpHeaders responseHeaders = new HttpHeaders();
+
+        
+        return ResponseEntity.ok().headers(responseHeaders).body(trip);
     }
 
     //Get Events
@@ -66,9 +71,6 @@ public class RESTManager {
         tripRepository.save(trip);
         return "Added trip with id:" + trip.getTrip_id();
     }
-
-
-    //Planner
 
     //Post Trip
     @PostMapping(baseURL + "/trip")
@@ -112,8 +114,8 @@ public class RESTManager {
      
     // //Get user's trips
     @GetMapping(baseURL + "/usertrips")
-    public List<Trip> getTrips(@RequestParam String userid){
-        User user =  userRepository.findById(userid).get();
+    public List<Trip> getTrips(@RequestParam String authid){
+        User user =  userRepository.findByAuthId(authid);
         String trips[] = user.getTrips();
         List<Trip> trip = new ArrayList<>();
         for(int i =0; i<trips.length; i++){
@@ -158,10 +160,10 @@ public class RESTManager {
     @DeleteMapping(baseURL + "/event")
     public String deleteEvent(@RequestParam("eventid") String eventid){
         eventRepository.deleteById(eventid);
-        return "Success";
+        return "Deleted event with id:" + eventid;
     }
     
-    // //Delete a trip
+    //Delete a trip
     @DeleteMapping(baseURL + "/trip")
     public String deleteTrip(@RequestParam String tripid){
         Trip trip =  tripRepository.findById(tripid).get();
@@ -175,7 +177,7 @@ public class RESTManager {
         }
 
         tripRepository.deleteById(tripid); //delete the trip
-        return "Success";
+        return "Deleted trip with id:" + tripid;
     }
 
 }

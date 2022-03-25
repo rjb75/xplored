@@ -8,5 +8,5 @@ import seng.xplored.tplanner.models.*;
 
 
 public interface UserRepository extends MongoRepository<User, String> {
-     
+    User findByAuthId(String authId);
 }
