@@ -2,10 +2,11 @@ import React from "react";
 import "./EventCard.scss";
 
 interface FlightCardProps {
-    airline: string,
-    flightCode: string,
-    times: ,
-    price: string,
+    airline?: string;
+    flightCode?: string;
+    times?: string[];
+    price?: string;
+    locations?: string[];
 }
 
 export default function FlightCard(props: FlightCardProps) {
