@@ -118,7 +118,7 @@ const Signup = () => {
         <div className="PageMessage">
           <h1 className=" TopLine">Making trip planning easy</h1>
           <h1 className=" BottomLine">
-            Integrated with our transportation, accomodation, food and activity
+            Integrated with our transportation, accomodation, food, and activity
             planner.
           </h1>
         </div>
