@@ -193,12 +193,14 @@ $background-image: url(../assets/test_background_field.jpg);
 
 
 .TextInput .TextText {
+  font-family: Manrope, san-serif;
   font-size: 18px;
   flex-grow: 0;
   flex-shrink: 1;
 }
 
 .TextInput .TextLabel {
+  font-family: Manrope, san-serif;
   font-size: 18px;
   font-weight: 700;
   flex-grow: 1;
