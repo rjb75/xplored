@@ -49,6 +49,7 @@ $background-image: url(../assets/test_background_field.jpg);
   height: 100vh;
   width: 100vw;
   object-position: center;
+  filter: contrast(120%) brightness(50%);
 }
 
 .AuthPage {
@@ -60,11 +61,7 @@ $background-image: url(../assets/test_background_field.jpg);
   height: 100vh;
   position: absolute;
   padding: 80px;
-  // background-image: $background-image;
-  // background-position: 50% 50%;
-  // background-repeat: no-repeat;
-  // background-color: #000;
-  column-gap: 8vw;
+  column-gap: 2vw;
 
 }
 
@@ -85,19 +82,16 @@ $background-image: url(../assets/test_background_field.jpg);
   color: $color-white;
   flex-shrink: 2;
   flex-grow: 1;
-
-
-  //background-color: aquamarine;
   position: relative;
 }
 
 .PageMessage .TopLine {
-  font-size: 44px;
+  font-size: 36px;
   font-weight: 700;
 }
 
 .PageMessage .BottomLine {
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 400;
 }
 
@@ -144,7 +138,6 @@ $background-image: url(../assets/test_background_field.jpg);
   font-size: 44px;
   color: $color-white;
   font-weight: 800;
-  //justify-self: flex-start;
   flex-grow: 1;
 }
 
@@ -214,8 +207,6 @@ $background-image: url(../assets/test_background_field.jpg);
   row-gap: 0.25em;
   flex-grow: 0;
   flex-shrink: 1;
-
-
 }
 
 
