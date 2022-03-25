@@ -3,19 +3,15 @@
 .card {
     &--holder-button {
         position: fixed;
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         top: 18rem;
         left: 1.5rem;
         height: 4rem;
         width: 4rem;
         background-color: $color-white;
         z-index: 6;
-        box-shadow: 0px -13px 176px rgba(0, 0, 0, 0.26),
-            0px -5.43109px 73.5286px rgba(0, 0, 0, 0.186902),
-            0px -2.90372px 39.3119px rgba(0, 0, 0, 0.154988),
-            0px -1.6278px 22.0379px rgba(0, 0, 0, 0.13),
-            0px -0.864513px 11.7042px rgba(0, 0, 0, 0.105012),
-            0px -0.359743px 4.87037px rgba(0, 0, 0, 0.0730979);
     }
 
     &--holder {
@@ -47,6 +43,13 @@
             0px -2.75474px 10.0172px rgba(0, 0, 0, 0.15),
             0px -1.46302px 5.32008px rgba(0, 0, 0, 0.121168),
             0px -0.608796px 2.21381px rgba(0, 0, 0, 0.0843437);
+
+        &-close {
+            transform: rotate(180deg);
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+        }
 
         &-title {
             font-size: xx-large;

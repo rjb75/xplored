@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./EventCard.scss";
 import DatePicker from "react-datepicker";
 import FlightCard from "./FlightCard";
+import Chevron from "../assets/chevron.svg";
 
 interface CardHolderProps {
     selectedMode: string;
@@ -261,13 +262,19 @@ export default function EventCardHolder({
     return (
         <div>
             {!holderOpen && (
-                <div
-                    className="card--holder-button"
-                    onClick={swapHolderOpen}></div>
+                <div className="card--holder-button" onClick={swapHolderOpen}>
+                    <img src={Chevron} alt={`open menu`} />
+                </div>
             )}
             {holderOpen && (
                 <div className="card--holder">
                     <div className="card--holder-bar">
+                        <img
+                            src={Chevron}
+                            className="card--holder-bar-close"
+                            alt={`close menu`}
+                            onClick={swapHolderOpen}
+                        />
                         <h1 className="card--holder-bar-title">
                             {holderLabel()}
                         </h1>
