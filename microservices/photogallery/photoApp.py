@@ -35,5 +35,13 @@ def get_photo(name: str, width: int | None = None, height: int | None = None, ph
         return {"photo_id": photo_id,
                 "photo_url": urls_dict['full']}
 
+@photoApp.get("/photo/api/v1/random")
+def get_random_photo(name: str):
+    querystring = {"query": name, "count": "1"}
+    response = requests.request("GET", config.random_url, params=querystring)
+    random_dict = response.json()[0]
+
+    return {"url": random_dict['urls']['full']}
+
 if __name__ == "__main__":
     uvicorn.run(photoApp, host=os.getenv("PHOTO_HOST"), port=int(os.getenv("PHOTO_PORT")))
