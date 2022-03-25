@@ -13,6 +13,7 @@ import { TravelPlanner } from "../components/TravelPlanner";
 import { eventTypes } from "../components/EventCard";
 import TravelMap from "../components/TravelMap";
 import PlannerSwitcher from "../components/PlannerSwitcher";
+import NavBar from "../components/NavBar";
 
 function ComponentTest() {
   return (
@@ -23,6 +24,7 @@ function ComponentTest() {
         margin: `auto`,
       }}
     >
+      <NavBar />
       <TravelMap />
       <TravelPlanner />
     </div>
