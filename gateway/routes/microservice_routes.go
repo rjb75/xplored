@@ -13,6 +13,7 @@ func DiningRoutes(r fiber.Router) {
 // Routes for photo microservice
 func PhotoRoutes(r fiber.Router) {
 	r.Get("/photo", handlers.PhotosHandler)
+	r.Get("/photo/random", handlers.RandomPhotoHandler)
 }
 
 // Routes for POI microservice
