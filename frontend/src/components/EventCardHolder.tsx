@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./EventCard.scss";
 import DatePicker from "react-datepicker";
 import FlightCard from "./FlightCard";
+import CarCard from "./CarCard";
+import FoodCard from "./FoodCard";
 import Chevron from "../assets/chevron.svg";
 
 interface CardHolderProps {
@@ -260,7 +262,7 @@ export default function EventCardHolder({
     }
 
     return (
-        <div>
+        <>
             {!holderOpen && (
                 <div className="card--holder-button" onClick={swapHolderOpen}>
                     <img src={Chevron} alt={`open menu`} />
@@ -295,10 +297,16 @@ export default function EventCardHolder({
                             <FlightCard />
                         </li>
                         <li>
-                            <FlightCard />
+                            <CarCard />
                         </li>
                         <li>
-                            <FlightCard />
+                            <FoodCard
+                                name={"McDonald's"}
+                                image={Chevron}
+                                location={"1613 Bitch Street"}
+                                extras={["Kosher", "Indian"]}
+                                rating={"4.3"}
+                            />
                         </li>
                         <li>
                             <FlightCard />
@@ -312,6 +320,6 @@ export default function EventCardHolder({
                     </ul>
                 </div>
             )}
-        </div>
+        </>
     );
 }
