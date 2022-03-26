@@ -1,16 +1,15 @@
 package handlers
 
-// import (
-// 	// "context"
-// 	// "log"
-// 	// "os"
-// 	// "strconv"
+import (
+	// "context"
+	// "log"
+	// "os"
+	// "strconv"
 
-// 	// "github.com/gofiber/fiber/v2"
-
-// 	// _ "github.com/lib/pq"
-
-// )
+	"github.com/Risath18/xplored-transportation/models"
+	"github.com/gofiber/fiber/v2"
+	_ "github.com/lib/pq"
+)
 
 func GetTransLong(c *fiber.Ctx) error {
 	req := new(models.LongTrip)
@@ -24,9 +23,9 @@ func GetTransLong(c *fiber.Ctx) error {
 	//check that data isn't null
 	//if req.___ == null
 
-	data := longOptions(req)
+	//data := longOptions(req)
 
-	return c.Status(200).JSON(fiber.Map{"status": err, "data": data})
+	return c.Status(200).JSON(fiber.Map{"status": err, "data": nil})
 }
 
 func GetTransShort(c *fiber.Ctx) error {
@@ -41,15 +40,15 @@ func GetTransShort(c *fiber.Ctx) error {
 	//check that data isn't null
 	//if req.___ == null
 
-	data := shortOptions(req)
+//	data := shortOptions(req)
 
-	return c.Status(200).JSON(fiber.Map{"status": err, "data": data})
+	return c.Status(200).JSON(fiber.Map{"status": err, "data": nil})
 }
 
-func longOptions(trans *models.LongTrip) {
+// func longOptions(trans *models.LongTrip) {
 
-}
+// }
 
-func shortOptions(trans *models.LongTrip) {
+// func shortOptions(trans *models.LongTrip) {
 
-}
+// }
