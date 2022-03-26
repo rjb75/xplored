@@ -14,6 +14,9 @@ import { useDrag } from "react-dnd";
 import { ItemTypes } from "../utils/PlannerConstants";
 import { Resizable, NumberSize } from "re-resizable";
 
+/**
+ * Enum for types of valid events
+ */
 export enum eventTypes {
   FOOD = "DIN",
   CAR = "TRANSS",
@@ -22,6 +25,9 @@ export enum eventTypes {
   POI = "POI",
 }
 
+/**
+ * Describes the props for a plannerEvent
+ */
 export type plannerEvent = {
   event_id: string;
   type: eventTypes;
@@ -36,6 +42,12 @@ export type plannerEvent = {
   deleteCallBack: Function;
 };
 
+/**
+ * General Event Card Component, can support any of the event types described
+ * in 'eventTypes'.
+ * @param Props Required Props
+ * @returns An event card
+ */
 export const EventCard = ({
   event_id,
   type,
@@ -58,6 +70,11 @@ export const EventCard = ({
     if (editSizeCallBack !== undefined) editSizeCallBack(event_id, durHours);
   }, [size]);
 
+  /**
+   * Returns Icon for the given eventType
+   * @param eventType
+   * @returns Img tag of the icon
+   */
   function getIcon(eventType: eventTypes) {
     switch (eventType) {
       case "DIN":
