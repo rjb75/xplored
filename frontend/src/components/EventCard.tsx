@@ -26,17 +26,19 @@ export type plannerEvent = {
   date: String;
   title: String;
   duration: String;
-  type: eventTypes;
+  eventType: eventTypes;
   id: String;
+  type: string;
 };
 
 export const EventCard = ({
-  type,
+  eventType,
   time,
   title,
   duration,
   date,
   id,
+  type,
 }: plannerEvent): JSX.Element => {
   const [size, setSize] = useState<string>();
 
@@ -69,11 +71,12 @@ export const EventCard = ({
     type: ItemTypes.EVENT,
     item: {
       id: id,
-      type: type,
+      eventType: eventType,
       time: time,
       title: title,
       duration: duration,
       date: date,
+      type: type,
     },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
@@ -83,12 +86,12 @@ export const EventCard = ({
 
   return (
     <div
-      className={"eventCard " + type}
+      className={"eventCard " + eventType}
       ref={drag}
       style={{ opacity: isDragging ? 0.5 : 1 , height: size}}
     >
       <div className="middle">
-        {getIcon(type)}
+        {getIcon(eventType)}
         <div className="headerContainers">
           <h1>{time}</h1>
           <h2>{title}</h2>

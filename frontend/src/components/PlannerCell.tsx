@@ -13,26 +13,16 @@ interface AppProps {
     test?: boolean,
 }
 
-function isPlannerEvent(items: plannerEvent | FlightCardProps): boolean{
-    console.log((items as plannerEvent).type)
-    if((items as plannerEvent).type !== "flight"){
-        return true;
-    }
-    return false;
-}
-
 export const PlannerCell = ({day, time, children, test, dropCallbackMove, dropCallbackNewEvent}: AppProps) => {
 
     const [{ isOver }, drop] = useDrop(() => ({
         accept: ItemTypes.EVENT,
         drop: (item: plannerEvent | FlightCardProps, monitor) => {
-            if(isPlannerEvent(item)){
-                console.log("event");
+            if((item as plannerEvent).type === "event"){
+                dropCallbackMove(item, day, time);
+            }else{
+                dropCallbackNewEvent((item as plannerEvent).title, day, time);
             }
-            else{
-                console.log("flight");
-            }
-           // dropCallbackMove(item, day, time);
         },
         collect: monitor => ({
             isOver: !!monitor.isOver(),
