@@ -15,6 +15,7 @@ interface AppProps {
 
 export const PlannerCell = ({day, time, children, dropCallbackMove, dropCallbackNewEvent, dropCallbackNewSetDateEvent}: AppProps) => {
 
+    // Hook to detect plannerEvents dropped into cell then pass to the dropCallback.
     const [{ isOver }, drop] = useDrop(() => ({
         accept: ItemTypes.EVENT,
         drop: (item: any, monitor) => {
