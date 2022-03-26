@@ -375,7 +375,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
   render() {
     return (
       <DndProvider backend={HTML5Backend}>
-        <div className="travelPlannerWrapper">
+        <div data-testid="TravelPlanner" className="travelPlannerWrapper">
           <div className="plannerNavbar">
             <div style={{ width: `33.3%` }}></div>
             <div className="plannerNavbarDate">
