@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./EventCard.scss";
 import DatePicker from "react-datepicker";
 import FlightCard from "./FlightCard";
@@ -7,6 +7,7 @@ import FoodCard from "./FoodCard";
 import HotelsCard from "./HotelsCard";
 import AttractionCard from "./AttractionCard";
 import Chevron from "../assets/chevron.svg";
+import axiosInstance from "../utils/axios";
 
 interface CardHolderProps {
     selectedMode: string;
@@ -265,6 +266,60 @@ export default function EventCardHolder({
         }
     }
 
+    const [eventCards, setEventCards] = useState(<></>);
+
+    function getCardsFromAPI() {
+        switch (selectedMode) {
+            case "Flights":
+                axiosInstance
+                    .get("/api/v1")
+                    .then((res) => {
+                        console.log(res);
+                    })
+                    .catch((err) => console.log(err));
+                break;
+            case "Car":
+                axiosInstance
+                    .get("/api/v1/")
+                    .then((res) => {
+                        console.log(res);
+                    })
+                    .catch((err) => console.log(err));
+                break;
+            case "Food":
+                axiosInstance
+                    .get("/api/v1/")
+                    .then((res) => {
+                        console.log(res);
+                    })
+                    .catch((err) => console.log(err));
+                break;
+            case "Hotels":
+                axiosInstance
+                    .get("/api/v1/")
+                    .then((res) => {
+                        console.log(res);
+                    })
+                    .catch((err) => console.log(err));
+                break;
+            case "Attraction":
+                axiosInstance
+                    .get("/api/v1/")
+                    .then((res) => {
+                        console.log(res);
+                    })
+                    .catch((err) => console.log(err));
+                break;
+            default:
+                break;
+        }
+    }
+
+    useEffect(() => {
+        getCardsFromAPI();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedMode]);
+
     return (
         <>
             {!holderOpen && (
@@ -295,41 +350,7 @@ export default function EventCardHolder({
                             {holderExtras()}
                         </ul>
                     </div>
-                    <ul className="card--holder-list">
-                        {/* TODO: add the list of cards from the api */}
-                        <li>
-                            <FlightCard addCardFunction={eventHandler} />
-                        </li>
-                        <li>
-                            <CarCard />
-                        </li>
-                        <li>
-                            <FoodCard
-                                name={"McDonald's"}
-                                image={Chevron}
-                                location={"1613 Bitch Street"}
-                                extras={["Kosher", "Indian"]}
-                                rating={"4.3"}
-                            />
-                        </li>
-                        <li>
-                            <HotelsCard
-                                name={"Raddison"}
-                                image={Chevron}
-                                address={"1613 Bitch Street"}
-                                price={"$500"}
-                                link={""}
-                            />
-                        </li>
-                        <li>
-                            <AttractionCard
-                                name={"Eiffel Tower"}
-                                image={Chevron}
-                                address={"1613 Bitch Street"}
-                                link={""}
-                            />
-                        </li>
-                    </ul>
+                    <ul className="card--holder-list">{eventCards}</ul>
                 </div>
             )}
         </>
