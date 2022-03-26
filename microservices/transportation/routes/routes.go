@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"github.com/Risath18/xplored-transportation/handlers"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
