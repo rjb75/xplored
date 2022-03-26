@@ -32,3 +32,12 @@ func ReviewsRoutes(r fiber.Router) {
 	r.Get("/reviews/all", handlers.AllReviewsHandler)
 	r.Post("/review", handlers.CreateReviewsHandler)
 }
+
+// Routes for travel planner microservice
+func TPlannerRoutes(r fiber.Router) {
+	r.Get("/trips", handlers.GetUserTrips)
+	r.Get("/trip", handlers.GetTripById)
+	r.Get("/event", handlers.GetEventById)
+	r.Post("/event/edit", handlers.EditEventById)
+	r.Post("/event/create", handlers.CreateEvent)
+}
