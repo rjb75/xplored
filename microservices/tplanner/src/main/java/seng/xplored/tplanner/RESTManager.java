@@ -1,14 +1,20 @@
 package seng.xplored.tplanner;
 
+// import org.bson.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import seng.xplored.tplanner.Repositories.*;
 import java.util.*;
 import seng.xplored.tplanner.models.*;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.bson.json.*;
+// import org.springframework.data.mongodb.util.json.*;
+
 @RestController
 public class RESTManager {
     private final String baseURL = "/planner/api/v1";
@@ -26,9 +32,18 @@ public class RESTManager {
     //Post Event
     @PostMapping(baseURL + "/event")
     public ResponseEntity<Trip> addEvent(@RequestBody Event event, @RequestParam("tripid") String tripid){
-        eventRepository.save(event);
+        HttpHeaders responseHeaders = new HttpHeaders();
 
-        Trip trip =  tripRepository.findById(tripid).get(); //Gets the User with Id
+        Trip trip;
+        try{
+            trip = tripRepository.findById(tripid).get(); //Gets the User with Id
+        }
+        catch(Exception ex){
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+        }
+
+        eventRepository.save(event); //save the event in the database
+
         String[] events= trip.getEvents(); //Gets users Trips
         List<String> stringEvents=new ArrayList<>(Arrays.asList(events));
 
@@ -44,24 +59,43 @@ public class RESTManager {
         }
 
         trip.setEvents(str);
-        tripRepository.save(trip);        
-        
-        HttpHeaders responseHeaders = new HttpHeaders();
-
+        tripRepository.save(trip);
+        // if(tripRepository.findById(tripid).isEmpty()){
+        //     return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+        // }
         
         return ResponseEntity.ok().headers(responseHeaders).body(trip);
     }
 
+    // //Get Events
+    // @GetMapping(baseURL + "/events")
+    // public List<Event> getEvents(){
+    //     return eventRepository.findAll();
+    // }
     //Get Events
     @GetMapping(baseURL + "/events")
-    public List<Event> getEvents(){
-        return eventRepository.findAll();
+    @ResponseBody
+    public ResponseEntity<List<Event>> getEvents(){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        if(eventRepository.findAll().isEmpty()){ //NEED TO TEST THIS STILL
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+        }
+        else{
+            return ResponseEntity.ok().headers(responseHeaders).body(eventRepository.findAll());
+        }
     }
 
     //Get Event
     @GetMapping(baseURL + "/event")
-    public Optional<Event> getEvent(@RequestParam("eventid") String eventid){
-        return eventRepository.findById(eventid);
+    public ResponseEntity<Optional<Event>> getEvent(@RequestParam("eventid") String eventid){
+        // return eventRepository.findById(eventid);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        if(eventRepository.findById(eventid).isEmpty()){ //NEED TO TEST THIS STILL
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+        }
+        else{
+            return ResponseEntity.ok().headers(responseHeaders).body(eventRepository.findById(eventid));
+        }
     }
 
     
