@@ -19,8 +19,11 @@ export const PlannerCell = ({day, time, children, test, dropCallbackMove, dropCa
         accept: ItemTypes.EVENT,
         drop: (item: plannerEvent | FlightCardProps, monitor) => {
             if((item as plannerEvent).type === "event"){
+                console.log("test")
                 dropCallbackMove(item, day, time);
             }else{
+                console.log("test2")
+
                 dropCallbackNewEvent((item as plannerEvent).title, day, time);
             }
         },

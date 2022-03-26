@@ -12,6 +12,7 @@ import POIIcon from "../assets/POIIcon.svg";
 import accommodationIcon from "../assets/accommodationIcon.svg";
 import { useDrag } from "react-dnd";
 import { ItemTypes } from "../utils/PlannerConstants";
+import { Resizable, NumberSize } from "re-resizable";
 
 export enum eventTypes {
   FOOD = "food",
@@ -25,10 +26,11 @@ export type plannerEvent = {
   time: String;
   date: String;
   title: String;
-  duration: String;
+  duration: string;
   eventType: eventTypes;
   id: String;
   type: string;
+  editCallback?: Function;
 };
 
 export const EventCard = ({
@@ -39,8 +41,13 @@ export const EventCard = ({
   date,
   id,
   type,
+  editCallback,
 }: plannerEvent): JSX.Element => {
-  const [size, setSize] = useState<string>();
+  const [size, setSize] = useState<number>(getSize());
+
+  useEffect(() => {
+    if (editCallback !== undefined) editCallback(id, getDuration());
+  }, [size]);
 
   function getIcon(eventType: eventTypes) {
     switch (eventType) {
@@ -59,13 +66,20 @@ export const EventCard = ({
     }
   }
 
-  function getSize(){
-    return "150%";
+  function getSize(): number {
+    let s = duration.toString().split(" ")[0];
+    let num = parseFloat(s);
+
+    let size = num / 0.5;
+
+    return size * 50;
   }
 
-  useEffect(() => {
-    setSize(getSize);
-  }, [])
+  function getDuration(): string {
+    console.log(size);
+    let num = (size / 50) * 0.5;
+    return num.toString() + " Hour";
+  }
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.EVENT,
@@ -85,20 +99,40 @@ export const EventCard = ({
   }));
 
   return (
-    <div
-      className={"eventCard " + eventType}
-      ref={drag}
-      style={{ opacity: isDragging ? 0.5 : 1 , height: size}}
+    <Resizable
+      onResizeStop={(e, d, r, delta) => {
+        console.log("test");
+        let roundedSize = Math.ceil((size + delta.height) / 50) * 50;
+        setSize(roundedSize);
+      }}
+      size={{ width: 227.72, height: size }}
+      minHeight={50}
+      enable={{
+        top: false,
+        right: false,
+        bottom: true,
+        left: false,
+        topRight: false,
+        bottomRight: false,
+        bottomLeft: false,
+        topLeft: false,
+      }}
     >
-      <div className="middle">
-        {getIcon(eventType)}
-        <div className="headerContainers">
-          <h1>{time}</h1>
-          <h2>{title}</h2>
+      <div
+        className={"eventCard " + eventType}
+        ref={drag}
+        style={{ opacity: isDragging ? 0.5 : 1 }}
+      >
+        <div className="middle">
+          {getIcon(eventType)}
+          <div className="headerContainers">
+            <h1>{time}</h1>
+            <h2>{title}</h2>
+          </div>
         </div>
+        <p>{duration}</p>
       </div>
-      <p>{duration}</p>
-    </div>
+    </Resizable>
   );
 };
 

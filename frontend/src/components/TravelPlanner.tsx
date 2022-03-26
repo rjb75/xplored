@@ -78,6 +78,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
 
     this.moveEvent = this.moveEvent.bind(this);
     this.newEvent = this.newEvent.bind(this);
+    this.editEvent = this.editEvent.bind(this);
   }
 
   changeWeek() {}
@@ -95,6 +96,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
             id={e.id}
             date={e.date}
             type={e.type}
+            editCallback={this.editEvent}
           />
         );
       }
@@ -115,6 +117,18 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     });
 
     // Update backend
+  }
+
+  editEvent(id: string, duration?: string) {
+    let event = this.state.events.filter((item) => item.id === id)[0];
+
+    if(duration !== undefined){
+      event.duration = duration;
+    }
+
+    let oldState = this.state.events.filter((item) => item.id !== id);
+    oldState.push(event);
+    this.setState({ events: oldState })
   }
 
   newEvent(title: string, day: string, time: string) {
