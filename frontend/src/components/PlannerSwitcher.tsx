@@ -6,13 +6,23 @@ interface view {
   view: String;
 }
 
+// Props for the component
 interface PlannerSwitcherProps {
   switchFunction: Function;
 }
 
+/**
+ * Represents the planner switcher "pill" on the application
+ * @param switchFunction A callback function that takes a view ("planner" or "map") and is responsible for switching the view.
+ * @returns PlannerSwitcher component.
+ */
 export const PlannerSwitcher = ({ switchFunction }: PlannerSwitcherProps) => {
-  const [plannerOrMap, setPlannerOrMap] = useState<view>({ view: "planner" }); // True for planner
+  const [plannerOrMap, setPlannerOrMap] = useState<view>({ view: "planner" }); 
 
+  /**
+   * Switches the view internally to change the color of the component and calls the callback function to switch the actual view
+   * @param view the view to switch to (either "planner" or "map").
+   */
   function switchView(view: String) {
     setPlannerOrMap({ view: view });
     switchFunction(view);
