@@ -12,6 +12,10 @@ interface IState {
 }
 
 interface IProps {}
+
+/**
+ * Describes the home page of the application.
+ */
 class Home extends React.Component<IProps, IState> {
     constructor(props: any) {
         super(props);
