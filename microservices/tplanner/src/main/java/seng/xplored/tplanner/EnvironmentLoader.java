@@ -14,6 +14,7 @@ public class EnvironmentLoader {
         this.PORT = env.get("TPLANNER_PORT");
         this.DB_URL = env.get("TPLANNER_MONGODB_URL");
         this.HOST = env.get("TPLANNER_HOST");
+        System.out.println(PORT + DB_URL + HOST);
     }
 
     public static EnvironmentLoader getInstance(){
