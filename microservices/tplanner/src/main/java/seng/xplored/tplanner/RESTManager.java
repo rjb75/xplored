@@ -13,6 +13,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.bson.json.*;
+
+
+import java.time.LocalDateTime;  
+import java.time.format.DateTimeFormatter; 
+
 // import org.springframework.data.mongodb.util.json.*;
 
 @RestController
@@ -31,7 +36,7 @@ public class RESTManager {
 
     //Post Event
     @PostMapping(baseURL + "/event")
-    public ResponseEntity<Trip> addEvent(@RequestBody Event event, @RequestParam("tripid") String tripid){
+    public ResponseEntity<Object> addEvent(@RequestBody Event event, @RequestParam("tripid") String tripid){
         HttpHeaders responseHeaders = new HttpHeaders();
 
         Trip trip;
@@ -39,7 +44,7 @@ public class RESTManager {
             trip = tripRepository.findById(tripid).get(); //Gets the User with Id
         }
         catch(Exception ex){
-            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); //create a body!
         }
 
         eventRepository.save(event); //save the event in the database
