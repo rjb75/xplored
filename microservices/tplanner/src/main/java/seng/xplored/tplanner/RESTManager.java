@@ -72,7 +72,7 @@ public class RESTManager {
     // public List<Event> getEvents(){
     //     return eventRepository.findAll();
     // }
-    //Get Events
+    //Get All Events
     @GetMapping(baseURL + "/events")
     @ResponseBody
     public ResponseEntity<List<Event>> getEvents(){
@@ -85,7 +85,7 @@ public class RESTManager {
         }
     }
 
-    //Get Event
+    //Get Single Event
     @GetMapping(baseURL + "/event")
     public ResponseEntity<Optional<Event>> getEvent(@RequestParam("eventid") String eventid){
         // return eventRepository.findById(eventid);
@@ -101,20 +101,28 @@ public class RESTManager {
     
     //Post User
     @PostMapping(baseURL + "/user")
-    public String addTrip(@RequestBody Trip trip){
-        tripRepository.save(trip);
-        return "Added trip with id:" + trip.getTrip_id();
+    public ResponseEntity<User> addUser(@RequestBody User user){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        userRepository.save(user);
+        return ResponseEntity.ok().headers(responseHeaders).body(user);
     }
 
     //Post Trip
     @PostMapping(baseURL + "/trip")
-    public String addTrip(@RequestBody Trip trip, @RequestParam("userid") String userid){
+    public ResponseEntity<Object> addTrip(@RequestBody Trip trip, @RequestParam("userid") String userid){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        User user;
+        try{
+            user = userRepository.findById(userid).get(); //Gets the User with Id
+        } catch(Exception ex){
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+        }
+
         tripRepository.save(trip); //Add Trip
-        User user =  userRepository.findById(userid).get(); //Gets the User with Id
         String[] trips= user.getTrips(); //Gets users Trips
         List<String> stringTrips=new ArrayList<>(Arrays.asList(trips));
 
-        System.out.println(stringTrips);
+        // System.out.println(stringTrips);
 
         Trip myTrip = tripRepository.findById(trip.getTrip_id()).get(); 
         String newTripId = myTrip.getTrip_id();
@@ -129,52 +137,93 @@ public class RESTManager {
 
         user.setTrips(str);
         userRepository.save(user);
-        return "Added trip with id:" + trip.getTrip_id();
+        return ResponseEntity.ok().headers(responseHeaders).body(user);
     }
 
     //Get All Trips
     @GetMapping(baseURL + "/trips")
-    public List<Trip> getTrips(){
-        System.out.println(tripRepository.findAll());
-        return tripRepository.findAll();
+    public ResponseEntity<List<Trip>> getTrips(){
+        // System.out.println(tripRepository.findAll());
+        // return tripRepository.findAll();
+        HttpHeaders responseHeaders = new HttpHeaders();
+        if(tripRepository.findAll().isEmpty()){ //NEED TO TEST THIS STILL
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+        }
+        else{
+            return ResponseEntity.ok().headers(responseHeaders).body(tripRepository.findAll());
+        }
     }
 
     //Get Single Trip
     @GetMapping(baseURL + "/trip")
-    public Optional<Trip> getTrip(@RequestParam String id){
-        return tripRepository.findById(id);
+    public ResponseEntity<Optional<Trip>> getTrip(@RequestParam String id){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        if(tripRepository.findById(id).isEmpty()){ //NEED TO TEST THIS STILL
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+        }
+        else{
+            return ResponseEntity.ok().headers(responseHeaders).body(tripRepository.findById(id));
+        }
     }
 
      
-    // //Get user's trips
+   //Get user's trips
     @GetMapping(baseURL + "/usertrips")
-    public List<Trip> getTrips(@RequestParam String authid){
+    public ResponseEntity<List<Trip>> getTrips(@RequestParam String authid){
+        HttpHeaders responseHeaders = new HttpHeaders();
         User user =  userRepository.findByAuthId(authid);
-        String trips[] = user.getTrips();
+        String trips[];
+        try{ 
+            trips = user.getTrips();
+        } catch(Exception ex){
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+        }
         List<Trip> trip = new ArrayList<>();
         for(int i =0; i<trips.length; i++){
-            System.out.println(tripRepository.findById(trips[i]).get());
+            // System.out.println(tripRepository.findById(trips[i]).get());
             trip.add(tripRepository.findById(trips[i]).get());
         }
-        return trip;
+        if(trip == null){ //NEED TO TEST THIS STILL
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+        }
+        else{
+            return ResponseEntity.ok().headers(responseHeaders).body(trip);
+        }
     }
 
     //Get All Events in a Trip
     @GetMapping(baseURL + "/alltrips")
-    public List<Event> getAllEventsInTrip(@RequestParam String tripid){
-        Trip trip =  tripRepository.findById(tripid).get();
+    public ResponseEntity<List<Event>> getAllEventsInTrip(@RequestParam String tripid){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        Trip trip;
+        try{ 
+            trip =  tripRepository.findById(tripid).get();
+        } catch(Exception ex){
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+        }
         String events[] = trip.getEvents();
         List<Event> event = new ArrayList<>();
         for(int i =0; i<events.length; i++){
             event.add(eventRepository.findById(events[i]).get());
         }
-        return event;        
+        if(event == null){  //NEED TO TEST THIS STILL
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+        }
+        else{
+            return ResponseEntity.ok().headers(responseHeaders).body(event);
+        }      
     }
 
     //Edit an Event
     @PostMapping(baseURL + "/editevent")
-    public Event editEvent(@RequestParam String eventid, @RequestBody Event myEvent){
-        Event event = eventRepository.findById(eventid).get();
+    public ResponseEntity<Object> editEvent(@RequestParam String eventid, @RequestBody Event myEvent){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        Event event;
+        try{ 
+            event = eventRepository.findById(eventid).get();
+        } catch(Exception ex){
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+        }
 
         event.setEvent_id(eventid);
         event.setPhoto_URL(myEvent.getPhoto_URL());
@@ -187,20 +236,40 @@ public class RESTManager {
         event.setEnd_time(myEvent.getEnd_time());
         event.setData(myEvent.getData());
 
-        return eventRepository.save(event);
+        eventRepository.save(event);
+
+        if(eventRepository.findById(eventid).isEmpty()){ //NEED TO TEST THIS STILL
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+        }
+        else{
+            return ResponseEntity.ok().headers(responseHeaders).body(eventRepository.findById(eventid));
+        }
     }
 
     //Delete an event
     @DeleteMapping(baseURL + "/event")
-    public String deleteEvent(@RequestParam("eventid") String eventid){
+    public ResponseEntity<Object> deleteEvent(@RequestParam("eventid") String eventid){
+        HttpHeaders responseHeaders = new HttpHeaders();
         eventRepository.deleteById(eventid);
-        return "Deleted event with id:" + eventid;
+        if(eventRepository.findById(eventid).isEmpty()){ //NEED TO TEST THIS STILL
+            return ResponseEntity.ok().headers(responseHeaders).body(null); //create a body for success!
+        }
+        else{
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body for failure
+        }
     }
     
     //Delete a trip
     @DeleteMapping(baseURL + "/trip")
-    public String deleteTrip(@RequestParam String tripid){
-        Trip trip =  tripRepository.findById(tripid).get();
+    public ResponseEntity<Object> deleteTrip(@RequestParam String tripid){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        Trip trip;
+        // System.out.println(tripid);
+        try{
+            trip =  tripRepository.findById(tripid).get();
+        } catch(Exception ex){
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+        }
 
         String events[] = trip.getEvents();
 
@@ -211,7 +280,12 @@ public class RESTManager {
         }
 
         tripRepository.deleteById(tripid); //delete the trip
-        return "Deleted trip with id:" + tripid;
+        if(tripRepository.findById(tripid).isEmpty()){ //NEED TO TEST THIS STILL
+            return ResponseEntity.ok().headers(responseHeaders).body(null); //create a body for success!
+        }
+        else{
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body for failure
+        }
     }
 
 }

@@ -23,8 +23,6 @@ public class User {
         this.authId = authId;
     }
 
-
-
     public String getId() {
         return this.id;
     }
