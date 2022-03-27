@@ -1,5 +1,5 @@
 import config, uvicorn, os, requests
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 
 photoApp = FastAPI()
 
@@ -23,6 +23,9 @@ def get_photo(name: str, width: int | None = None, height: int | None = None, ph
     querystring = {"query":name,"page":"1", "per_page":"5"}
     # send GET request to unsplash api
     response = requests.request("GET", config.photo_url, params=querystring)
+    # handles error response
+    if not response.json()['results']:
+        raise HTTPException(status_code=500)
     # stores response from unsplash api in a dictionary
     results_dict = response.json()['results'][0]
     # stores the given urls
@@ -53,6 +56,9 @@ def get_random_photo(name: str):
     querystring = {"query": name, "count": "1"}
     # send GET request to unsplash api
     response = requests.request("GET", config.random_url, params=querystring)
+    # handles error response
+    if not response.json()['results']:
+        raise HTTPException(status_code=500)
     # stores response from unsplash api in a dictionary
     random_dict = response.json()[0]
 
