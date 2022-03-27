@@ -24,7 +24,7 @@ func main() {
 	routes.RegisterRoutes(app)
 
 	//Formatting port
-	PLANNER_PORT := os.Getenv("TPLANNER_PORT")
+	PLANNER_PORT := os.Getenv("TRANSPORTATION_PORT")
 	port := fmt.Sprintf(":%s", PLANNER_PORT)
 	app.Listen(port)
 
