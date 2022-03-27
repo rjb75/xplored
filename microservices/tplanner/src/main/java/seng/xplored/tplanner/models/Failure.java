@@ -1,37 +1,33 @@
 package seng.xplored.tplanner.models;
 
-public class Failure {
-    private String timestamp;
-    private String status;
-    private String error;
+import org.springframework.http.HttpStatus;
 
-    public String getTimestamp() {
+
+import java.time.LocalDateTime;
+
+public class Failure {
+    private LocalDateTime timestamp;
+    private HttpStatus status;
+
+    public Failure(LocalDateTime timestamp, HttpStatus status) {
+        this.timestamp = timestamp;
+        this.status = status;
+    }
+
+    public LocalDateTime getTimestamp() {
         return this.timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
-    public String getStatus() {
+    public HttpStatus getStatus() {
         return this.status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(HttpStatus status) {
         this.status = status;
     }
 
-    public String getError() {
-        return this.error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    public Failure(String timestamp, String status, String error) {
-        this.timestamp = timestamp;
-        this.status = status;
-        this.error = error;
-    }
 }
