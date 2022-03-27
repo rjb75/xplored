@@ -2,8 +2,11 @@ package handlers
 
 import (
 	"context"
+	"encoding/csv"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 
@@ -15,6 +18,55 @@ import (
 	"googlemaps.github.io/maps"
 )
 
+
+var codes = importAirportCodes()
+func importAirportCodes() [] models.AirportCodes{
+	f, err := os.Open("airport-codes_csv.csv")
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    // remember to close the file at the end of the program
+    defer f.Close()
+
+    // read csv values using csv.Reader
+    csvReader := csv.NewReader(f)
+    data, err := csvReader.ReadAll()
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    // convert records to array of structs
+	var codesList []models.AirportCodes
+    for i, line := range data {
+        if i > 0 { // omit header line
+            var rec models.AirportCodes
+            for j, field := range line {
+                if j == 0 {
+                    rec.Name = field
+                } else if j == 1 {
+                    rec.Municipality = field
+                } else if j == 2{
+					rec.Code = field
+				} else if j == 3 {
+					rec.Coordinates = field
+				}
+            }
+            codesList = append(codesList, rec)
+        }
+    }
+
+    // print the array
+   fmt.Printf("%+v\n", codesList)
+	return codesList
+}
+
+func GetAirportCode(c *fiber.Ctx) error{
+   fmt.Printf("%+v\n", codes)
+
+	//data:= importAirportCodes()
+	return c.Status(200).JSON(fiber.Map{"status": nil, "data": nil})
+}
 /*
 * Short Distance travel with Google API
  */

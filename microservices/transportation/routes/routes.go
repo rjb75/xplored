@@ -16,4 +16,6 @@ func RegisterRoutes(app *fiber.App) {
 
 	v1.Get("/long", handlers.GetTransLong)
 	v1.Get("/short", handlers.GetTransShort)
+	v1.Get("/codes", handlers.GetAirportCode)
+
 }
