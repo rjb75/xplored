@@ -290,6 +290,17 @@ export function eventAdapter(events: any[], editSizeCallBack: Function): planner
         break;
     }
 
+    let temp = new Date(event.start_time);
+    let start = new Date();
+    start.setUTCFullYear(temp.getFullYear());
+    start.setUTCMonth(temp.getMonth());
+    start.setUTCDate(temp.getDate());
+    start.setUTCHours(temp.getHours());
+    start.setUTCMinutes(temp.getMinutes());
+    start.setUTCSeconds(0);
+    start.setUTCMilliseconds(0);
+
+
     e.push({
       event_id: event.event_id,
       type: type,

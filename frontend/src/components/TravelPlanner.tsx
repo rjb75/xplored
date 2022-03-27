@@ -72,13 +72,37 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     return ret;
   }
 
-  changeWeek() {}
+  changeWeek(way: string) {
+    if(way === "f"){
+      let week = this.state.week;
+      week.forEach((day) => {
+        day.setUTCDate(day.getUTCDate() + 7);
+      })
+      this.setState({
+        events: this.state.events,
+        week: week,
+      })
+    }else{
+      let week = this.state.week;
+      week.forEach((day) => {
+        day.setUTCDate(day.getUTCDate() - 7);
+      })
+      this.setState({
+        events: this.state.events,
+        week: week,
+      })
+    }
+  }
 
   placeEvents(day: number, time: String) {
     let res;
     this.state.events.map((e) => {
       let t = dateObjToDisplayTime(e.start_time);
-      if (e.start_time.getUTCDay() === day && t === time) {
+      let inWeek: boolean = false;
+
+      if(this.state.week[day].getUTCDate() === e.start_time.getUTCDate()) inWeek = true;
+
+      if (e.start_time.getUTCDay() === day && t === time && inWeek) {
         res = (
           <EventCard
             event_id={e.event_id}
@@ -105,11 +129,16 @@ export class TravelPlanner extends React.Component<IProps, IState> {
         let i = prevItems[index];
 
         let duration = item.end_time.getTime() - item.start_time.getTime();
-        duration = duration/1000/60;
-        let mins = duration%60;
-        let hours = Math.floor(duration/60);
+        duration = duration / 1000 / 60;
+        let mins = duration % 60;
+        let hours = Math.floor(duration / 60);
 
-        let start = displayTimeToDateObj(time, this.state.week[day].getUTCMonth(), this.state.week[day].getUTCDate(), this.state.week[day].getUTCFullYear());
+        let start = displayTimeToDateObj(
+          time,
+          this.state.week[day].getUTCMonth(),
+          this.state.week[day].getUTCDate(),
+          this.state.week[day].getUTCFullYear()
+        );
         let end = new Date(start);
         end.setUTCHours(end.getUTCHours() + hours);
         end.setUTCMinutes(end.getUTCMinutes() + mins);
@@ -128,10 +157,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     let event = this.state.events.filter((item) => item.event_id === id)[0];
 
     let hours = Math.floor(duration);
-    let mins = (duration % 1)*60;
-
-    console.log(hours);
-    console.log(mins);
+    let mins = (duration % 1) * 60;
 
     event.end_time.setUTCHours(event.start_time.getUTCHours() + hours);
     event.end_time.setUTCMinutes(event.start_time.getUTCMinutes() + mins);
@@ -189,12 +215,22 @@ export class TravelPlanner extends React.Component<IProps, IState> {
             <div className="plannerNavbarDate">
               <div className="dateWrapper">
                 <img src={calendarIcon} alt="" />
-                <h1>Mar 20 - Mar 26 2022</h1>
+                <h1>
+                  {dateToMonthString(this.state.week[0]) +
+                    " " +
+                    this.state.week[0].getUTCDate() +
+                    " - " +
+                    dateToMonthString(this.state.week[6]) +
+                    " " +
+                    this.state.week[6].getUTCDate() +
+                    " " +
+                    this.state.week[6].getUTCFullYear()}
+                </h1>
               </div>
             </div>
             <div className="arrowWrapper">
-              <img src={leftArrow} alt="" onClick={this.changeWeek} />
-              <img src={rightArrow} alt="" onClick={this.changeWeek} />
+              <img src={leftArrow} alt="" onClick={() => this.changeWeek("b")} />
+              <img src={rightArrow} alt="" onClick={() => this.changeWeek("f")} />
             </div>
           </div>
 
@@ -211,7 +247,15 @@ export class TravelPlanner extends React.Component<IProps, IState> {
             <div className="table">
               <div className="daysWrapper">
                 {this.state.week.map((day) => {
-                  return <h1>{dateToDayString(day) + ", " + dateToMonthString(day) + " " + day.getDate()}</h1>;
+                  return (
+                    <h1>
+                      {dateToDayString(day) +
+                        ", " +
+                        dateToMonthString(day) +
+                        " " +
+                        day.getDate()}
+                    </h1>
+                  );
                 })}
               </div>
               <div className="cellWrapper">
