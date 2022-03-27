@@ -32,3 +32,9 @@ func ReviewsRoutes(r fiber.Router) {
 	r.Get("/reviews/all", handlers.AllReviewsHandler)
 	r.Post("/review", handlers.CreateReviewsHandler)
 }
+
+// Routes for transportation microservice
+func TransportationRoutes(r fiber.Router) {
+	r.Get("transportation/short", handlers.ShortTransportationHandler)
+	r.Get("transportation/long", handlers.LongTransportationHandler)
+}
