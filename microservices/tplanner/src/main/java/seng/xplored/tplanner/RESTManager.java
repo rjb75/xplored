@@ -4,6 +4,7 @@ package seng.xplored.tplanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.yaml.snakeyaml.util.ArrayUtils;
 
 import seng.xplored.tplanner.Repositories.*;
 import java.util.*;
@@ -65,10 +66,7 @@ public class RESTManager {
 
         trip.setEvents(str);
         tripRepository.save(trip);
-        // if(tripRepository.findById(tripid).isEmpty()){
-        //     return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
-        // }
-        
+
         return ResponseEntity.ok().headers(responseHeaders).body(trip);
     }
 
@@ -80,10 +78,10 @@ public class RESTManager {
     //Get All Events
     @GetMapping(baseURL + "/events")
     @ResponseBody
-    public ResponseEntity<List<Event>> getEvents(){
+    public ResponseEntity<Object> getEvents(){
         HttpHeaders responseHeaders = new HttpHeaders();
         if(eventRepository.findAll().isEmpty()){ //NEED TO TEST THIS STILL
-            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); //create a body!
         }
         else{
             return ResponseEntity.ok().headers(responseHeaders).body(eventRepository.findAll());
@@ -92,17 +90,16 @@ public class RESTManager {
 
     //Get Single Event
     @GetMapping(baseURL + "/event")
-    public ResponseEntity<Optional<Event>> getEvent(@RequestParam("eventid") String eventid){
+    public ResponseEntity<Object> getEvent(@RequestParam("eventid") String eventid){
         // return eventRepository.findById(eventid);
         HttpHeaders responseHeaders = new HttpHeaders();
         if(eventRepository.findById(eventid).isEmpty()){ //NEED TO TEST THIS STILL
-            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); //create a body!
         }
         else{
             return ResponseEntity.ok().headers(responseHeaders).body(eventRepository.findById(eventid));
         }
     }
-
     
     //Post User
     @PostMapping(baseURL + "/user")
@@ -120,7 +117,7 @@ public class RESTManager {
         try{
             user = userRepository.findById(userid).get(); //Gets the User with Id
         } catch(Exception ex){
-            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); //create a body!
         }
 
         tripRepository.save(trip); //Add Trip
@@ -147,12 +144,10 @@ public class RESTManager {
 
     //Get All Trips
     @GetMapping(baseURL + "/trips")
-    public ResponseEntity<List<Trip>> getTrips(){
-        // System.out.println(tripRepository.findAll());
-        // return tripRepository.findAll();
+    public ResponseEntity<Object> getTrips(){
         HttpHeaders responseHeaders = new HttpHeaders();
         if(tripRepository.findAll().isEmpty()){ //NEED TO TEST THIS STILL
-            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); 
         }
         else{
             return ResponseEntity.ok().headers(responseHeaders).body(tripRepository.findAll());
@@ -161,10 +156,10 @@ public class RESTManager {
 
     //Get Single Trip
     @GetMapping(baseURL + "/trip")
-    public ResponseEntity<Optional<Trip>> getTrip(@RequestParam String id){
+    public ResponseEntity<Object> getTrip(@RequestParam String id){
         HttpHeaders responseHeaders = new HttpHeaders();
         if(tripRepository.findById(id).isEmpty()){ //NEED TO TEST THIS STILL
-            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); 
         }
         else{
             return ResponseEntity.ok().headers(responseHeaders).body(tripRepository.findById(id));
@@ -174,49 +169,39 @@ public class RESTManager {
      
    //Get user's trips
     @GetMapping(baseURL + "/usertrips")
-    public ResponseEntity<List<Trip>> getTrips(@RequestParam String authid){
+    public ResponseEntity<Object> getTrips(@RequestParam String authid){
         HttpHeaders responseHeaders = new HttpHeaders();
         User user =  userRepository.findByAuthId(authid);
         String trips[];
         try{ 
             trips = user.getTrips();
         } catch(Exception ex){
-            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); 
         }
         List<Trip> trip = new ArrayList<>();
         for(int i =0; i<trips.length; i++){
             // System.out.println(tripRepository.findById(trips[i]).get());
             trip.add(tripRepository.findById(trips[i]).get());
         }
-        if(trip == null){ //NEED TO TEST THIS STILL
-            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
-        }
-        else{
             return ResponseEntity.ok().headers(responseHeaders).body(trip);
-        }
     }
 
     //Get All Events in a Trip
     @GetMapping(baseURL + "/alltrips")
-    public ResponseEntity<List<Event>> getAllEventsInTrip(@RequestParam String tripid){
+    public ResponseEntity<Object> getAllEventsInTrip(@RequestParam String tripid){
         HttpHeaders responseHeaders = new HttpHeaders();
         Trip trip;
         try{ 
             trip =  tripRepository.findById(tripid).get();
         } catch(Exception ex){
-            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); 
         }
         String events[] = trip.getEvents();
         List<Event> event = new ArrayList<>();
         for(int i =0; i<events.length; i++){
             event.add(eventRepository.findById(events[i]).get());
         }
-        if(event == null){  //NEED TO TEST THIS STILL
-            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
-        }
-        else{
-            return ResponseEntity.ok().headers(responseHeaders).body(event);
-        }      
+        return ResponseEntity.ok().headers(responseHeaders).body(event);      
     }
 
     //Edit an Event
@@ -227,7 +212,7 @@ public class RESTManager {
         try{ 
             event = eventRepository.findById(eventid).get();
         } catch(Exception ex){
-            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); 
         }
 
         event.setEvent_id(eventid);
@@ -243,8 +228,8 @@ public class RESTManager {
 
         eventRepository.save(event);
 
-        if(eventRepository.findById(eventid).isEmpty()){ //NEED TO TEST THIS STILL
-            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+        if(eventRepository.findById(eventid).isEmpty()){ 
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); 
         }
         else{
             return ResponseEntity.ok().headers(responseHeaders).body(eventRepository.findById(eventid));
@@ -253,44 +238,70 @@ public class RESTManager {
 
     //Delete an event
     @DeleteMapping(baseURL + "/event")
-    public ResponseEntity<Object> deleteEvent(@RequestParam("eventid") String eventid){
-        HttpHeaders responseHeaders = new HttpHeaders();
-        eventRepository.deleteById(eventid);
-        if(eventRepository.findById(eventid).isEmpty()){ //NEED TO TEST THIS STILL
-            return ResponseEntity.ok().headers(responseHeaders).body(null); //create a body for success!
-        }
-        else{
-            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body for failure
-        }
-    }
-    
-    //Delete a trip
-    @DeleteMapping(baseURL + "/trip")
-    public ResponseEntity<Object> deleteTrip(@RequestParam String tripid){
+    public ResponseEntity<Object> deleteEvent(@RequestParam("eventid") String eventid, @RequestParam("tripid") String tripid){
         HttpHeaders responseHeaders = new HttpHeaders();
         Trip trip;
-        // System.out.println(tripid);
         try{
-            trip =  tripRepository.findById(tripid).get();
+            trip = tripRepository.findById(tripid).get();
         } catch(Exception ex){
-            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body!
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); 
+        }
+
+        Event event;
+        try{
+            event = eventRepository.findById(eventid).get();
+        } catch(Exception ex){
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); 
         }
 
         String events[] = trip.getEvents();
-
-        if(events.length != 0){
-            for(int i = 0; i < events.length; i++){ //get all events for the trip, delete the events
-                eventRepository.deleteById(events[i]);
-            }
+        List<String> stringEvents=new ArrayList<>(Arrays.asList(events));
+        try{
+            stringEvents.remove(eventid); //remove the event from the trip
+        } catch(Exception ex){
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); 
         }
 
-        tripRepository.deleteById(tripid); //delete the trip
-        if(tripRepository.findById(tripid).isEmpty()){ //NEED TO TEST THIS STILL
-            return ResponseEntity.ok().headers(responseHeaders).body(null); //create a body for success!
+        events = stringEvents.toArray(new String[0]);
+        trip.setEvents(events); //change the events in the trip
+        tripRepository.save(trip); //save the trip edit
+        
+        eventRepository.deleteById(eventid); //delete event
+        if(eventRepository.findById(eventid).isEmpty()){ //event was successfully deleted
+            return ResponseEntity.ok().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.OK)); 
         }
         else{
-            return ResponseEntity.internalServerError().headers(responseHeaders).body(null); //create a body for failure
+            return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); 
         }
     }
+    
+    // //Delete a trip
+    // @DeleteMapping(baseURL + "/trip")
+    // public ResponseEntity<Object> deleteTrip(@RequestParam String tripid){
+    //     HttpHeaders responseHeaders = new HttpHeaders();
+    //     Trip trip;
+    //     // System.out.println(tripid);
+    //     try{
+    //         trip =  tripRepository.findById(tripid).get();
+    //     } catch(Exception ex){
+    //         return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); 
+    //     }
+
+    //     String events[] = trip.getEvents();
+
+    //     if(events.length != 0){
+    //         for(int i = 0; i < events.length; i++){ //get all events for the trip, delete the events
+    //             eventRepository.deleteById(events[i]);
+    //         }
+    //     }
+
+    //     tripRepository.deleteById(tripid); //delete the trip
+    //     if(tripRepository.findById(tripid).isEmpty()){
+    //         return ResponseEntity.ok().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.OK)); 
+    //     }
+    //     else{
+    //         return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); 
+    //     }
+    // }
 
 }
