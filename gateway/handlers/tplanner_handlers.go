@@ -51,6 +51,11 @@ func GetUserTrips(c *fiber.Ctx) error {
 	}
 
 	uid := c.Locals("user_id")
+
+	if uid == nil {
+		return c.Status(401).JSON(fiber.Map{"status": "fail", "type": "Authentication Error", "cause": "Invalid access token", "origin": "gateway"})
+	}
+
 	q := query.URL.Query()
 	q.Add("authid", uid.(string))
 	query.URL.RawQuery = q.Encode()
