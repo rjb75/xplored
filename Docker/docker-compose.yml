@@ -39,6 +39,14 @@ services:
       dockerfile: Docker/Recommendations.Dockerfile
     expose:
       - 3007
+  tplanner:
+    tty: true
+    container_name: xplored-ms-tplanner
+    build:
+      context: ../
+      dockerfile: Docker/TPlanner.Dockerfile
+    expose:
+      - 3000
   gateway:
     tty: true
     container_name: xplored-gateway

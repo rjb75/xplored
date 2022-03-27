@@ -72,6 +72,15 @@ const Login: React.FC = () => {
     GetImageURL();
   }, []);
 
+  function test() {
+    axiosInstance
+      .get('/api/v1/trips')
+      .then((res) => {
+        console.log(res.data)
+      })
+      .catch((err) => console.log(err))
+  }
+
   function login() {
     const email = (document.getElementById("email") as HTMLInputElement).value;
     const pass = (document.getElementById("password") as HTMLInputElement)
@@ -136,8 +145,9 @@ const Login: React.FC = () => {
                 className="AuthButton"
                 type="button"
                 value="Log In"
-                onClick={() => GetImageURL()}
+                onClick={() => login()}
               />
+              <input className="AuthButton" type={'button'} value="test" onClick={test}/>
             </div>
           </div>
         </div>
