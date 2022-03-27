@@ -272,7 +272,13 @@ export default function EventCardHolder({
         switch (selectedMode) {
             case "Flights":
                 axiosInstance
-                    .get("/transportation/api/v1/long")
+                    .get("/api/v1/pois", {
+                        params: {
+                            address: "2500 University Drive NW",
+                            keyword: "Cafe",
+                            radius: 1000,
+                        },
+                    })
                     .then((res) => {
                         console.log(res);
                     })

@@ -6,7 +6,12 @@ import Logo from "../images/logo.svg";
 import Select from "react-select";
 import axiosInstance from "../utils/axios";
 
-const NavBar: React.FC = () => {
+interface NavProps {
+    mode: string;
+    changeMode: Function;
+}
+
+const NavBar = ({ mode, changeMode }: NavProps) => {
     const travelTypes = [
         {
             name: "Flights",
@@ -35,24 +40,26 @@ const NavBar: React.FC = () => {
         },
     ];
 
-    const [selectedMode, setSelectedMode] = useState("Flights");
     interface TripOptions {
-        label: string,
-        value: string,
-    };
+        label: string;
+        value: string;
+    }
 
     const [trips, setTrips] = useState<Array<TripOptions>>([]);
 
     useEffect(() => {
         axiosInstance
-        .get('/api/v1/trips')
-        .then((res) => {
-            Array.isArray(res.data) && setTrips(res.data.map((t) => {
-                return {label: t.name, value: t.trip_id}
-            }))
-        })
-        .catch((err) => console.log(err))
-    }, [])
+            .get("/api/v1/trips")
+            .then((res) => {
+                Array.isArray(res.data) &&
+                    setTrips(
+                        res.data.map((t) => {
+                            return { label: t.name, value: t.trip_id };
+                        })
+                    );
+            })
+            .catch((err) => console.log(err));
+    }, []);
 
     const testFunc = () => {};
 
@@ -120,18 +127,16 @@ const NavBar: React.FC = () => {
             </div>
             <div className="navbar--type-selector">
                 {travelTypes.map((e, i) => {
-                    const onClickAction = () => {
-                        setSelectedMode(e.name);
-                        e.action();
-                    };
-
                     return (
                         <button
                             className={`navbar--type-button icon-${e.icon} ${
-                                selectedMode === e.name ? "active" : ""
+                                mode === e.name ? "active" : ""
                             }`}
                             key={i}
-                            onClick={onClickAction}
+                            onClick={() => {
+                                changeMode(e.name);
+                                e.action();
+                            }}
                         />
                     );
                 })}
