@@ -12,6 +12,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
+
 func main() {
 	app := fiber.New()
 
@@ -29,3 +30,6 @@ func main() {
 	app.Listen(port)
 
 }
+
+
+
