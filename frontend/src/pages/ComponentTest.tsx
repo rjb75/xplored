@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Accommodation } from "../components/Accommodation";
 import { Auth } from "../components/Auth";
 import { Dining } from "../components/Dining";
@@ -13,11 +13,11 @@ import { eventTypes } from "../components/EventCard";
 import EventCardHolder from "../components/EventCardHolder";
 
 function ComponentTest() {
-  return (
-    <div style={{ height: `100vh`, width: `100%`, margin: `auto` }}>
-      <TravelPlanner />
-    </div>
-  );
+    return (
+        <div style={{ height: `100vh`, width: `100%`, margin: `auto` }}>
+            <TravelPlanner />
+        </div>
+    );
 }
 
 export default ComponentTest;

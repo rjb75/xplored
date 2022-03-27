@@ -272,7 +272,7 @@ export default function EventCardHolder({
         switch (selectedMode) {
             case "Flights":
                 axiosInstance
-                    .get("/api/v1")
+                    .get("/transportation/api/v1/long")
                     .then((res) => {
                         console.log(res);
                     })
@@ -280,7 +280,7 @@ export default function EventCardHolder({
                 break;
             case "Car":
                 axiosInstance
-                    .get("/api/v1/")
+                    .get("/transportation/api/v1/short")
                     .then((res) => {
                         console.log(res);
                     })
@@ -288,7 +288,7 @@ export default function EventCardHolder({
                 break;
             case "Food":
                 axiosInstance
-                    .get("/api/v1/")
+                    .get("/dining/api/v1")
                     .then((res) => {
                         console.log(res);
                     })
@@ -296,7 +296,7 @@ export default function EventCardHolder({
                 break;
             case "Hotels":
                 axiosInstance
-                    .get("/api/v1/")
+                    .get("/accom/api/v1")
                     .then((res) => {
                         console.log(res);
                     })
@@ -304,7 +304,7 @@ export default function EventCardHolder({
                 break;
             case "Attraction":
                 axiosInstance
-                    .get("/api/v1/")
+                    .get("/poi/api/v1")
                     .then((res) => {
                         console.log(res);
                     })
@@ -350,7 +350,10 @@ export default function EventCardHolder({
                             {holderExtras()}
                         </ul>
                     </div>
-                    <ul className="card--holder-list">{eventCards}</ul>
+                    <ul className="card--holder-list">
+                        <FlightCard addCardFunction={eventHandler} />
+                        {eventCards}
+                    </ul>
                 </div>
             )}
         </>
