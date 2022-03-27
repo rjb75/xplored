@@ -14,6 +14,6 @@ func RegisterRoutes(app *fiber.App) {
 	api := poi.Group("/api")
 	v1 := api.Group("/v1")
 
-//	v1.Get("/long", handlers.GetTransLong)
+	v1.Get("/long", handlers.GetTransLong)
 	v1.Get("/short", handlers.GetTransShort)
 }
