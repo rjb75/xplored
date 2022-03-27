@@ -15,6 +15,9 @@ import (
 	"googlemaps.github.io/maps"
 )
 
+/*
+* Short Distance travel with Google API
+ */
 func GetTransShort(c *fiber.Ctx) error {
 	request := new(models.ShortRequest)
 	err := c.QueryParser(request)
@@ -26,10 +29,6 @@ func GetTransShort(c *fiber.Ctx) error {
 	if (request.Origin == "" || request.Destination == ""){
 		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Missing Paramater"})
 	}
-
-
-	//check that data isn't null
-	//if req.___ == null
 
 	client, err := maps.NewClient(maps.WithAPIKey(os.Getenv("TRANSPORTATION_GOOGLE_API_KEY")))
 	
@@ -54,7 +53,9 @@ func GetTransShort(c *fiber.Ctx) error {
 	return c.Status(200).JSON(fiber.Map{"status": err, "data": result, "waypoint": waypoints})
 }
 
-
+/*
+* Flight information with Flights API
+*/
 func GetTransLong(c *fiber.Ctx) error {
 	request := new(models.LongRequest)
 	err := c.QueryParser(request)
@@ -110,6 +111,7 @@ func GetTransLong(c *fiber.Ctx) error {
 	defer res.Body.Close()
 	body, _ := ioutil.ReadAll(res.Body)
 
+	//JSONIFY
 	var jsonMap map[string]interface{}
 	json.Unmarshal([]byte(string(body) ), &jsonMap)	
 
