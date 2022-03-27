@@ -39,6 +39,12 @@ services:
       dockerfile: Docker/Recommendations.Dockerfile
     expose:
       - 3007
+  trans:
+    tty: true
+    container_name: xplored-ms-transportation
+    build:
+      context: ../
+      dockerfile: Docker/Transportation.Dockerfile
   gateway:
     tty: true
     container_name: xplored-gateway
