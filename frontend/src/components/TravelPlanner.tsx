@@ -14,7 +14,7 @@ import { eventTypes } from "./EventCard";
 import PlannerCell from "./PlannerCell";
 import axiosInstance from "../utils/axios";
 import axios from "axios"; // Remove When switching to axios instance!!
-import { eventAdapter } from "../utils/PlannerAdapters";
+import { eventAdapter, typeAdapter } from "../utils/PlannerAdapters";
 
 interface IProps {
   currentTrip: string;
@@ -80,6 +80,11 @@ export class TravelPlanner extends React.Component<IProps, IState> {
             duration={e.duration}
             id={e.id}
             date={e.date}
+            address={e.address}
+            link={e.link}
+            photoUrl={e.photoUrl}
+            startDate={e.startDate}
+            endDate={e.endDate}
           />
         );
       }
@@ -99,7 +104,24 @@ export class TravelPlanner extends React.Component<IProps, IState> {
       }
     });
 
-    // Update backend
+    let returnTime: Date;
+    if(time.split(" ")[1] === "pm"){
+      returnTime = new Date(startTime.)
+    }else{
+      returnTime = new Date()
+    }
+
+    axios.post("http://localhost:3000/planner/api/v1/editevent",{
+      params: {
+        eventid: item.id,
+      },
+      type: typeAdapter(item.type),
+      name: item.title,
+      address: item.address,
+      link: item.link,
+      photo_url: item.photoUrl,
+      startDate: 
+    })
   }
 
   render() {

@@ -28,6 +28,11 @@ export type plannerEvent = {
   duration: String;
   type: eventTypes;
   id: String;
+  address: string;
+  link: string;
+  photoUrl: string;
+  startDate: string;
+  endDate: string;
 };
 
 export const EventCard = ({
@@ -37,6 +42,11 @@ export const EventCard = ({
   duration,
   date,
   id,
+  address,
+  link,
+  photoUrl,
+  startDate,
+  endDate,
 }: plannerEvent): JSX.Element => {
   const [size, setSize] = useState<string>();
 
@@ -74,6 +84,11 @@ export const EventCard = ({
       title: title,
       duration: duration,
       date: date,
+      address: address,
+      link: link,
+      photoUrl: photoUrl,
+      startDate: startDate,
+      endDate: endDate,
     },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
