@@ -53,7 +53,6 @@ export const EventCard = ({
 
 
   useEffect(() => {
-    console.log("test")
     let durHours = size / 100;
     if (editSizeCallBack !== undefined) editSizeCallBack(event_id, durHours);
   }, [size]);
