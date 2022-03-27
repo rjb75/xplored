@@ -23,7 +23,7 @@ export const PlannerSwitcher = ({switchFunction}: PlannerSwitcherProps) => {
   }
 
   return (
-    <Draggable>
+    <Draggable bounds="parent">
       <div className="PlannerSwitcherWrapper">
         <div
           className={

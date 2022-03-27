@@ -1,37 +1,40 @@
 $color-grey-light: #979797;
-$color-grey-dark: #453F3F;
-$color-pink: #F07495;
-$color-purple: #776EDE;
+$color-grey-x-light: #f3f3f3;
+$color-grey-dark: #453f3f;
+$color-pink: #f07495;
+$color-purple: #776ede;
+$color-white: #ffffff;
 $color-purple-shaded: #544cac;
 $color-purple-lightened: #968fe2;
-$color-white: #FFFFFF;
 $color-error: #cf1f00;
 
 // Event colors
-$color-magenta: #E44D90;
-$color-dark-magenta: #BF3271;
-$color-yellow: #F8C86D;
-$color-dark-yellow: #EDAE49;
-$color-blue: #3A8Ed6;
-$color-dark-blue: #30638E;
-$color-turquoise: #2B9DAF;
-$color-dark-turquoise: #00798C;
-$color-salmon: #EC6E7F;
-$color-dark-salmon: #D1495B;
+$color-magenta: #e44d90;
+$color-dark-magenta: #bf3271;
+$color-yellow: #f8c86d;
+$color-dark-yellow: #edae49;
+$color-blue: #3a8ed6;
+$color-dark-blue: #30638e;
+$color-turquoise: #2b9daf;
+$color-dark-turquoise: #00798c;
+$color-salmon: #ec6e7f;
+$color-dark-salmon: #d1495b;
 
-$colors: ('grey-light': $color-grey-light,
-    'grey-dark': $color-grey-dark,
-    'pink': $color-pink,
-    'purple': $color-purple,
-    'white': $color-white,
-    'magenta': $color-magenta,
-    'dark-magenta': $color-dark-magenta,
-    'yellow': $color-yellow,
-    'dark-yellow': $color-dark-yellow,
-    'blue': $color-blue,
-    'dark-blue': $color-dark-blue,
-    'turquoise': $color-turquoise,
-    'dark-turquoise': $color-dark-turquoise,
-    'salmon': $color-salmon,
-    'dark-salmon': $color-dark-salmon,
-    'error':$color-error);
+$colors: (
+    "grey-light": $color-grey-light,
+    "grey-dark": $color-grey-dark,
+    "pink": $color-pink,
+    "purple": $color-purple,
+    "white": $color-white,
+    "magenta": $color-magenta,
+    "dark-magenta": $color-dark-magenta,
+    "yellow": $color-yellow,
+    "dark-yellow": $color-dark-yellow,
+    "blue": $color-blue,
+    "dark-blue": $color-dark-blue,
+    "turquoise": $color-turquoise,
+    "dark-turquoise": $color-dark-turquoise,
+    "salmon": $color-salmon,
+    "dark-salmon": $color-dark-salmon,
+    "error":$color-error
+);
