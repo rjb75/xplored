@@ -1,17 +1,7 @@
 import config, uvicorn, os, requests
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 
 photoApp = FastAPI()
-
-origins = ["http://localhost:8000"]
-photoApp.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"]
-)
 
 #root endpoint
 @photoApp.get("/")
