@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputField from "./inputs/InputField";
 import DatePicker from "react-datepicker";
 import "./NavBar.scss";
 import Logo from "../images/logo.svg";
-import Select, { StylesConfig } from "react-select";
+import Select from "react-select";
+import axiosInstance from "../utils/axios";
 
 const NavBar: React.FC = () => {
     const travelTypes = [
@@ -35,13 +36,23 @@ const NavBar: React.FC = () => {
     ];
 
     const [selectedMode, setSelectedMode] = useState("Flights");
+    interface TripOptions {
+        label: string,
+        value: string,
+    };
 
-    const trips = [
-        {
-            label: "Seattle Trip",
-            value: "seattle",
-        },
-    ];
+    const [trips, setTrips] = useState<Array<TripOptions>>([]);
+
+    useEffect(() => {
+        axiosInstance
+        .get('/api/v1/trips')
+        .then((res) => {
+            Array.isArray(res.data) && setTrips(res.data.map((t) => {
+                return {label: t.name, value: t.trip_id}
+            }))
+        })
+        .catch((err) => console.log(err))
+    }, [])
 
     const testFunc = () => {};
 
