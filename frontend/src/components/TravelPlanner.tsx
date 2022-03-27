@@ -123,10 +123,11 @@ export class TravelPlanner extends React.Component<IProps, IState> {
   }
 
   moveEvent(item: plannerEvent, day: number, time: string) {
+    let i: plannerEvent = item;
     this.state.events.forEach((e, index) => {
       if (item.event_id === e.event_id) {
         let prevItems = [...this.state.events];
-        let i = prevItems[index];
+        i = prevItems[index];
 
         let duration = item.end_time.getTime() - item.start_time.getTime();
         duration = duration / 1000 / 60;
@@ -150,7 +151,22 @@ export class TravelPlanner extends React.Component<IProps, IState> {
       }
     });
 
-    // Update backend
+    axios.post("http://localhost:3000/planner/api/v1/editevent", {
+      params:{
+        eventid: i.event_id,
+      },
+      headers: {
+        "Content-type": "application/json",
+      },
+      type: i.type,
+      start_time: i.start_time,
+      end_time: i.end_time,
+      name: i.name,
+      address: i.address,
+      link: i.link,
+      data: i.data,
+      photo_URL: i.photo_URL,
+    })
   }
 
   editEventSize(id: string, duration: number) {
