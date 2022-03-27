@@ -10,22 +10,30 @@ import (
 	"os"
 	"strings"
 
-	// "strconv"
-
 	"github.com/Risath18/xplored-transportation/models"
 	"github.com/gofiber/fiber/v2"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"googlemaps.github.io/maps"
 )
 
-
+//Import All Codes
 var codes = importAirportCodes()
+
+/*
+* Helper Method to Import codes from CSV
+ */
 func importAirportCodes() map[string]models.AirportCodes{
-	f, err := os.Open("airport-codes_csv.csv")
+
+	err := godotenv.Load("../../.env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	f, err := os.Open(os.Getenv("TRANSPORTATION_AIRPORT_CODE_CSV"))
     if err != nil {
         log.Fatal(err)
-    }
-    
+    }    
 
     // remember to close the file at the end of the program
     defer f.Close()
@@ -38,7 +46,6 @@ func importAirportCodes() map[string]models.AirportCodes{
     }
 
     // convert records to array of structs
-	//var codesList []models.AirportCodes
 	codesMap := make(map[string]models.AirportCodes)
     for i, line := range data {
         if i > 0 { // omit header line
@@ -62,6 +69,9 @@ func importAirportCodes() map[string]models.AirportCodes{
 	return codesMap
 }
 
+/*
+* Dynamic Query to get Airport Codes based on various data
+ */
 func GetAirportCode(c *fiber.Ctx) error{
 	request := new(models.CodeRequest)
 	err := c.QueryParser(request)
