@@ -2,7 +2,6 @@ import React from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import {
-  days,
   timeRows,
   dateObjToDisplayTime,
   eventAdapter,
@@ -46,7 +45,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
         },
       })
       .then((res) => {
-        let events = eventAdapter(res.data);
+        let events = eventAdapter(res.data, this.editEventSize);
         this.setState({ events: events });
       });
 
@@ -57,7 +56,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
 
     this.moveEvent = this.moveEvent.bind(this);
     this.newEvent = this.newEvent.bind(this);
-    this.editEvent = this.editEvent.bind(this);
+    this.editEventSize = this.editEventSize.bind(this);
   }
 
   getWeek(): Date[] {
@@ -79,7 +78,6 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     let res;
     this.state.events.map((e) => {
       let t = dateObjToDisplayTime(e.start_time);
-      console.log(t)
       if (e.start_time.getUTCDay() === day && t === time) {
         res = (
           <EventCard
@@ -92,6 +90,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
             link={e.link}
             data={e.data}
             photo_URL={e.photo_URL}
+            editSizeCallBack={this.editEventSize}
           />
         );
       }
@@ -125,14 +124,19 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     // Update backend
   }
 
-  editEvent(id: string, duration?: string) {
-    let event = this.state.events.filter((item) => item.id === id)[0];
+  editEventSize(id: string, duration: number) {
+    let event = this.state.events.filter((item) => item.event_id === id)[0];
 
-    if (duration !== undefined) {
-      event.duration = duration;
-    }
+    let hours = Math.floor(duration);
+    let mins = (duration % 1)*60;
 
-    let oldState = this.state.events.filter((item) => item.id !== id);
+    console.log(hours);
+    console.log(mins);
+
+    event.end_time.setUTCHours(event.start_time.getUTCHours() + hours);
+    event.end_time.setUTCMinutes(event.start_time.getUTCMinutes() + mins);
+
+    let oldState = this.state.events.filter((item) => item.event_id !== id);
     oldState.push(event);
     this.setState({ events: oldState });
   }

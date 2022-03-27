@@ -32,6 +32,7 @@ export type plannerEvent = {
   link: string,
   data: string,
   photo_URL: string,
+  editSizeCallBack: Function,
 };
 
 export const EventCard = ({
@@ -44,6 +45,7 @@ export const EventCard = ({
   link,
   data,
   photo_URL,
+  editSizeCallBack,
 }: plannerEvent): JSX.Element => {
   const [duration, setDuration] = useState<string>(getDuration());
   const [size, setSize] = useState<number>(getSize());
@@ -51,7 +53,9 @@ export const EventCard = ({
 
 
   useEffect(() => {
-    //if (editCallback !== undefined) editCallback(id, getDuration());
+    console.log("test")
+    let durHours = size / 100;
+    if (editSizeCallBack !== undefined) editSizeCallBack(event_id, durHours);
   }, [size]);
 
   function getIcon(eventType: eventTypes) {

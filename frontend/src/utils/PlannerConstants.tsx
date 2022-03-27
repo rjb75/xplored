@@ -222,7 +222,6 @@ export function dateToDayString(date: Date) {
 
 export function dateToMonthString(date: Date) {
   let month: string = "";
-  console.log(date.getUTCMonth())
   switch (date.getUTCMonth()) {
     case 0:
       month = "Jan";
@@ -266,7 +265,7 @@ export function dateToMonthString(date: Date) {
   return month;
 }
 
-export function eventAdapter(events: any[]): plannerEvent[] {
+export function eventAdapter(events: any[], editSizeCallBack: Function): plannerEvent[] {
   let e: plannerEvent[] = [];
   events.forEach((event) => {
     let type: eventTypes;
@@ -301,6 +300,7 @@ export function eventAdapter(events: any[]): plannerEvent[] {
       link: event.link,
       data: event.data,
       photo_URL: event.photo_URL,
+      editSizeCallBack: editSizeCallBack,
     });
   });
 
