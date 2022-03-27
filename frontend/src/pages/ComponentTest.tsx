@@ -2,6 +2,7 @@ import React from "react";
 import { TravelPlanner } from "../components/TravelPlanner";
 import TravelMap from "../components/TravelMap";
 import NavBar from "../components/NavBar";
+import React from "react";
 
 function ComponentTest() {
   return (

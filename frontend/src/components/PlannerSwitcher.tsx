@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import Draggable from "react-draggable";
 import "../styles/PlannerSwitcher.scss";
-//@ts-ignore
-import calendar from "../assets/calendarIcon.svg";
-//@ts-ignore
-import mapIcon from "../assets/mapIcon.svg";
 
 interface view {
   view: String;

@@ -33,7 +33,7 @@ class Home extends React.Component<IProps, IState> {
           margin: `auto`,
         }}
       >
-        {this.state.view === "planner" ? <TravelPlanner /> : <TravelMap />}
+        {this.state.view === "planner" ? <TravelPlanner mode="planner"/> : <TravelMap />}
         <PlannerSwitcher switchFunction={this.changeView} />
       </div>
     );
