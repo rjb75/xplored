@@ -1,54 +1,51 @@
 package handlers
 
 import (
-	// "context"
-	// "log"
-	// "os"
+	"context"
+	"os"
+
 	// "strconv"
 
 	"github.com/Risath18/xplored-transportation/models"
 	"github.com/gofiber/fiber/v2"
 	_ "github.com/lib/pq"
+	"googlemaps.github.io/maps"
 )
 
-func GetTransLong(c *fiber.Ctx) error {
-	req := new(models.LongTrip)
-
-	err := c.QueryParser(req)
-
-	if err != nil {
-		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Body Error", "cause": "Couldn't process request body"})
-	}
-
-	//check that data isn't null
-	//if req.___ == null
-
-	//data := longOptions(req)
-
-	return c.Status(200).JSON(fiber.Map{"status": err, "data": nil})
-}
-
 func GetTransShort(c *fiber.Ctx) error {
-	req := new(models.ShortTrip)
-
-	err := c.QueryParser(req)
+	request := new(models.ShortRequest)
+	err := c.QueryParser(request)
 
 	if err != nil {
-		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Body Error", "cause": "Couldn't process request body"})
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Body Error", "cause": "Couldn't process body of request"})
 	}
+
+	if (request.Origin == "" || request.Destination == ""){
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Missing Paramater"})
+	}
+
 
 	//check that data isn't null
 	//if req.___ == null
 
-//	data := shortOptions(req)
+	client, err := maps.NewClient(maps.WithAPIKey(os.Getenv("TRANSPORTATION_GOOGLE_API_KEY")))
+	
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Failed to connect with API"})
 
-	return c.Status(200).JSON(fiber.Map{"status": err, "data": nil})
+	}
+
+	r := &maps.DirectionsRequest {
+		Origin : request.Origin,
+		Destination : request.Destination,
+		DepartureTime : request.DepartureTime,
+	}
+
+	result, waypoints, err := client.Directions(context.Background(), r)
+	
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": err})
+	}
+
+	return c.Status(200).JSON(fiber.Map{"status": err, "data": result, "waypoint": waypoints})
 }
-
-// func longOptions(trans *models.LongTrip) {
-
-// }
-
-// func shortOptions(trans *models.LongTrip) {
-
-// }
