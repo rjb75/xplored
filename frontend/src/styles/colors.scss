@@ -4,6 +4,9 @@ $color-grey-dark: #453f3f;
 $color-pink: #f07495;
 $color-purple: #776ede;
 $color-white: #ffffff;
+$color-purple-shaded: #544cac;
+$color-purple-lightened: #968fe2;
+$color-error: #cf1f00;
 
 // Event colors
 $color-magenta: #e44d90;
@@ -33,4 +36,5 @@ $colors: (
     "dark-turquoise": $color-dark-turquoise,
     "salmon": $color-salmon,
     "dark-salmon": $color-dark-salmon,
+    "error":$color-error
 );

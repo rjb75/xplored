@@ -9,6 +9,7 @@ import (
 // variables for authentication middleware
 type AuthConfig struct {
 	FirebaseApp *firebase.App
+	IgnorePaths []string
 }
 
 // default configuration settings

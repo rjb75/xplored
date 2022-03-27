@@ -8,6 +8,8 @@ func FrontendRoutes(app *fiber.App) {
 
 	app.Static("/", frontendBuildPath)
 	app.Static("/login", frontendBuildPath)
+	app.Static("/signup", frontendBuildPath)
+	app.Static("/home", frontendBuildPath)
 	app.Static("/component-test", frontendBuildPath)
 }
 

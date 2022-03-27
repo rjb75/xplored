@@ -10,6 +10,14 @@ The deployment of the application is completed using `docker-compose` which aggr
 $ docker-compose -f Docker/docker-compose.yml up --build
 ```
 
+## Developing the Application
+
+The development version of the application can be ran with the following command from the root folder:
+
+```bash
+$ docker-compose -f Docker/docker-compose-dev.yml up --build
+```
+
 ## Building Individual Containers
 
 To build an individual container navigate to the root project folder and run the following command:

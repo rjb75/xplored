@@ -13,4 +13,22 @@ func DiningRoutes(r fiber.Router) {
 // Routes for photo microservice
 func PhotoRoutes(r fiber.Router) {
 	r.Get("/photo", handlers.PhotosHandler)
+	r.Get("/photo/random", handlers.RandomPhotoHandler)
+}
+
+// Routes for POI microservice
+func POIsRoutes(r fiber.Router) {
+	r.Get("/pois", handlers.POIsHandler)
+}
+
+// Routes for recommendations microservice
+func RecommendationsRoutes(r fiber.Router) {
+	r.Get("/recommendations", handlers.RecommendationHandler)
+}
+
+// Routes for reviews microservice
+func ReviewsRoutes(r fiber.Router) {
+	r.Get("/reviews", handlers.ReviewsHandler)
+	r.Get("/reviews/all", handlers.AllReviewsHandler)
+	r.Post("/review", handlers.CreateReviewsHandler)
 }

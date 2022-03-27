@@ -26,7 +26,6 @@ func RegisterRoutes(app *fiber.App) {
 	// use API key from environment for authentication
 	opt := option.WithAPIKey(os.Getenv("FIREBASE_API_KEY"))
 
-	// opt := option.WithCredentialsFile("firebase-config.json")
 	fba, err := firebase.NewApp(context.Background(), firebase_config, opt)
 
 	if err != nil {
@@ -44,9 +43,8 @@ func RegisterRoutes(app *fiber.App) {
 	// Check user authentication status
 	app.Use(middleware.NewAuth(middleware.AuthConfig{
 		FirebaseApp: fba,
+		IgnorePaths: []string{"/login$", "/signup$", "/robots.txt$", "/manifest.json$", "/api/v1/photo"},
 	}))
-
-	// TODO: add auth here
 
 	v1.Get("/success", handlers.SuccessHandler)
 	v1.Get("/fail", handlers.FailHandler)
@@ -56,4 +54,7 @@ func RegisterRoutes(app *fiber.App) {
 
 	DiningRoutes(v1)
 	PhotoRoutes(v1)
+	POIsRoutes(v1)
+	RecommendationsRoutes(v1)
+	ReviewsRoutes(v1)
 }

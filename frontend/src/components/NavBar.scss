@@ -1,98 +1,111 @@
 @import "../styles/colors.scss";
 
 .navbar {
-    .navbar {
-        &--container {
-            display: flex;
-            flex-direction: column;
-            padding: 0.5em 1em;
-        }
-        
-        &--primary-row {
-            display: flex;
-            margin: 2.5em 3em 0 3em;
-        }
-
-        &--trip-fields {
-            border: 2px solid $color-pink;
-            border-radius: 6em;
-            padding: 1em 0.5em;
-            width: 70%;
-            box-shadow: 0px 18px 39px rgba(0, 0, 0, 0.07), 0px 6.03776px 18.5609px rgba(0, 0, 0, 0.0870857), 0px 2.82777px 9.32026px rgba(0, 0, 0, 0.0496034);
-            display: flex;
-            height: fit-content;
-            align-self: center;
-            background-color: $color-white;
-            .react-datepicker-wrapper {
-                .navbar--trip-field {
-                    width: 100%;
-                }
-            }
-            >.navbar--trip-field-container:first-child {
-                border-left: none;
-            }
-        }
-
-        &--trip-field-container {
-            width: 25%;
-            display: flex;
-            border-left: 1px solid $color-grey-light;
-            align-items: baseline;
-        }
-
-        &--trip-field-icon {
-            padding: 0 1em;
-            color: $color-grey-dark;
-        }
-
-        &--trip-field {
-            padding: 0 0.5em;
-            width: 100%;
-            &::placeholder {
-                color: $color-grey-light;
-            }
-        }
-
-        &--left-control, &--right-control {
-            display: flex;
-            width: 15%;
-        }
-
-        &--left-control {
-            justify-items: flex-start;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        &--right-control {
-            justify-content: flex-end;
-            align-items: flex-end;
-            flex-direction: column;
-        }
-
-        &--type-selector {
-            border-top: 1px solid $color-grey-light;
-            margin: 1em 3em;
-            display: flex;
-            justify-content: center;
-        }
-
-        &--type-button {
-            padding: 0.75em 1.75em;
-            color: $color-grey-dark;
-            font-size: 1.5em;
-            &.active {
-                background-color: $color-purple;
-                color: $color-white;
-            }
-        }
-
-        &--profile-link {
-            color: $color-grey-light;
-        }
-
-        &--trip-selector {
-            color: $color-grey-light;
-        }
+    box-shadow: 0px 12px 41px 0px rgba(0, 0, 0, 0.26);
+    -webkit-box-shadow: 0px 12px 41px 0px rgba(0, 0, 0, 0.26);
+    -moz-box-shadow: 0px 12px 41px 0px rgba(0, 0, 0, 0.26);
+    z-index: 6;
+  .navbar {
+    &--container {
+      display: flex;
+      flex-direction: column;
+      padding: 0.5em 1em;
+      box-shadow: 0px 12px 41px 0px rgba(0, 0, 0, 0.26);
+      -webkit-box-shadow: 0px 12px 41px 0px rgba(0, 0, 0, 0.26);
+      -moz-box-shadow: 0px 12px 41px 0px rgba(0, 0, 0, 0.26);
     }
+
+    &--primary-row {
+      display: flex;
+      margin: 0em 3em 0 3em;
+      padding-top: 2.5em;
+    }
+
+    &--trip-fields {
+      border: 2px solid $color-pink;
+      border-radius: 6em;
+      padding: 1em 0.5em;
+      width: 70%;
+      box-shadow: 0px 18px 39px rgba(0, 0, 0, 0.07),
+        0px 6.03776px 18.5609px rgba(0, 0, 0, 0.0870857),
+        0px 2.82777px 9.32026px rgba(0, 0, 0, 0.0496034);
+      display: flex;
+      height: fit-content;
+      align-self: center;
+      background-color: $color-white;
+      .react-datepicker-wrapper {
+        .navbar--trip-field {
+          width: 100%;
+        }
+      }
+      > .navbar--trip-field-container:first-child {
+        border-left: none;
+      }
+    }
+
+    &--trip-field-container {
+      width: 25%;
+      display: flex;
+      border-left: 1px solid $color-grey-light;
+      align-items: baseline;
+      z-index: 10;
+    }
+
+    &--trip-field-icon {
+      padding: 0 1em;
+      color: $color-grey-dark;
+    }
+
+    &--trip-field {
+      padding: 0 0.5em;
+      width: 100%;
+      &::placeholder {
+        color: $color-grey-light;
+      }
+    }
+
+    &--left-control,
+    &--right-control {
+      display: flex;
+      width: 15%;
+    }
+
+    &--left-control {
+      justify-items: flex-start;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &--right-control {
+      justify-content: flex-end;
+      align-items: flex-end;
+      flex-direction: column;
+    }
+
+    &--type-selector {
+      border-top: 1px solid $color-grey-light;
+      margin: 1em 3em 0 3em;
+      display: flex;
+      justify-content: center;
+    }
+
+    &--type-button {
+      padding: 0.75em 1.75em;
+      color: $color-grey-dark;
+      font-size: 1.5em;
+      cursor: pointer;
+      &.active {
+        background-color: $color-purple;
+        color: $color-white;
+      }
+    }
+
+    &--profile-link {
+      color: $color-grey-light;
+    }
+
+    &--trip-selector {
+      color: $color-grey-light;
+    }
+  }
 }
