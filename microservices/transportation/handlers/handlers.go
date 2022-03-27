@@ -42,6 +42,7 @@ func GetTransShort(c *fiber.Ctx) error {
 		Destination : request.Destination,
 		DepartureTime : request.DepartureTime,
 		ArrivalTime : request.ArrivalTime,
+		Mode : request.Mode,
 	}
 
 	result, waypoints, err := client.Directions(context.Background(), r)
