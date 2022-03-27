@@ -4,11 +4,11 @@ import (
 	"context"
 	"encoding/csv"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	// "strconv"
 
@@ -20,11 +20,12 @@ import (
 
 
 var codes = importAirportCodes()
-func importAirportCodes() [] models.AirportCodes{
+func importAirportCodes() map[string]models.AirportCodes{
 	f, err := os.Open("airport-codes_csv.csv")
     if err != nil {
         log.Fatal(err)
     }
+    
 
     // remember to close the file at the end of the program
     defer f.Close()
@@ -37,13 +38,16 @@ func importAirportCodes() [] models.AirportCodes{
     }
 
     // convert records to array of structs
-	var codesList []models.AirportCodes
+	//var codesList []models.AirportCodes
+	codesMap := make(map[string]models.AirportCodes)
     for i, line := range data {
         if i > 0 { // omit header line
             var rec models.AirportCodes
+			var key string
             for j, field := range line {
                 if j == 0 {
-                    rec.Name = field
+                   key = field
+				   rec.Name = field
                 } else if j == 1 {
                     rec.Municipality = field
                 } else if j == 2{
@@ -51,21 +55,59 @@ func importAirportCodes() [] models.AirportCodes{
 				} else if j == 3 {
 					rec.Coordinates = field
 				}
+				codesMap[key] = rec
             }
-            codesList = append(codesList, rec)
         }
     }
-
-    // print the array
-   fmt.Printf("%+v\n", codesList)
-	return codesList
+	return codesMap
 }
 
 func GetAirportCode(c *fiber.Ctx) error{
-   fmt.Printf("%+v\n", codes)
+	request := new(models.CodeRequest)
+	err := c.QueryParser(request)
 
-	//data:= importAirportCodes()
-	return c.Status(200).JSON(fiber.Map{"status": nil, "data": nil})
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Body Error", "cause": "Couldn't process body of request"})
+	}
+
+	if (request.Name == ""){
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Missing Paramater"})
+	}
+
+	//Look for Names
+	tempMap := make(map[string]models.AirportCodes)
+    for k := range codes {
+		if(strings.HasPrefix(strings.ToLower(k), strings.ToLower(request.Name))){
+			tempMap[k] = codes[k]
+		}
+    }
+
+	//Look for City
+	for k := range codes{
+		if(strings.HasPrefix(strings.ToLower(codes[k].Municipality), strings.ToLower(request.Name))){
+			tempMap[k] = codes[k]
+		}
+    }
+
+	//Look for Code
+	for k := range codes{
+		if(strings.HasPrefix(strings.ToLower(codes[k].Code), strings.ToLower(request.Name))){
+			tempMap[k] = codes[k]
+		}
+	}
+
+	//If prefix contains less than 5, look for inside string.
+	if(len(tempMap) < 5){
+		for k := range codes {
+			if(strings.Contains(strings.ToLower(k), strings.ToLower(request.Name))){
+				if _, ok := tempMap[k]; !ok {
+					tempMap[k] = codes[k]
+				}
+			}
+		}
+	}
+
+	return c.Status(200).JSON(fiber.Map{"status": "Success", "data": tempMap})
 }
 /*
 * Short Distance travel with Google API
