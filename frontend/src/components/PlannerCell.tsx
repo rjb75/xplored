@@ -5,7 +5,7 @@ import EventCard, { eventTypes, plannerEvent } from "./EventCard";
 import { FlightCardProps } from './FlightCard';
 
 interface AppProps {
-    day: String,
+    day: number,
     time: String,
     children?: JSX.Element,
     dropCallbackMove: Function,
@@ -17,14 +17,14 @@ export const PlannerCell = ({day, time, children, test, dropCallbackMove, dropCa
 
     const [{ isOver }, drop] = useDrop(() => ({
         accept: ItemTypes.EVENT,
-        drop: (item: plannerEvent | FlightCardProps, monitor) => {
-            if((item as plannerEvent).type === "event"){
+        drop: (item: any, monitor) => {
+            if(item.itemType === "event"){
                 console.log("test")
                 dropCallbackMove(item, day, time);
             }else{
                 console.log("test2")
 
-                dropCallbackNewEvent((item as plannerEvent).title, day, time);
+                dropCallbackNewEvent((item as plannerEvent).name, day, time);
             }
         },
         collect: monitor => ({
