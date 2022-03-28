@@ -237,28 +237,22 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     });
   }
 
-  newEvent(title: string, day: string, start_time: string) {
-    let mode: eventTypes;
-    switch (this.props.mode) {
-      case "Flights":
-        mode = eventTypes.FLIGHT;
-        break;
-      case "Car":
-        mode = eventTypes.CAR;
-        break;
-      case "Hotels":
-        mode = eventTypes.ACCOMODATION;
-        break;
-      case "Food":
-        mode = eventTypes.FOOD;
-        break;
-      case "Attraction":
-        mode = eventTypes.POI;
-        break;
-
-      default:
-        mode = eventTypes.FLIGHT;
-        break;
+  newEvent(name: string, type: eventTypes, day: string, start_time: string, end_time: string) {
+    if(type === eventTypes.FLIGHT){
+      axiosInstance.post("/api/v1/event/create", {
+        type: type,
+        start_time: start_time,
+        end_time: end_time,
+        name: name,
+        address: null,
+        link: null,
+        data: null,
+        photo_url: null,
+      }, {
+        params:{
+          tripid: this.state.currTripId
+        }
+      })
     }
 
     let newEvent: plannerEvent = {
