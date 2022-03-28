@@ -79,6 +79,10 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
     }
   }
 
+  function addTrip(){
+    
+  }
+
   useEffect(() => {
     changeTripId(currTrip?.value);
   }, [currTrip]);
@@ -88,13 +92,16 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
       <div className="navbar--primary-row">
         <div className="navbar--left-control">
           <img src={Logo} alt={`Xplored Logo`} />
-          <Select
-            className="navbar--trip-selector"
-            options={trips}
-            defaultValue={trips[0]}
-            value={currTrip}
-            onChange={updateCurrentTrip}
-          />
+          <div style={{display:`flex`, alignItems: `center`, gap: `20px`}}>
+            <Select
+              className="navbar--trip-selector"
+              options={trips}
+              defaultValue={trips[0]}
+              value={currTrip}
+              onChange={updateCurrentTrip}
+            />
+            <h1 onClick={addTrip} style={{fontSize: `25px`, fontWeight:`600`}}>+</h1>
+          </div>
         </div>
         <div className="navbar--trip-fields">
           <div className="navbar--trip-field-container">
