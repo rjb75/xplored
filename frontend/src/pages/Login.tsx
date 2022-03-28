@@ -4,6 +4,7 @@ import { firebaseAuth } from "../firebase/FirebaseConfig";
 import axiosInstance from "../utils/axios";
 import { setCookie } from "../utils/CookieUtils";
 import "../pages/UserAuth.scss";
+//@ts-ignore
 import XploredLogo from "../assets/Logo.svg";
 
 const Login: React.FC = () => {
@@ -69,7 +70,7 @@ const Login: React.FC = () => {
 
   // Used to get image only ONCE on loading the page.
   useEffect(() => {
-    GetImageURL();
+    //GetImageURL();
   }, []);
 
   function login() {
