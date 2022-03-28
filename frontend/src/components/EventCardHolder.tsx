@@ -48,13 +48,13 @@ export default function EventCardHolder({
     /* List of all possible properties that have been selected by users (there's probably a better way of doing this) */
     // Flights Properties //
     const [flightsHome, setFlightsHome] = useState("");
-    const [flightsDate, setFlightsDate] = useState("");
+    const [flightsDate, setFlightsDate] = useState(new Date());
     const [flightsDest, setFlightsDest] = useState("");
     const [flightsNumTravelers, setFlightsNumTravelers] = useState("1");
 
     // Car Properties //
     const [carHome, setCarHome] = useState("");
-    const [carDate, setCarDate] = useState("");
+    const [carDate, setCarDate] = useState(new Date());
     const [carDest, setCarDest] = useState("");
     const [carNumTravelers, setCarNumTravelers] = useState("1");
 
@@ -65,8 +65,8 @@ export default function EventCardHolder({
 
     // Hotels Properties //
     const [hotelsLocation, setHotelsLocation] = useState("");
-    const [hotelsTimeIn, setHotelsTimeIn] = useState("");
-    const [hotelsTimeOut, setHotelsTimeOut] = useState("");
+    const [hotelsTimeIn, setHotelsTimeIn] = useState(new Date());
+    const [hotelsTimeOut, setHotelsTimeOut] = useState(new Date());
     const [hotelsNumRooms, setHotelsNumRooms] = useState("1");
     const [hotelsNumAdults, setHotelsNumAdults] = useState("1");
     const [hotelsNumKids, setHotelsNumKids] = useState("0");
@@ -102,16 +102,12 @@ export default function EventCardHolder({
                             <i className="icon-calendar-date card--holder-bar-property-icon" />
                             <DatePicker
                                 className="card--holder-bar-property-input"
-                                selected={startDate}
-                                onChange={(date: Date) =>
-                                    setFlightsDate(
-                                        date.toISOString().slice(0, 10)
-                                    )
-                                }
-                                startDate={startDate}
-                                endDate={endDate}
+                                selected={flightsDate}
+                                onChange={(date: Date) => setFlightsDate(date)}
+                                startDate={flightsDate}
                                 placeholderText="Add date"
                                 selectsStart
+                                dateFormat="dd-MM-yyyy"
                                 wrapperClassName="card--holder-bar-property-input"
                             />
                         </li>
@@ -155,14 +151,12 @@ export default function EventCardHolder({
                             <i className="icon-calendar-date card--holder-bar-property-icon" />
                             <DatePicker
                                 className="card--holder-bar-property-input"
-                                selected={startDate}
-                                onChange={(date: Date) =>
-                                    setCarDate(date.toISOString().slice(0, 10))
-                                }
-                                startDate={startDate}
-                                endDate={endDate}
+                                selected={carDate}
+                                onChange={(date: Date) => setCarDate(date)}
+                                startDate={carDate}
                                 placeholderText="Add date"
                                 selectsStart
+                                dateFormat="dd-MM-yyyy"
                                 wrapperClassName="card--holder-bar-property-input"
                             />
                         </li>
@@ -226,16 +220,13 @@ export default function EventCardHolder({
                             <i className="icon-calendar-date card--holder-bar-property-icon" />
                             <DatePicker
                                 className="card--holder-bar-property-input"
-                                selected={startDate}
-                                onChange={(date: Date) =>
-                                    setHotelsTimeIn(
-                                        date.toISOString().slice(0, 10)
-                                    )
-                                }
-                                startDate={startDate}
-                                endDate={endDate}
+                                selected={hotelsTimeIn}
+                                onChange={(date: Date) => setHotelsTimeIn(date)}
+                                startDate={hotelsTimeIn}
+                                endDate={hotelsTimeOut}
                                 placeholderText="Add date"
                                 selectsStart
+                                dateFormat="dd-MM-yyyy"
                                 wrapperClassName="card--holder-bar-property-input"
                             />
                         </li>
@@ -246,16 +237,15 @@ export default function EventCardHolder({
                             <i className="icon-calendar-date card--holder-bar-property-icon" />
                             <DatePicker
                                 className="card--holder-bar-property-input"
-                                selected={endDate}
+                                selected={hotelsTimeOut}
                                 onChange={(date: Date) =>
-                                    setHotelsTimeOut(
-                                        date.toISOString().slice(0, 10)
-                                    )
+                                    setHotelsTimeOut(date)
                                 }
-                                startDate={startDate}
-                                endDate={endDate}
+                                startDate={hotelsTimeIn}
+                                endDate={hotelsTimeOut}
                                 placeholderText="Add date"
                                 selectsEnd
+                                dateFormat="dd-MM-yyyy"
                                 wrapperClassName="card--holder-bar-property-input"
                             />
                         </li>
@@ -504,8 +494,8 @@ export default function EventCardHolder({
                             no_of_adults: hotelsNumAdults,
                             no_of_children: hotelsNumKids,
                             no_of_rooms: hotelsNumRooms,
-                            check_in: hotelsTimeIn,
-                            checkout: hotelsTimeOut,
+                            check_in: hotelsTimeIn.toISOString().slice(0, 10),
+                            checkout: hotelsTimeOut.toISOString().slice(0, 10),
                             currency: "CAD",
                         },
                     })
