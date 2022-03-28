@@ -40,7 +40,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
 
     this.state = {
       events: [],
-      week: this.getWeek(),
+      week: this.getWeek(null),
       currTripId: this.props.tripId,
     };
 
@@ -76,18 +76,29 @@ export class TravelPlanner extends React.Component<IProps, IState> {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          let events = eventAdapter(res.data, this.editEventSize);
+          let earliestEvent = events.sort((item1, item2) => {
+            return item1.start_time.getTime() - item2.start_time.getTime();
+          })[0].start_time;
+
           this.setState({
-            events: eventAdapter(res.data, this.editEventSize),
+            events: events,
+            week: this.getWeek(earliestEvent),
           });
         });
     }
   }
 
-  getWeek(): Date[] {
+  getWeek(earliestEvent: Date | null): Date[] {
     let ret: Date[] = [];
-    let today = new Date();
-    console.log(today);
+    let today: Date;
+    if(earliestEvent === null){
+      console.log("U no")
+      today = new Date();
+    }else{
+      today = earliestEvent;
+    }
+    
     for (let i = 0; i < 7; i++) {
       let day: Date = new Date(today);
       day.setUTCDate(day.getUTCDate() - day.getUTCDay() + i);

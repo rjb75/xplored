@@ -86,7 +86,7 @@ const Login: React.FC = () => {
           setCookie("access_token", id);
         });
         setCookie("refresh_token", userCredential.user.refreshToken);
-        window.location.href ="/home";
+     //   window.location.href ="/home";
       }
       
       ).catch((error) => {
