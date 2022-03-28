@@ -6,30 +6,30 @@ import { getCookie } from "./CookieUtils";
 const axiosDefaultHeaders: AxiosRequestHeaders = {
     "Content-type": "application/json",
     // "Sec-Fetch-Mode": "no-cors",
-}
+};
 
 // default axios config values
 const axiosDefaultConfig: AxiosRequestConfig = {
     baseURL: API_BASE,
-    timeout: 2000,
-    headers: axiosDefaultHeaders
-}
+    timeout: 3000,
+    headers: axiosDefaultHeaders,
+};
 
-const axiosInstance = axios.create(axiosDefaultConfig)
+const axiosInstance = axios.create(axiosDefaultConfig);
 
 // append authorization header if cookie exists
-axiosInstance.interceptors.request.use((config : AxiosRequestConfig) => {
-    if(!config.headers) {
+axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
+    if (!config.headers) {
         config.headers = axiosDefaultHeaders;
     }
 
-    const token = getCookie('access_token');
+    const token = getCookie("access_token");
 
-    if(token !== "") {
+    if (token !== "") {
         config.headers.Authorization = token;
     }
 
-    return config
-})
+    return config;
+});
 
 export default axiosInstance;
