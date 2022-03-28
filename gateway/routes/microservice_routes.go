@@ -5,6 +5,11 @@ import (
 	"github.com/rjb75/xplored-api-gateway/handlers"
 )
 
+// routes for accommodations microservice
+func AccommodationsRoutes(r fiber.Router) {
+	r.Get("/accommodations", handlers.AccommodationHandler)
+}
+
 // Routes for dining microservice
 func DiningRoutes(r fiber.Router) {
 	r.Get("/dining", handlers.DiningHandler)

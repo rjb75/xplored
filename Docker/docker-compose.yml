@@ -47,6 +47,14 @@ services:
       dockerfile: Docker/TPlanner.Dockerfile
     expose:
       - 3000
+  accommodations:
+    tty: true
+    container_name: xplored-ms-accommodations
+    build:
+      context: ../
+      dockerfile: Docker/Accommodations.Dockerfile
+    expose:
+      - 3003
   gateway:
     tty: true
     container_name: xplored-gateway
