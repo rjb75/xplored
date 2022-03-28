@@ -57,11 +57,10 @@ def get_random_photo(name: str):
     # send GET request to unsplash api
     response = requests.request("GET", config.random_url, params=querystring)
     # handles error response
-    if not response.json()['results']:
+    if response.json() == {'errors': ['No photos found.']}:
         raise HTTPException(status_code=500)
     # stores response from unsplash api in a dictionary
     random_dict = response.json()[0]
-
     #returns photo url
     return {"url": random_dict['urls']['full']}
 
