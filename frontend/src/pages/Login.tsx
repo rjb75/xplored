@@ -6,6 +6,7 @@ import { setCookie } from "../utils/CookieUtils";
 import "../pages/UserAuth.scss";
 //@ts-ignore
 import XploredLogo from "../assets/Logo.svg";
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -54,6 +55,8 @@ const Login: React.FC = () => {
   const fallbackImage = "https://images.unsplash.com/photo-1473042904451-00171c69419d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1499&q=80";
   const [bgImgURL, setBgImgURL] = useState<String>(fallbackImage);
   const photoAPIRequestBase = "/api/v1/photo/random?name=";
+  
+  const navigation = useNavigate();
 
   const GetImageURL = () => {
     const cityIndex = Math.floor(Math.random() * locations.length);
@@ -81,12 +84,13 @@ const Login: React.FC = () => {
     signInWithEmailAndPassword(firebaseAuth, email, pass).then(
       (userCredential) => {
         setUser(userCredential.user);
+        setCookie("refresh_token", userCredential.user.refreshToken);
         userCredential.user.getIdToken(true).then((id) => {
           setCookie("id_token", id);
           setCookie("access_token", id);
+          navigation('/home');
         });
         setCookie("refresh_token", userCredential.user.refreshToken);
-     //   window.location.href ="/home";
       }
       
       ).catch((error) => {

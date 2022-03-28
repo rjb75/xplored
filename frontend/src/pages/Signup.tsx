@@ -5,6 +5,7 @@ import axiosInstance from "../utils/axios";
 import { setCookie } from "../utils/CookieUtils";
 import "../pages/UserAuth.scss";
 import XploredLogo from "../assets/Logo.svg";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -54,6 +55,10 @@ const Signup = () => {
   );
   const photoAPIRequestBase = "/api/v1/photo/random?name=";
 
+  const createUserAPIBase = "/api/v1/trip/user";
+
+  const navigation = useNavigate();
+
   const GetImageURL = () => {
     const cityIndex = Math.floor(Math.random() * locations.length);
     const photoAPIRequest =
@@ -72,7 +77,7 @@ const Signup = () => {
     GetImageURL();
   }, []);
 
-  function Signup() {
+  function doSignup() {
     if (!checkPasswordMatch()) {
       // Prevents signup if the password field inputs don't match
       return;
@@ -83,11 +88,13 @@ const Signup = () => {
     createUserWithEmailAndPassword(firebaseAuth, email, pass).then(
       (userCredential) => {
         setUser(userCredential.user);
+        setCookie("refresh_token", userCredential.user.refreshToken);
         userCredential.user.getIdToken(true).then((id) => {
           setCookie("id_token", id);
           setCookie("access_token", id);
+          axiosInstance.post(createUserAPIBase)
+          .then(() => navigation('/home'))
         });
-        setCookie("refresh_token", userCredential.user.refreshToken);
       }
     );
   }
@@ -163,7 +170,7 @@ const Signup = () => {
                 className="AuthButton"
                 type="button"
                 value="Sign Up"
-                onClick={() => Signup}
+                onClick={() => doSignup()}
               />
             </div>
           </div>
