@@ -2,6 +2,7 @@ import React from "react";
 import "./EventCard.scss";
 import { ItemTypes } from "../utils/PlannerConstants";
 import { useDrag } from "react-dnd";
+import { eventTypes } from "./EventCard";
 
 export interface FlightCardProps {
     airline?: string;
@@ -20,8 +21,17 @@ export default function FlightCard(props: FlightCardProps) {
     const [{ isDragging }, drag] = useDrag(() => ({
         type: ItemTypes.EVENT,
         item: {
-            type: "Flights",
-            title: "Flight to TEST",
+            event_id: null,
+            type: eventTypes.FLIGHT,
+            start_time: props.times[0],
+            end_time: props.times[1],
+            name: "Flight to TBD",
+            address: null,
+            link: null,
+            data: null,
+            photo_url: null,
+            itemType: "flight",
+            duratation: null,
         },
         collect: (monitor) => ({
             isDragging: !!monitor.isDragging(),
