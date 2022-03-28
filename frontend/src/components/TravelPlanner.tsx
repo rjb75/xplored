@@ -21,6 +21,7 @@ import { eventTypes } from "./EventCard";
 import PlannerCell from "./PlannerCell";
 import EventCardHolder from "./EventCardHolder";
 import axios from "axios";
+import axiosInstance from "../utils/axios";
 
 interface IProps {
   mode: string;
@@ -35,19 +36,14 @@ export class TravelPlanner extends React.Component<IProps, IState> {
   constructor(props: any) {
     super(props);
 
-    axios
-      .get("http://localhost:3000/planner/api/v1/alltrips", {
-        params: {
-          tripid: "623bdb2996a983ea8e7168a9",
-        },
-        headers: {
-          "Content-type": "application/json",
-        },
-      })
-      .then((res) => {
-        let events = eventAdapter(res.data, this.editEventSize);
-        this.setState({ events: events });
-      });
+    axiosInstance.get("/api/v1/trip", {
+      params: {
+        id: "62410f506d61765a335d95f8",
+      }
+    })
+    .then((res) => {
+      console.log(res.data)
+    })
 
     this.state = {
       events: [],
@@ -256,15 +252,15 @@ export class TravelPlanner extends React.Component<IProps, IState> {
               eventHandler={this.newEvent}
             />
             <div className="timeWrapper">
-              {timeRows.map((row) => {
-                return <div className="time">{row.time}</div>;
+              {timeRows.map((row, index) => {
+                return <div key={index} className="time">{row.time}</div>;
               })}
             </div>
             <div className="table">
               <div className="daysWrapper">
-                {this.state.week.map((day) => {
+                {this.state.week.map((day, index) => {
                   return (
-                    <h1>
+                    <h1 key={index}>
                       {dateToDayString(day) +
                         ", " +
                         dateToMonthString(day) +
@@ -277,7 +273,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
               <div className="cellWrapper">
                 {timeRows.map((row, index) => {
                   return (
-                    <div className="cellContainer">
+                    <div key={index} className="cellContainer">
                       <PlannerCell
                         dropCallbackMove={this.moveEvent}
                         dropCallbackNewEvent={this.newEvent}

@@ -276,10 +276,10 @@ export function eventAdapter(events: any[], editSizeCallBack: Function): planner
       case "POI":
         type = eventTypes.POI;
         break;
-      case "TRIPS":
+      case "TRANSS":
         type = eventTypes.CAR;
         break;
-      case "TRIPL":
+      case "TRANSL":
         type = eventTypes.FLIGHT;
         break;
       case "DIN":
