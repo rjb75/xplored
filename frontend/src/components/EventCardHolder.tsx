@@ -569,7 +569,24 @@ export default function EventCardHolder({
                         </ul>
                     </div>
                     <ul className="card--holder-list">
-                        <FlightCard addCardFunction={eventHandler} />
+                        <FlightCard
+                            airline={"Air Canada"}
+                            airlineLogo={Chevron}
+                            flightCode={"AC 513"}
+                            times={["8:00 AM", "2:00 PM"]}
+                            timeZones={[
+                                "Mountain Standard Time",
+                                "Central European Standard Time",
+                            ]}
+                            price={"831"}
+                            currencyType={"CAD"}
+                            duration={"12 hr 56 mins"}
+                            addCardFunction={eventHandler}
+                        />
+                        {/* airline?: string; airlineLogo?: string; flightCode?:
+                        string; times: string[]; timeZones: string[]; price?:
+                        string; locations?: string[]; duration?: string;
+                        currencyType?: string; */}
                         {eventCards}
                     </ul>
                 </div>
