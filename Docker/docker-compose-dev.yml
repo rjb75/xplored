@@ -1,3 +1,5 @@
+volumes:
+  node-shared-modules:
 services:
   reviews:
     tty: true
@@ -64,7 +66,7 @@ services:
     volumes:
       - ../frontend/src:/xplored/frontend/src
       - ../frontend/build:/xplored/frontend/build
-      - /xplored/frontend/node_modules
+      - node-shared-modules:/xplored/frontend/node_modules
   gateway:
     tty: true
     stdin_open: true
