@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from dotenv import load_dotenv
-import config, uvicorn, os, datetime, accommFunctions
+import config, uvicorn, os, datetime, accommFunctions, accommModel
 
 accommodationApp = FastAPI()
 
@@ -23,7 +23,7 @@ def index():
 #order_by options are 
 @accommodationApp.get("/accom/api/v1/")
 def getHotelInfo(location: str, no_of_adults: int, no_of_children: int, no_of_rooms: int,
- check_in: datetime.date, checkout: datetime.date, currency: str, order_by: str | None = None):
+ check_in: datetime.date, checkout: datetime.date, currency: str, order_by: accommModel.OrderByTypeModel | None = None):
 
     hotel_list = []
     location_id = accommFunctions.getLocationID(location)
@@ -37,11 +37,11 @@ def getHotelInfo(location: str, no_of_adults: int, no_of_children: int, no_of_ro
     "locale": "en-gb", "dest_type": "city", "filter_by_currency": "AED", "room_number": no_of_rooms, "checkout_date": checkout, 
     "page_number":"0","include_adjacency":"true"}
     elif order_by is not None and no_of_children == 0:
-        hotel_search_query = {"dest_id": location_id, "units": "metric", "order_by": order_by, "adults_number": no_of_adults, "checkin_date": check_in, 
+        hotel_search_query = {"dest_id": location_id, "units": "metric", "order_by": order_by.value, "adults_number": no_of_adults, "checkin_date": check_in, 
     "locale": "en-gb", "dest_type": "city", "filter_by_currency": "AED", "room_number": no_of_rooms, "checkout_date": checkout, 
     "page_number":"0","include_adjacency":"true"}
     else:
-        hotel_search_query = {"dest_id": location_id, "units": "metric", "order_by": order_by, "adults_number": no_of_adults, "checkin_date": check_in, 
+        hotel_search_query = {"dest_id": location_id, "units": "metric", "order_by": order_by.value, "adults_number": no_of_adults, "checkin_date": check_in, 
     "locale": "en-gb", "dest_type": "city", "filter_by_currency": "AED", "room_number": no_of_rooms, "checkout_date": checkout, 
     "page_number":"0","include_adjacency":"true", "children_number":no_of_children}
 

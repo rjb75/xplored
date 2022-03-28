@@ -1,8 +1,13 @@
+from fastapi import HTTPException
 import config
 
 def getLocationID(location):
     querystring = {"name":location,"locale":"en-gb"}
     response = config.requests.request("GET", config.location_url, headers=config.headers, params=querystring)
+    responseList = response.json()
+    if not responseList:
+        raise HTTPException(status_code=404, detail="Location not found")
+
     return response.json()[0]['dest_id']
 
 def getCurrencyExchange(hotelCurrency, originCurrency):
@@ -18,3 +23,5 @@ def getCurrencyExchange(hotelCurrency, originCurrency):
         for currency in currency_info:
             if currency['currency'] == originCurrency:
                 return currency['exchange_rate_buy']
+    
+    raise HTTPException(status_code=404, detail="Invalid Currency")
