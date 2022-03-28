@@ -1,8 +1,8 @@
-FROM node:17-alpine
+FROM node:17
 
 WORKDIR /xplored
 
-COPY .env .env
+COPY .env .
 
 WORKDIR /xplored/frontend
 
@@ -11,8 +11,8 @@ COPY /frontend/yarn.lock .
 
 RUN yarn install
 
-COPY /frontend/public ./public
+COPY /frontend/public /xplored/frontend/public
 COPY /frontend/tsconfig.json .
 COPY /frontend/webpack.config.js .
 
-CMD ["yarn", "run","dev"]
+CMD ["yarn", "run", "dev"]
