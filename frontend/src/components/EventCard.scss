@@ -490,4 +490,58 @@
             font-size: 2rem;
         }
     }
+
+    &--car {
+        display: grid;
+        grid-template-columns: 25% 1fr;
+        align-items: center;
+
+        &-icon {
+            width: 5rem;
+            height: 5rem;
+            overflow: hidden;
+            justify-self: center;
+            grid-column: 1;
+            background-color: $color-pink;
+            padding: 1rem;
+            border-radius: 1rem;
+        }
+
+        &-info-holder {
+            grid-column: 2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-duration {
+            font-size: larger;
+            color: $color-grey-dark;
+            font-family: Manrope;
+            font-weight: bold;
+        }
+
+        &-distance {
+            color: $color-grey-dark;
+        }
+
+        &-link {
+            font-size: x-small;
+            color: $color-white;
+            display: block;
+            width: fit-content;
+            background-color: $color-purple;
+            border-radius: 1rem;
+            padding: 0.25rem 1rem;
+            margin-top: 0.25rem;
+        }
+
+        &-directions {
+            display: flex;
+            position: absolute;
+            right: 1rem;
+            bottom: 1rem;
+            font-size: small;
+            color: $color-grey-dark;
+        }
+    }
 }
