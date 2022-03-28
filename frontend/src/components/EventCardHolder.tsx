@@ -583,10 +583,12 @@ export default function EventCardHolder({
                             duration={"12 hr 56 mins"}
                             addCardFunction={eventHandler}
                         />
-                        {/* airline?: string; airlineLogo?: string; flightCode?:
-                        string; times: string[]; timeZones: string[]; price?:
-                        string; locations?: string[]; duration?: string;
-                        currencyType?: string; */}
+                        <CarCard
+                            type="driving"
+                            duration="10 Minutes"
+                            distance="11.2 KM"
+                            link="a"
+                        />
                         {eventCards}
                     </ul>
                 </div>
