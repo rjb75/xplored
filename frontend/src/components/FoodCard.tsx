@@ -1,6 +1,8 @@
 import { extractQuerystring } from "@firebase/util";
 import React from "react";
 import "./EventCard.scss";
+import { ItemTypes } from "../utils/PlannerConstants";
+import { useDrag } from "react-dnd";
 import ChevronSmall from "../assets/chevron-small.svg";
 
 interface FoodCardProps {
@@ -12,11 +14,24 @@ interface FoodCardProps {
     extras?: string[];
     priceTier?: string;
     hours?: string;
+    addCardFunction: Function;
 }
 
 export default function FoodCard(props: FoodCardProps) {
+    const [{ isDragging }, drag] = useDrag(() => ({
+        type: ItemTypes.EVENT,
+        item: {
+            type: "Food",
+            title: "Food to TEST",
+        },
+        collect: (monitor) => ({
+            isDragging: !!monitor.isDragging(),
+            item: monitor.getItem(),
+        }),
+    }));
+
     return (
-        <div className="card--entry card--food">
+        <div ref={drag} className="card--entry card--food">
             <div className="card--food-container">
                 <img
                     src={props.image}

@@ -614,6 +614,7 @@ export default function EventCardHolder({
                             duration="10 Minutes"
                             distance="11.2 KM"
                             link="a"
+                            addCardFunction={eventHandler}
                         />
                         {eventCards}
                     </ul>
