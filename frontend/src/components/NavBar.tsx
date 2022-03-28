@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import InputField from "./inputs/InputField";
 import DatePicker from "react-datepicker";
 import "./NavBar.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 //@ts-ignore
 import Logo from "../images/logo.svg";
 import Select from "react-select";
 import axiosInstance from "../utils/axios";
 import { Modal, Button, OverlayTrigger, Popover } from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 interface NavProps {
   mode: string;
@@ -121,11 +121,7 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
                 placement="right"
                 overlay={popover}
               >
-                <h1
-                  style={{ fontSize: `25px`, fontWeight: `600` }}
-                >
-                  +
-                </h1>
+                <h1 style={{ fontSize: `25px`, fontWeight: `600` }}>+</h1>
               </OverlayTrigger>
             </div>
           </div>
