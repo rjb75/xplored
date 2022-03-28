@@ -48,9 +48,8 @@ const Login: React.FC = () => {
     "Havana",
   ];
 
-  const [bgImgURL, setBgImgURL] = useState<String>(
-    "https://images.unsplash.com/photo-1473042904451-00171c69419d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1499&q=80"
-  );
+  const fallbackImage = "https://images.unsplash.com/photo-1473042904451-00171c69419d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1499&q=80";
+  const [bgImgURL, setBgImgURL] = useState<String>(fallbackImage);
   const photoAPIRequestBase = "/api/v1/photo/random?name=";
 
   const GetImageURL = () => {
@@ -92,7 +91,7 @@ const Login: React.FC = () => {
     <>
       <img
         className="PageBackground"
-        src={bgImgURL.toString()}
+        src={bgImgURL ? bgImgURL.toString() : "https://images.unsplash.com/photo-1473042904451-00171c69419d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1499&q=80"}
         alt="Background"
       />
       <div className="AuthPage">
