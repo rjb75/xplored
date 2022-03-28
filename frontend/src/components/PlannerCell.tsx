@@ -11,10 +11,9 @@ interface AppProps {
     dropCallbackMove: Function,
     dropCallbackNewSetDateEvent: Function,
     dropCallbackNewEvent: Function,
-    test?: boolean,
 }
 
-export const PlannerCell = ({day, time, children, test, dropCallbackMove, dropCallbackNewEvent, dropCallbackNewSetDateEvent}: AppProps) => {
+export const PlannerCell = ({day, time, children, dropCallbackMove, dropCallbackNewEvent, dropCallbackNewSetDateEvent}: AppProps) => {
 
     const [{ isOver }, drop] = useDrop(() => ({
         accept: ItemTypes.EVENT,

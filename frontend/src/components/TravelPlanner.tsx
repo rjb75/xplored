@@ -44,7 +44,6 @@ export class TravelPlanner extends React.Component<IProps, IState> {
       currTripId: this.props.tripId,
     };
 
-    console.log(this.props.tripId);
     if (this.props.tripId !== undefined) {
       console.log(this.props.tripId);
       axiosInstance
