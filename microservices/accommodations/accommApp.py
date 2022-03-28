@@ -47,10 +47,11 @@ def getHotelInfo(location: str, no_of_adults: int, no_of_children: int, no_of_ro
 
     hotel_response = config.requests.request("GET", config.hotel_info_url, headers=config.headers, params=hotel_search_query)
     hotel_information = hotel_response.json()['result']
+    exchange = accommFunctions.getCurrencyExchange(hotel_response.json()['result'][0]['currency_code'], currency)
 
     for hotel in hotel_information: 
         hotel_list.append({"hotel_name": hotel['hotel_name'], "hotel_information": hotel['unit_configuration_label'], "hotel_longitude": hotel['longitude'], "hotel_latitude": hotel['latitude'], 
-        "hotel_price": float(hotel['min_total_price']) * float(accommFunctions.getCurrencyExchange(hotel['currency_code'], currency)),
+        "hotel_price": float(hotel['min_total_price']) * float(exchange),
         "hotel_image": hotel['main_photo_url'], "hotel_address": hotel['address'], "hotel_url": hotel['url']})
 
     return {"hotel_information": hotel_list}
