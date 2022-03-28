@@ -64,6 +64,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     this.moveEvent = this.moveEvent.bind(this);
     this.newEvent = this.newEvent.bind(this);
     this.editEventSize = this.editEventSize.bind(this);
+    this.newEventFlight = this.newEventFlight.bind(this);
   }
 
   componentDidUpdate(prevProps: IProps) {
@@ -214,54 +215,127 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     this.setState({ events: oldState });
 
     axiosInstance
-    .post(
-      "/api/v1/event/edit",
-      {
-        type: event.type,
-        start_time: event.start_time,
-        end_time: event.end_time,
-        name: event.name,
-        address: event.address,
-        link: event.link,
-        data: event.data,
-        photo_URL: event.photo_URL,
-      },
-      {
-        params: {
-          eventid: event.event_id,
+      .post(
+        "/api/v1/event/edit",
+        {
+          type: event.type,
+          start_time: event.start_time,
+          end_time: event.end_time,
+          name: event.name,
+          address: event.address,
+          link: event.link,
+          data: event.data,
+          photo_URL: event.photo_URL,
         },
-      }
-    )
-    .catch((e) => {
-      console.log(e);
-    });
+        {
+          params: {
+            eventid: event.event_id,
+          },
+        }
+      )
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
-  newEvent(name: string, type: eventTypes, day: string, start_time: string, end_time: string) {
-    if(type === eventTypes.FLIGHT){
-      axiosInstance.post("/api/v1/event/create", {
-        type: type,
-        start_time: start_time,
-        end_time: end_time,
-        name: name,
-        address: null,
-        link: null,
-        data: null,
-        photo_url: null,
-      }, {
-        params:{
-          tripid: this.state.currTripId
-        }
-      })
+  /**
+   * Creates a new planner event
+   * @param name name of the event 
+   * @param type type of the event 
+   * @param day what day (0-6 representing sunday-saturday)
+   * @param start_time start time in the format of display time (eg. 6:00 am, 8:30 pm)
+   * @param duration Optional. Should be in form "x.y Hours" where x is hours and y is remainder (eg. 1.5 hours is one hour, 30 mins)
+   */
+  newEvent(
+    name: string,
+    type: eventTypes,
+    day: number,
+    start_time: string,
+    duration?: string
+  ) {
+    let start = displayTimeToDateObj(
+      start_time,
+      this.state.week[day].getUTCDay(),
+      day,
+      this.state.week[day].getUTCFullYear()
+    );
+    let end: Date = displayTimeToDateObj(
+      start_time,
+      this.state.week[day].getUTCDay(),
+      day,
+      this.state.week[day].getUTCFullYear()
+    );
+    if (duration !== undefined) {
+      //todo
+    } else {
+      end.setUTCMinutes(end.getUTCMinutes() + 30);
     }
 
-    let newEvent: plannerEvent = {
+    axiosInstance
+      .post(
+        "/api/v1/event/create",
+        {
+          type: type,
+          start_time: start,
+          end_time: end,
+          name: name,
+          address: null,
+          link: null,
+          data: null,
+          photo_url: null,
+        },
+        {
+          params: {
+            tripid: this.state.currTripId,
+          },
+        }
+      )
+      .then((res) => {
+        let oldState = this.state.events;
+        oldState.push(eventAdapter([res.data], this.editEventSize)[0]);
+        this.setState({ events: oldState });
+      });
+  }
 
-    };
-
-    let oldState = this.state.events;
-    oldState.push(newEvent);
-    this.setState({ events: oldState });
+  /**
+   * Creates a new event with preset start and end time.
+   * @param name 
+   * @param type 
+   * @param day 
+   * @param start_time 
+   * @param end_time 
+   */
+  newEventFlight(
+    name: string,
+    type: eventTypes,
+    day: number,
+    start_time: Date,
+    end_time: Date
+  ) {
+    axiosInstance
+      .post(
+        "/api/v1/event/create",
+        {
+          type: type,
+          start_time: start_time,
+          end_time: end_time,
+          name: name,
+          address: null,
+          link: null,
+          data: null,
+          photo_url: null,
+        },
+        {
+          params: {
+            tripid: this.state.currTripId,
+          },
+        }
+      )
+      .then((res) => {
+        let oldState = this.state.events;
+        oldState.push(eventAdapter([res.data], this.editEventSize)[0]);
+        this.setState({ events: oldState });
+      });
   }
 
   render() {
@@ -335,6 +409,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                       <PlannerCell
                         dropCallbackMove={this.moveEvent}
                         dropCallbackNewEvent={this.newEvent}
+                        dropCallbackNewFlightEvent={this.newEventFlight}
                         day={0}
                         time={row.time}
                       >
@@ -343,6 +418,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                       <PlannerCell
                         dropCallbackMove={this.moveEvent}
                         dropCallbackNewEvent={this.newEvent}
+                        dropCallbackNewFlightEvent={this.newEventFlight}
                         day={1}
                         time={row.time}
                       >
@@ -351,6 +427,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                       <PlannerCell
                         dropCallbackMove={this.moveEvent}
                         dropCallbackNewEvent={this.newEvent}
+                        dropCallbackNewFlightEvent={this.newEventFlight}
                         day={2}
                         time={row.time}
                       >
@@ -359,6 +436,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                       <PlannerCell
                         dropCallbackMove={this.moveEvent}
                         dropCallbackNewEvent={this.newEvent}
+                        dropCallbackNewFlightEvent={this.newEventFlight}
                         day={3}
                         time={row.time}
                       >
@@ -367,6 +445,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                       <PlannerCell
                         dropCallbackMove={this.moveEvent}
                         dropCallbackNewEvent={this.newEvent}
+                        dropCallbackNewFlightEvent={this.newEventFlight}
                         day={4}
                         time={row.time}
                       >
@@ -375,6 +454,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                       <PlannerCell
                         dropCallbackMove={this.moveEvent}
                         dropCallbackNewEvent={this.newEvent}
+                        dropCallbackNewFlightEvent={this.newEventFlight}
                         day={5}
                         time={row.time}
                       >
@@ -383,6 +463,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                       <PlannerCell
                         dropCallbackMove={this.moveEvent}
                         dropCallbackNewEvent={this.newEvent}
+                        dropCallbackNewFlightEvent={this.newEventFlight}
                         day={6}
                         time={row.time}
                       >
