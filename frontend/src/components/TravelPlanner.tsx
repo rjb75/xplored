@@ -222,126 +222,124 @@ export class TravelPlanner extends React.Component<IProps, IState> {
 
     render() {
         return (
-            <DndProvider backend={HTML5Backend}>
-                <div className="travelPlannerWrapper">
-                    <div className="plannerNavbar">
-                        <div style={{ width: `33.3%` }}></div>
-                        <div className="plannerNavbarDate">
-                            <div className="dateWrapper">
-                                <img src={calendarIcon} alt="" />
-                                <h1>
-                                    {dateToMonthString(this.state.week[0]) +
-                                        " " +
-                                        this.state.week[0].getUTCDate() +
-                                        " - " +
-                                        dateToMonthString(this.state.week[6]) +
-                                        " " +
-                                        this.state.week[6].getUTCDate() +
-                                        " " +
-                                        this.state.week[6].getUTCFullYear()}
-                                </h1>
-                            </div>
-                        </div>
-                        <div className="arrowWrapper">
-                            <img
-                                src={leftArrow}
-                                alt=""
-                                onClick={() => this.changeWeek("b")}
-                            />
-                            <img
-                                src={rightArrow}
-                                alt=""
-                                onClick={() => this.changeWeek("f")}
-                            />
-                        </div>
-                    </div>
-          <div className="planner">
-            <EventCardHolder
-              selectedMode={this.props.mode}
-              eventHandler={this.newEvent}
-            />
-            <div className="timeWrapper">
-              {timeRows.map((row, index) => {
-                return <div key={index} className="time">{row.time}</div>;
-              })}
+          <DndProvider backend={HTML5Backend}>
+          <div className="travelPlannerWrapper">
+            <div className="plannerNavbar">
+              <div style={{ width: `33.3%` }}></div>
+              <div className="plannerNavbarDate">
+                <div className="dateWrapper">
+                  <img src={calendarIcon} alt="" />
+                  <h1>
+                    {dateToMonthString(this.state.week[0]) +
+                      " " +
+                      this.state.week[0].getUTCDate() +
+                      " - " +
+                      dateToMonthString(this.state.week[6]) +
+                      " " +
+                      this.state.week[6].getUTCDate() +
+                      " " +
+                      this.state.week[6].getUTCFullYear()}
+                  </h1>
+                </div>
+              </div>
+              <div className="arrowWrapper">
+                <img src={leftArrow} alt="" onClick={() => this.changeWeek("b")} />
+                <img src={rightArrow} alt="" onClick={() => this.changeWeek("f")} />
+              </div>
             </div>
-            <div className="table">
-              <div className="daysWrapper">
-                {this.state.week.map((day, index) => {
-                  return (
-                    <h1 key={index}>
-                      {dateToDayString(day) +
-                        ", " +
-                        dateToMonthString(day) +
-                        " " +
-                        day.getDate()}
-                    </h1>
-                  );
+  
+            <div className="planner">
+              <EventCardHolder
+                selectedMode={this.props.mode}
+                eventHandler={this.newEvent}
+              />
+              <div className="timeWrapper">
+                {timeRows.map((row, index) => {
+                  return <div key={index} className="time">{row.time}</div>;
                 })}
               </div>
-              <div className="cellWrapper">
-                {timeRows.map((row, index) => {
-                  return (
-                    <div key={index} className="cellContainer">
-                      <PlannerCell
-                        dropCallbackMove={this.moveEvent}
-                        dropCallbackNewEvent={this.newEvent}
-                        day={0}
-                        time={row.time}
-                      >
-                        {this.placeEvents(0, row.time)}
-                      </PlannerCell>
-                      <PlannerCell
-                        dropCallbackMove={this.moveEvent}
-                        dropCallbackNewEvent={this.newEvent}
-                        day={1}
-                        time={row.time}
-                      >
-                        {this.placeEvents(1, row.time)}
-                      </PlannerCell>
-                      <PlannerCell
-                        dropCallbackMove={this.moveEvent}
-                        dropCallbackNewEvent={this.newEvent}
-                        day={2}
-                        time={row.time}
-                      >
-                        {this.placeEvents(2, row.time)}
-                      </PlannerCell>
-                      <PlannerCell
-                        dropCallbackMove={this.moveEvent}
-                        dropCallbackNewEvent={this.newEvent}
-                        day={3}
-                        time={row.time}
-                      >
-                        {this.placeEvents(3, row.time)}
-                      </PlannerCell>
-                      <PlannerCell
-                        dropCallbackMove={this.moveEvent}
-                        dropCallbackNewEvent={this.newEvent}
-                        day={4}
-                        time={row.time}
-                      >
-                        {this.placeEvents(4, row.time)}
-                      </PlannerCell>
-                      <PlannerCell
-                        dropCallbackMove={this.moveEvent}
-                        dropCallbackNewEvent={this.newEvent}
-                        day={5}
-                        time={row.time}
-                      >
-                        {this.placeEvents(5, row.time)}
-                      </PlannerCell>
-                      <PlannerCell
-                        dropCallbackMove={this.moveEvent}
-                        dropCallbackNewEvent={this.newEvent}
-                        day={6}
-                        time={row.time}
-                      >
-                        {this.placeEvents(6, row.time)}
-                      </PlannerCell>
-                    </div>
+              <div className="table">
+                <div className="daysWrapper">
+                  {this.state.week.map((day, index) => {
+                    return (
+                      <h1 key={index}>
+                        {dateToDayString(day) +
+                          ", " +
+                          dateToMonthString(day) +
+                          " " +
+                          day.getDate()}
+                      </h1>
+                    );
+                  })}
                 </div>
-            </DndProvider>
+                <div className="cellWrapper">
+                  {timeRows.map((row, index) => {
+                    return (
+                      <div key={index} className="cellContainer">
+                        <PlannerCell
+                          dropCallbackMove={this.moveEvent}
+                          dropCallbackNewEvent={this.newEvent}
+                          day={0}
+                          time={row.time}
+                        >
+                          {this.placeEvents(0, row.time)}
+                        </PlannerCell>
+                        <PlannerCell
+                          dropCallbackMove={this.moveEvent}
+                          dropCallbackNewEvent={this.newEvent}
+                          day={1}
+                          time={row.time}
+                        >
+                          {this.placeEvents(1, row.time)}
+                        </PlannerCell>
+                        <PlannerCell
+                          dropCallbackMove={this.moveEvent}
+                          dropCallbackNewEvent={this.newEvent}
+                          day={2}
+                          time={row.time}
+                        >
+                          {this.placeEvents(2, row.time)}
+                        </PlannerCell>
+                        <PlannerCell
+                          dropCallbackMove={this.moveEvent}
+                          dropCallbackNewEvent={this.newEvent}
+                          day={3}
+                          time={row.time}
+                        >
+                          {this.placeEvents(3, row.time)}
+                        </PlannerCell>
+                        <PlannerCell
+                          dropCallbackMove={this.moveEvent}
+                          dropCallbackNewEvent={this.newEvent}
+                          day={4}
+                          time={row.time}
+                        >
+                          {this.placeEvents(4, row.time)}
+                        </PlannerCell>
+                        <PlannerCell
+                          dropCallbackMove={this.moveEvent}
+                          dropCallbackNewEvent={this.newEvent}
+                          day={5}
+                          time={row.time}
+                        >
+                          {this.placeEvents(5, row.time)}
+                        </PlannerCell>
+                        <PlannerCell
+                          dropCallbackMove={this.moveEvent}
+                          dropCallbackNewEvent={this.newEvent}
+                          day={6}
+                          time={row.time}
+                        >
+                          {this.placeEvents(6, row.time)}
+                        </PlannerCell>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        </DndProvider>
         );
     }
 }
