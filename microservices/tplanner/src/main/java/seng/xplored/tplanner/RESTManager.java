@@ -111,11 +111,11 @@ public class RESTManager {
 
     //Post Trip
     @PostMapping(baseURL + "/trip")
-    public ResponseEntity<Object> addTrip(@RequestBody Trip trip, @RequestParam("userid") String userid){
+    public ResponseEntity<Object> addTrip(@RequestBody Trip trip, @RequestParam("authid") String authid){
         HttpHeaders responseHeaders = new HttpHeaders();
         User user;
         try{
-            user = userRepository.findById(userid).get(); //Gets the User with Id
+            user = userRepository.findByAuthId(authid); //Gets the User with Id
         } catch(Exception ex){
             return ResponseEntity.internalServerError().headers(responseHeaders).body(new Failure(java.time.LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR)); //create a body!
         }
