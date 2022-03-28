@@ -69,7 +69,7 @@ const Login: React.FC = () => {
 
   // Used to get image only ONCE on loading the page.
   useEffect(() => {
-    //GetImageURL();
+    GetImageURL();
   }, []);
 
   function login() {
