@@ -8,6 +8,7 @@ import HotelsCard from "./HotelsCard";
 import AttractionCard from "./AttractionCard";
 import Chevron from "../assets/chevron.svg";
 import axiosInstance from "../utils/axios";
+import { getSystemErrorName } from "util";
 
 interface CardHolderProps {
     selectedMode: string;
@@ -103,7 +104,9 @@ export default function EventCardHolder({
                                 className="card--holder-bar-property-input"
                                 selected={startDate}
                                 onChange={(date: Date) =>
-                                    setFlightsDate(date.toDateString())
+                                    setFlightsDate(
+                                        date.toISOString().slice(0, 10)
+                                    )
                                 }
                                 startDate={startDate}
                                 endDate={endDate}
@@ -154,7 +157,7 @@ export default function EventCardHolder({
                                 className="card--holder-bar-property-input"
                                 selected={startDate}
                                 onChange={(date: Date) =>
-                                    setCarDate(date.toDateString())
+                                    setCarDate(date.toISOString().slice(0, 10))
                                 }
                                 startDate={startDate}
                                 endDate={endDate}
@@ -225,7 +228,9 @@ export default function EventCardHolder({
                                 className="card--holder-bar-property-input"
                                 selected={startDate}
                                 onChange={(date: Date) =>
-                                    setHotelsTimeIn(date.toDateString())
+                                    setHotelsTimeIn(
+                                        date.toISOString().slice(0, 10)
+                                    )
                                 }
                                 startDate={startDate}
                                 endDate={endDate}
@@ -243,7 +248,9 @@ export default function EventCardHolder({
                                 className="card--holder-bar-property-input"
                                 selected={endDate}
                                 onChange={(date: Date) =>
-                                    setHotelsTimeOut(date.toDateString())
+                                    setHotelsTimeOut(
+                                        date.toISOString().slice(0, 10)
+                                    )
                                 }
                                 startDate={startDate}
                                 endDate={endDate}
@@ -491,9 +498,38 @@ export default function EventCardHolder({
                 );
 
                 axiosInstance
-                    .get("/accom/api/v1")
+                    .get("/api/v1/accommodations", {
+                        params: {
+                            location: hotelsLocation,
+                            no_of_adults: hotelsNumAdults,
+                            no_of_children: hotelsNumKids,
+                            no_of_rooms: hotelsNumRooms,
+                            check_in: hotelsTimeIn,
+                            checkout: hotelsTimeOut,
+                            currency: "CAD",
+                        },
+                    })
                     .then((res) => {
                         console.log(res);
+                        setEventCards(
+                            <>
+                                {res.data.hotel_information.map((e, i) => {
+                                    return (
+                                        <HotelsCard
+                                            key={i}
+                                            name={e.hotel_name}
+                                            image={e.hotel_image}
+                                            price={
+                                                "$" + Math.round(e.hotel_price)
+                                            }
+                                            link={e.hotel_url}
+                                            address={e.hotel_address}
+                                            addCardFunction={eventHandler}
+                                        />
+                                    );
+                                })}
+                            </>
+                        );
                     })
                     .catch((err) => console.log(err));
                 break;
