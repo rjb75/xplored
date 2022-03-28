@@ -501,13 +501,7 @@ export default function EventCardHolder({
                 console.log(attractionKeywords);
 
                 axiosInstance
-                    .get("/api/v1/pois", {
-                        params: {
-                            address: "2500 University Drive NW",
-                            keyword: "Cafe",
-                            radius: 1000,
-                        },
-                    })
+                    .get("/api/v1/pois")
                     .then((res) => {
                         console.log(res);
                     })
