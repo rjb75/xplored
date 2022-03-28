@@ -58,23 +58,23 @@
   }
 }
 
-.food {
+.DIN {
   background-color: $color-salmon;
   border-left: 5px solid $color-dark-salmon;
 }
-.car {
+.TRIPS {
   background-color: $color-turquoise; // Change to right vcolor vars
   border-left: 5px solid $color-dark-turquoise;
 }
-.flight {
+.TRIPL {
   background-color: $color-blue; // Change to right vcolor vars
   border-left: 5px solid $color-dark-blue;
 }
-.accommodation {
+.ACC {
   background-color: $color-magenta; // Change to right vcolor vars
   border-left: 5px solid $color-dark-magenta;
 }
-.poi {
+.POI {
   background-color: $color-yellow; // Change to right vcolor vars
   border-left: 5px solid $color-dark-yellow;
 }
