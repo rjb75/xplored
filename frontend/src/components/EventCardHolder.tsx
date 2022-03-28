@@ -578,7 +578,7 @@ export default function EventCardHolder({
                                 "Mountain Standard Time",
                                 "Central European Standard Time",
                             ]}
-                            price={"831"}
+                            price={"$831"}
                             currencyType={"CAD"}
                             duration={"12 hr 56 mins"}
                             addCardFunction={eventHandler}

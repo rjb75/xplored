@@ -52,12 +52,13 @@ export default function FlightCard(props: FlightCardProps) {
                                 {props.timeZones[0]}
                             </p>
                         </div>
+                        <h2 className="card--flight-time-center">-</h2>
                         <div className="card--flight-dest">
                             <h2 className="card--flight-time">
-                                {props.times[0]}
+                                {props.times[1]}
                             </h2>
                             <p className="card--flight-zone">
-                                {props.timeZones[0]}
+                                {props.timeZones[1]}
                             </p>
                         </div>
                     </div>
