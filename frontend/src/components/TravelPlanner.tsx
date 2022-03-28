@@ -150,9 +150,16 @@ export class TravelPlanner extends React.Component<IProps, IState> {
   }
 
   deleteEvent(itemid: string){
-    console.log(itemid)
     let oldEvents = this.state.events.filter((item) => item.event_id !== itemid);
     this.setState({ events: oldEvents });
+
+    axiosInstance.delete("/api/v1/event", {
+      params: {
+        eventid: itemid,
+        tripid: this.props.tripId
+      }
+    })
+
   }
 
   moveEvent(item: plannerEvent, day: number, time: string) {
