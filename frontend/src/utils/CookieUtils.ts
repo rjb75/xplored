@@ -22,3 +22,10 @@ export const setCookie = (name: string, content: string, duration?: number) => {
     const cookieData = `${name}=${content};expires=${currentDate.toUTCString()}`;
     document.cookie = cookieData;
 }
+
+// helper function to clear cookies
+export const clearCookie = () => {
+    document.cookie = `id_token='';expires=${new Date()}`;
+    document.cookie = `access_token='';expires=${new Date()}`;
+    document.cookie = `refresh_token='';expires=${new Date()}`;
+}
