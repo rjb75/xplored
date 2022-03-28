@@ -8,6 +8,8 @@ import Modal from "react-modal";
 import Logo from "../images/logo.svg";
 import Select from "react-select";
 import axiosInstance from "../utils/axios";
+import { handleLogout } from "../utils/Logout";
+import { useNavigate } from "react-router-dom";
 
 interface NavProps {
   mode: string;
@@ -67,6 +69,8 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
 
   const [trips, setTrips] = useState<Array<TripOptions>>([]);
   const [currTrip, setCurrTrip] = useState<TripOptions>();
+
+  const navigation = useNavigate();
 
   useEffect(() => {
     axiosInstance
