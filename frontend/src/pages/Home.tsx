@@ -8,6 +8,7 @@ import NavBar from "../components/NavBar";
 interface IState {
     view: string;
     mode: string;
+    tripId: string;
 }
 
 interface IProps {}
@@ -18,10 +19,16 @@ class Home extends React.Component<IProps, IState> {
         this.state = {
             view: "planner",
             mode: "Flights",
+            tripId: "",
         };
 
+        this.changeTripId = this.changeTripId.bind(this);
         this.changeView = this.changeView.bind(this);
         this.changeMode = this.changeMode.bind(this);
+    }
+
+    changeTripId(tripId: string){
+        this.setState({ tripId: tripId });
     }
 
     changeView(view: string) {
@@ -35,7 +42,7 @@ class Home extends React.Component<IProps, IState> {
     render() {
         return (
             <>
-                <NavBar mode={this.state.mode} changeMode={this.changeMode} />
+                <NavBar mode={this.state.mode} changeMode={this.changeMode} changeTripId={this.changeTripId} />
                 <div
                     style={{
                         height: `calc(100vh - 12.75rem)`,
@@ -43,7 +50,7 @@ class Home extends React.Component<IProps, IState> {
                         margin: `auto`,
                     }}>
                     {this.state.view === "planner" ? (
-                        <TravelPlanner mode={this.state.mode} />
+                        <TravelPlanner mode={this.state.mode} tripId={this.state.tripId} />
                     ) : (
                         <TravelMap />
                     )}
