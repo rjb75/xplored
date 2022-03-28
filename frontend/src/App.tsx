@@ -6,7 +6,6 @@ import ComponentTest from "./pages/ComponentTest";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import { cp } from "fs";
-import Home from "./pages/Home";
 import NavBar from "./components/NavBar";
 
 function App() {
