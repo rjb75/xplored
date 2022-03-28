@@ -44,7 +44,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
       currTripId: this.props.tripId,
     };
 
-    if (this.props.tripId !== undefined) {
+    if (this.props.tripId !== "") {
       console.log(this.props.tripId);
       axiosInstance
         .get("/api/v1/trip/events", {
@@ -60,6 +60,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
         });
     }
 
+    this.deleteEvent = this.deleteEvent.bind(this);
     this.moveEvent = this.moveEvent.bind(this);
     this.newEvent = this.newEvent.bind(this);
     this.editEventSize = this.editEventSize.bind(this);
@@ -140,11 +141,18 @@ export class TravelPlanner extends React.Component<IProps, IState> {
             data={e.data}
             photo_URL={e.photo_URL}
             editSizeCallBack={this.editEventSize}
+            deleteCallBack={this.deleteEvent}
           />
         );
       }
     });
     return res;
+  }
+
+  deleteEvent(itemid: string){
+    console.log(itemid)
+    let oldEvents = this.state.events.filter((item) => item.event_id !== itemid);
+    this.setState({ events: oldEvents });
   }
 
   moveEvent(item: plannerEvent, day: number, time: string) {

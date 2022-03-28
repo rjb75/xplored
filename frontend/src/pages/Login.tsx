@@ -9,6 +9,8 @@ import XploredLogo from "../assets/Logo.svg";
 
 const Login: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
+    const [authMessage, setAuthMessage] = useState<string>(" ");
+
 
   const locations = [
     "London",
@@ -84,8 +86,14 @@ const Login: React.FC = () => {
           setCookie("access_token", id);
         });
         setCookie("refresh_token", userCredential.user.refreshToken);
+        window.location.href ="/home";
       }
-    );
+      
+      ).catch((error) => {
+        setAuthMessage("Incorrect username or password");
+    }
+
+    )
   }
 
   return (
@@ -131,6 +139,7 @@ const Login: React.FC = () => {
             </div>
 
             <div className="AuthContent Spacer" />
+            <h1 className="AuthContent ErrorMessage">{authMessage}</h1>
             <div className="AuthContent BottomActionButtons">
               <input
                 className="AuthButton"
