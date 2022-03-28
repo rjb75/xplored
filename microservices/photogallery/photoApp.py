@@ -1,4 +1,4 @@
-import config, uvicorn, os, requests
+import config, uvicorn, os, requests, photoAppModel
 from fastapi import FastAPI, HTTPException
 
 photoApp = FastAPI()
@@ -18,7 +18,8 @@ def index():
 # The function also takes in more optional queries for the photo type returned, the image can be
 # returned in a photo type of 'raw', 'full', 'regular', 'small', 'thumb' or 'small_s3'.
 @photoApp.get("/photo/api/v1/photo")
-def get_photo(name: str, width: int | None = None, height: int | None = None, photoType: str | None = None):
+def get_photo(name: str, width: int | None = None, height: int | None = None, 
+              photoType: photoAppModel.PhotoTypeModel | None = None):
     # create query for photo
     querystring = {"query":name,"page":"1", "per_page":"5"}
     # send GET request to unsplash api
@@ -41,7 +42,7 @@ def get_photo(name: str, width: int | None = None, height: int | None = None, ph
     # returns photo url of given photo type if photoType query contains a string
     elif photoType is not None:
         return {"photo_id": photo_id,
-                "photo_url": urls_dict[photoType]}
+                "photo_url": urls_dict[photoType.value]}
     # returns a photo url of photo type 'full' if the optional queries contain nothing
     else:
         return {"photo_id": photo_id,
