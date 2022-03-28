@@ -200,6 +200,13 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
               />
             );
           })}
+        <div className="navbar--right-control">
+          <button className="navbar--profile-link" onClick={() => {
+              handleLogout();
+              navigation('/login')
+            }}>
+            Log Out <i className="icon-avatar" />
+          </button>
         </div>
       </div>
       <Modal
@@ -219,6 +226,7 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
           <div className="button" onClick={addTrip}><h2>Add Trip</h2></div>
         </div>
       </Modal>
+    </div>
     </>
   );
 };
