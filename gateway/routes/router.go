@@ -52,6 +52,7 @@ func RegisterRoutes(app *fiber.App) {
 	// Authenticated routes go here
 	FrontendProtectedRoutes(app)
 
+	AccommodationsRoutes(v1)
 	DiningRoutes(v1)
 	PhotoRoutes(v1)
 	POIsRoutes(v1)
