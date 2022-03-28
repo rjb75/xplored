@@ -37,7 +37,9 @@ func ReviewsRoutes(r fiber.Router) {
 func TPlannerRoutes(r fiber.Router) {
 	r.Get("/trips", handlers.GetUserTrips)
 	r.Get("/trip", handlers.GetTripById)
+	r.Get("/trip/events", handlers.GetEventsByTripId)
 	r.Get("/event", handlers.GetEventById)
 	r.Post("/event/edit", handlers.EditEventById)
 	r.Post("/event/create", handlers.CreateEvent)
+	r.Post("/trip/user", handlers.CreateUser)
 }
