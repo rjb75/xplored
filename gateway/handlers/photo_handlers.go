@@ -38,10 +38,10 @@ func PhotosHandler(c *fiber.Ctx) error {
 	}
 
 	if resp.StatusCode != 200 {
-		return c.Status(resp.StatusCode).JSON(body)
+		return c.Status(resp.StatusCode).Send(body)
 	}
 
-	return c.Status(200).JSON(body)
+	return c.Status(200).Send(body)
 
 }
 
@@ -74,9 +74,9 @@ func RandomPhotoHandler(c *fiber.Ctx) error {
 	}
 
 	if resp.StatusCode != 200 {
-		return c.Status(resp.StatusCode).JSON(body)
+		return c.Status(resp.StatusCode).Send(body)
 	}
 
-	return c.Status(200).JSON(body)
+	return c.Status(200).Send(body)
 
 }

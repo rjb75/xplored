@@ -58,7 +58,7 @@ func CreateUser(c *fiber.Ctx) error {
 	}
 
 	if resp.StatusCode != 200 {
-		return c.Status(resp.StatusCode).JSON(body)
+		return c.Status(resp.StatusCode).Send(body)
 	}
 
 	return c.Status(200).Send(body)
@@ -160,7 +160,7 @@ func GetUserTrips(c *fiber.Ctx) error {
 	}
 
 	if resp.StatusCode != 200 {
-		return c.Status(resp.StatusCode).JSON(body)
+		return c.Status(resp.StatusCode).Send(body)
 	}
 
 	return c.Status(200).Send(body)
@@ -195,7 +195,7 @@ func GetTripById(c *fiber.Ctx) error {
 	}
 
 	if resp.StatusCode != 200 {
-		return c.Status(resp.StatusCode).JSON(body)
+		return c.Status(resp.StatusCode).Send(body)
 	}
 
 	return c.Status(200).Send(body)
@@ -232,7 +232,7 @@ func CreateEvent(c *fiber.Ctx) error {
 	}
 
 	if resp.StatusCode != 200 {
-		return c.Status(resp.StatusCode).JSON(body)
+		return c.Status(resp.StatusCode).Send(body)
 	}
 
 	return c.Status(200).Send(body)
@@ -268,7 +268,7 @@ func EditEventById(c *fiber.Ctx) error {
 	}
 
 	if resp.StatusCode != 200 {
-		return c.Status(resp.StatusCode).JSON(body)
+		return c.Status(resp.StatusCode).Send(body)
 	}
 
 	return c.Status(200).Send(body)
