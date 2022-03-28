@@ -23,16 +23,17 @@ export enum eventTypes {
 }
 
 export type plannerEvent = {
-  event_id: string,
-  type: eventTypes,
-  start_time: Date,
-  end_time: Date,
-  name: string,
-  address: string,
-  link: string,
-  data: string,
-  photo_URL: string,
-  editSizeCallBack: Function,
+  event_id: string;
+  type: eventTypes;
+  start_time: Date;
+  end_time: Date;
+  name: string;
+  address: string;
+  link: string;
+  data: string;
+  photo_URL: string;
+  editSizeCallBack: Function;
+  deleteCallBack: Function;
 };
 
 export const EventCard = ({
@@ -46,11 +47,11 @@ export const EventCard = ({
   data,
   photo_URL,
   editSizeCallBack,
+  deleteCallBack
 }: plannerEvent): JSX.Element => {
   const [duration, setDuration] = useState<string>(getDuration());
   const [size, setSize] = useState<number>(getSize());
   const [displayTime, setDisplayTime] = useState<string>(getDisplayTime());
-
 
   useEffect(() => {
     let durHours = size / 100;
@@ -74,18 +75,17 @@ export const EventCard = ({
     }
   }
 
-  function getDisplayTime(){
+  function getDisplayTime() {
     let hour = start_time.getUTCHours();
     let pm = "am";
-    if(hour > 12) {
+    if (hour > 12) {
       hour -= 12;
       pm = "pm";
-    }
-    else if(hour === 0) hour = 12;
+    } else if (hour === 0) hour = 12;
 
     let mins = start_time.getUTCMinutes();
     let minsString = mins.toString();
-    if(mins < 10) minsString = "0" + mins;
+    if (mins < 10) minsString = "0" + mins;
 
     return hour.toString() + ":" + minsString + " " + pm;
   }
@@ -101,7 +101,7 @@ export const EventCard = ({
 
   function getDuration(): string {
     let delta = end_time.getTime() - start_time.getTime();
-    return (delta/60/60/1000).toString() + " Hours";
+    return (delta / 60 / 60 / 1000).toString() + " Hours";
   }
 
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -156,7 +156,10 @@ export const EventCard = ({
             <h2>{name}</h2>
           </div>
         </div>
-        <p>{duration}</p>
+        <div className="right">
+          <p>{duration}</p>
+          <h2 onClick={() => deleteCallBack(event_id)}>x</h2>
+        </div>
       </div>
     </Resizable>
   );

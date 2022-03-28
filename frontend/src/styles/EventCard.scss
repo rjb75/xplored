@@ -51,10 +51,24 @@
     }
   }
 
-  p {
-    margin: 0 2px 0 0;
-    font-family: "Roboto", sans-serif;
-    font-size: 7.28px;
+  .right{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-height: 35px;
+    align-items: center;
+
+    .h2{
+     background-color: #FFFFFF80;
+     color: #FFF;
+     font-weight: 800;
+    }
+
+    p {
+      margin: 0 2px 0 0;
+      font-family: "Roboto", sans-serif;
+      font-size: 7.28px;
+    }
   }
 }
 

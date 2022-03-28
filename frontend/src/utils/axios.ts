@@ -11,7 +11,7 @@ const axiosDefaultHeaders: AxiosRequestHeaders = {
 // default axios config values
 const axiosDefaultConfig: AxiosRequestConfig = {
     baseURL: API_BASE,
-    timeout: 3000,
+    timeout: 30000,
     headers: axiosDefaultHeaders,
 };
 
