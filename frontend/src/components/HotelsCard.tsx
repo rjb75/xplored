@@ -1,6 +1,8 @@
 import { extractQuerystring } from "@firebase/util";
 import React from "react";
 import "./EventCard.scss";
+import { ItemTypes } from "../utils/PlannerConstants";
+import { useDrag } from "react-dnd";
 import ChevronSmall from "../assets/chevron-small.svg";
 
 interface HotelsCardProps {
@@ -9,11 +11,24 @@ interface HotelsCardProps {
     name?: string;
     link?: string;
     address?: string;
+    addCardFunction: Function;
 }
 
 export default function HotelsCard(props: HotelsCardProps) {
+    const [{ isDragging }, drag] = useDrag(() => ({
+        type: ItemTypes.EVENT,
+        item: {
+            type: "Hotels",
+            title: "Hotels to TEST",
+        },
+        collect: (monitor) => ({
+            isDragging: !!monitor.isDragging(),
+            item: monitor.getItem(),
+        }),
+    }));
+
     return (
-        <div className="card--entry card--hotels">
+        <div ref={drag} className="card--entry card--hotels">
             <img
                 src={props.image}
                 className="card--hotels-image"

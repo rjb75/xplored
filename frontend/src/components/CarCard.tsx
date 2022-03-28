@@ -1,5 +1,7 @@
 import React from "react";
 import "./EventCard.scss";
+import { ItemTypes } from "../utils/PlannerConstants";
+import { useDrag } from "react-dnd";
 import CarIcon from "../assets/carIcon2.svg";
 import BikeIcon from "../assets/bikeIcon.svg";
 import ChevronSmall from "../assets/chevron-small.svg";
@@ -9,9 +11,22 @@ interface CarCardProps {
     duration?: string;
     distance?: string;
     link?: string;
+    addCardFunction: Function;
 }
 
 export default function CarCard(props: CarCardProps) {
+    const [{ isDragging }, drag] = useDrag(() => ({
+        type: ItemTypes.EVENT,
+        item: {
+            type: "Car",
+            title: "Car to TEST",
+        },
+        collect: (monitor) => ({
+            isDragging: !!monitor.isDragging(),
+            item: monitor.getItem(),
+        }),
+    }));
+
     let logo;
     let linkLabel;
     switch (props.type) {
@@ -35,7 +50,7 @@ export default function CarCard(props: CarCardProps) {
     }
 
     return (
-        <div className="card--entry card--car">
+        <div ref={drag} className="card--entry card--car">
             <img
                 className="card--car-icon"
                 src={logo}
