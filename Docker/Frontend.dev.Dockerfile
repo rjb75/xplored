@@ -11,4 +11,8 @@ COPY /frontend/yarn.lock .
 
 RUN yarn install
 
-CMD ["yarn", "start"]
+COPY /frontend/public ./public
+COPY /frontend/tsconfig.json .
+COPY /frontend/webpack.config.js .
+
+CMD ["yarn", "run","dev"]
