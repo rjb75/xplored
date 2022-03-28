@@ -64,7 +64,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     this.moveEvent = this.moveEvent.bind(this);
     this.newEvent = this.newEvent.bind(this);
     this.editEventSize = this.editEventSize.bind(this);
-    this.newEventFlight = this.newEventFlight.bind(this);
+    this.newEventSetDate = this.newEventSetDate.bind(this);
   }
 
   componentDidUpdate(prevProps: IProps) {
@@ -305,7 +305,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
    * @param start_time 
    * @param end_time 
    */
-  newEventFlight(
+  newEventSetDate(
     name: string,
     type: eventTypes,
     day: number,
@@ -409,7 +409,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                       <PlannerCell
                         dropCallbackMove={this.moveEvent}
                         dropCallbackNewEvent={this.newEvent}
-                        dropCallbackNewFlightEvent={this.newEventFlight}
+                        dropCallbackNewSetDateEvent={this.newEventSetDate}
                         day={0}
                         time={row.time}
                       >
@@ -418,7 +418,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                       <PlannerCell
                         dropCallbackMove={this.moveEvent}
                         dropCallbackNewEvent={this.newEvent}
-                        dropCallbackNewFlightEvent={this.newEventFlight}
+                        dropCallbackNewSetDateEvent={this.newEventSetDate}
                         day={1}
                         time={row.time}
                       >
@@ -427,7 +427,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                       <PlannerCell
                         dropCallbackMove={this.moveEvent}
                         dropCallbackNewEvent={this.newEvent}
-                        dropCallbackNewFlightEvent={this.newEventFlight}
+                        dropCallbackNewSetDateEvent={this.newEventSetDate}
                         day={2}
                         time={row.time}
                       >
@@ -436,7 +436,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                       <PlannerCell
                         dropCallbackMove={this.moveEvent}
                         dropCallbackNewEvent={this.newEvent}
-                        dropCallbackNewFlightEvent={this.newEventFlight}
+                        dropCallbackNewSetDateEvent={this.newEventSetDate}
                         day={3}
                         time={row.time}
                       >
@@ -445,7 +445,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                       <PlannerCell
                         dropCallbackMove={this.moveEvent}
                         dropCallbackNewEvent={this.newEvent}
-                        dropCallbackNewFlightEvent={this.newEventFlight}
+                        dropCallbackNewSetDateEvent={this.newEventSetDate}
                         day={4}
                         time={row.time}
                       >
@@ -454,7 +454,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                       <PlannerCell
                         dropCallbackMove={this.moveEvent}
                         dropCallbackNewEvent={this.newEvent}
-                        dropCallbackNewFlightEvent={this.newEventFlight}
+                        dropCallbackNewSetDateEvent={this.newEventSetDate}
                         day={5}
                         time={row.time}
                       >
@@ -463,7 +463,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
                       <PlannerCell
                         dropCallbackMove={this.moveEvent}
                         dropCallbackNewEvent={this.newEvent}
-                        dropCallbackNewFlightEvent={this.newEventFlight}
+                        dropCallbackNewSetDateEvent={this.newEventSetDate}
                         day={6}
                         time={row.time}
                       >

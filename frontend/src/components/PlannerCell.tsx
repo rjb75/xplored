@@ -9,12 +9,12 @@ interface AppProps {
     time: String,
     children?: JSX.Element,
     dropCallbackMove: Function,
-    dropCallbackNewFlightEvent: Function,
+    dropCallbackNewSetDateEvent: Function,
     dropCallbackNewEvent: Function,
     test?: boolean,
 }
 
-export const PlannerCell = ({day, time, children, test, dropCallbackMove, dropCallbackNewEvent, dropCallbackNewFlightEvent}: AppProps) => {
+export const PlannerCell = ({day, time, children, test, dropCallbackMove, dropCallbackNewEvent, dropCallbackNewSetDateEvent}: AppProps) => {
 
     const [{ isOver }, drop] = useDrop(() => ({
         accept: ItemTypes.EVENT,
@@ -22,7 +22,7 @@ export const PlannerCell = ({day, time, children, test, dropCallbackMove, dropCa
             if(item.itemType === "event"){
                 dropCallbackMove(item, day, time);
             }else if(item.itemType === "flight"){
-                dropCallbackNewFlightEvent((item as plannerEvent).name, item.type, day, item.start_time, item.end_time);
+                dropCallbackNewSetDateEvent((item as plannerEvent).name, item.type, day, item.start_time, item.end_time);
             }else{
                 dropCallbackNewEvent((item as plannerEvent).name, item.type, day, time);
             }
