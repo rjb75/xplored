@@ -176,7 +176,6 @@ export class TravelPlanner extends React.Component<IProps, IState> {
       }
     });
 
-    console.log(i.event_id);
     axiosInstance
       .post(
         "/api/v1/event/edit",
@@ -213,9 +212,32 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     let oldState = this.state.events.filter((item) => item.event_id !== id);
     oldState.push(event);
     this.setState({ events: oldState });
+
+    axiosInstance
+    .post(
+      "/api/v1/event/edit",
+      {
+        type: event.type,
+        start_time: event.start_time,
+        end_time: event.end_time,
+        name: event.name,
+        address: event.address,
+        link: event.link,
+        data: event.data,
+        photo_URL: event.photo_URL,
+      },
+      {
+        params: {
+          eventid: event.event_id,
+        },
+      }
+    )
+    .catch((e) => {
+      console.log(e);
+    });
   }
 
-  newEvent(title: string, day: string, time: string) {
+  newEvent(title: string, day: string, start_time: string) {
     let mode: eventTypes;
     switch (this.props.mode) {
       case "Flights":
@@ -240,13 +262,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     }
 
     let newEvent: plannerEvent = {
-      time: time,
-      date: day,
-      title: title,
-      duration: "1 Hour",
-      eventType: mode,
-      id: "6",
-      type: "event",
+
     };
 
     let oldState = this.state.events;
