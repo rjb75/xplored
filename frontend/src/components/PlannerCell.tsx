@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDrop } from 'react-dnd';
-import { ItemTypes } from "../utils/PlannerConstants";
+import { displayTimeToDateObj, ItemTypes } from "../utils/PlannerConstants";
 import EventCard, { eventTypes, plannerEvent } from "./EventCard";
 import { FlightCardProps } from './FlightCard';
 
@@ -9,11 +9,12 @@ interface AppProps {
     time: String,
     children?: JSX.Element,
     dropCallbackMove: Function,
+    dropCallbackNewFlightEvent: Function,
     dropCallbackNewEvent: Function,
     test?: boolean,
 }
 
-export const PlannerCell = ({day, time, children, test, dropCallbackMove, dropCallbackNewEvent}: AppProps) => {
+export const PlannerCell = ({day, time, children, test, dropCallbackMove, dropCallbackNewEvent, dropCallbackNewFlightEvent}: AppProps) => {
 
     const [{ isOver }, drop] = useDrop(() => ({
         accept: ItemTypes.EVENT,
@@ -21,9 +22,9 @@ export const PlannerCell = ({day, time, children, test, dropCallbackMove, dropCa
             if(item.itemType === "event"){
                 dropCallbackMove(item, day, time);
             }else if(item.itemType === "flight"){
-                dropCallbackNewEvent((item as plannerEvent).name, item.type, day, item.start_time, item.end_time);
+                dropCallbackNewFlightEvent((item as plannerEvent).name, item.type, day, item.start_time, item.end_time);
             }else{
-                dropCallbackNewEvent((item as plannerEvent).name, day, time)
+                dropCallbackNewEvent((item as plannerEvent).name, item.type, day, time);
             }
         },
         collect: monitor => ({
