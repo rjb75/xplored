@@ -16,8 +16,8 @@ import { Resizable, NumberSize } from "re-resizable";
 
 export enum eventTypes {
   FOOD = "DIN",
-  CAR = "TRIPS",
-  FLIGHT = "TRIPL",
+  CAR = "TRANSS",
+  FLIGHT = "TRANSL",
   ACCOMODATION = "ACC",
   POI = "POI",
 }
@@ -61,9 +61,9 @@ export const EventCard = ({
     switch (eventType) {
       case "DIN":
         return <img src={foodIcon} alt="" />;
-      case "TRIPS":
+      case "TRANSS":
         return <img src={carIcon} alt="" />;
-      case "TRIPL":
+      case "TRANSL":
         return <img src={flightIcon} alt="" />;
       case "ACC":
         return <img src={accommodationIcon} alt="" />;
