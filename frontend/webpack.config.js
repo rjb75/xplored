@@ -12,6 +12,9 @@ module.exports = {
     vendor: ["react", "react-dom"],
   },
   watch: process.env.FRONTEND_ENV_MODE === "development",
+  watchOptions: {
+    poll: 1000
+  },
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "js/[name].bundle.js",

@@ -54,7 +54,9 @@ services:
       context: ../
       dockerfile: Docker/Frontend.dev.Dockerfile
     volumes:
-      - ../frontend:/xplored/frontend
+      - ../frontend/src:/xplored/frontend/src
+      - ../frontend/build:/xplored/frontend/build
+      - /xplored/frontend/node_modules
   gateway:
     tty: true
     stdin_open: true
