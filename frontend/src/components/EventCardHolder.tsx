@@ -15,7 +15,7 @@ interface CardHolderProps {
 }
 
 export default function EventCardHolder({
-    selectedMode = "Flights",
+    selectedMode,
     eventHandler,
 }: CardHolderProps) {
     const [holderOpen, setHolderOpen] = React.useState(false);
@@ -44,11 +44,39 @@ export default function EventCardHolder({
     const [startDate, setStartDate] = useState<Date>();
     const [endDate, setEndDate] = useState<Date>();
 
+    /* List of all possible properties that have been selected by users (there's probably a better way of doing this) */
+    // Flights Properties //
+    const [flightsHome, setFlightsHome] = useState("");
+    const [flightsDate, setFlightsDate] = useState("");
+    const [flightsDest, setFlightsDest] = useState("");
+    const [flightsNumTravelers, setFlightsNumTravelers] = useState("1");
+
+    // Car Properties //
+    const [carHome, setCarHome] = useState("");
+    const [carDate, setCarDate] = useState("");
+    const [carDest, setCarDest] = useState("");
+    const [carNumTravelers, setCarNumTravelers] = useState("1");
+
+    // Food Properties //
+    const [foodName, setFoodName] = useState("");
+    const [foodRestrictions, setFoodRestrictions] = useState("");
+    const [foodCategories, setFoodCategories] = useState("");
+
+    // Hotels Properties //
+    const [hotelsLocation, setHotelsLocation] = useState("");
+    const [hotelsTimeIn, setHotelsTimeIn] = useState("");
+    const [hotelsTimeOut, setHotelsTimeOut] = useState("");
+    const [hotelsNumRooms, setHotelsNumRooms] = useState("1");
+    const [hotelsNumAdults, setHotelsNumAdults] = useState("1");
+    const [hotelsNumKids, setHotelsNumKids] = useState("0");
+
+    // Attraction Properties //
+    const [attractionKeywords, setAttractionKeywords] = useState("second");
+
     function holderProperties() {
         // Okay listen I could do this way better with map but I don't feel like it >:(
         switch (selectedMode) {
             case "Flights":
-            case "Car":
                 return (
                     <>
                         <li className="card--holder-bar-property">
@@ -60,6 +88,10 @@ export default function EventCardHolder({
                                 className="card--holder-bar-property-input"
                                 type="text"
                                 placeholder="Where are you starting?"
+                                value={flightsHome}
+                                onChange={(evt) =>
+                                    setFlightsHome(evt.target.value)
+                                }
                             />
                         </li>
                         <li className="card--holder-bar-property">
@@ -70,7 +102,9 @@ export default function EventCardHolder({
                             <DatePicker
                                 className="card--holder-bar-property-input"
                                 selected={startDate}
-                                onChange={(date: Date) => setStartDate(date)}
+                                onChange={(date: Date) =>
+                                    setFlightsDate(date.toDateString())
+                                }
                                 startDate={startDate}
                                 endDate={endDate}
                                 placeholderText="Add date"
@@ -86,7 +120,60 @@ export default function EventCardHolder({
                             <input
                                 className="card--holder-bar-property-input"
                                 type="text"
+                                value={flightsDest}
                                 placeholder="Where are you going?"
+                                onChange={(evt) =>
+                                    setFlightsDest(evt.target.value)
+                                }
+                            />
+                        </li>
+                    </>
+                );
+            case "Car":
+                return (
+                    <>
+                        <li className="card--holder-bar-property">
+                            <p className="card--holder-bar-property-label">
+                                Departure Location
+                            </p>
+                            <i className="icon-home card--holder-bar-property-icon" />
+                            <input
+                                className="card--holder-bar-property-input"
+                                type="text"
+                                value={carHome}
+                                placeholder="Where are you starting?"
+                                onChange={(evt) => setCarHome(evt.target.value)}
+                            />
+                        </li>
+                        <li className="card--holder-bar-property">
+                            <p className="card--holder-bar-property-label">
+                                Departure Date
+                            </p>
+                            <i className="icon-calendar-date card--holder-bar-property-icon" />
+                            <DatePicker
+                                className="card--holder-bar-property-input"
+                                selected={startDate}
+                                onChange={(date: Date) =>
+                                    setCarDate(date.toDateString())
+                                }
+                                startDate={startDate}
+                                endDate={endDate}
+                                placeholderText="Add date"
+                                selectsStart
+                                wrapperClassName="card--holder-bar-property-input"
+                            />
+                        </li>
+                        <li className="card--holder-bar-property">
+                            <p className="card--holder-bar-property-label">
+                                Destination
+                            </p>
+                            <i className="icon-marker card--holder-bar-property-icon" />
+                            <input
+                                className="card--holder-bar-property-input"
+                                type="text"
+                                value={carDest}
+                                placeholder="Where are you going?"
+                                onChange={(evt) => setCarDest(evt.target.value)}
                             />
                         </li>
                     </>
@@ -102,7 +189,11 @@ export default function EventCardHolder({
                             <input
                                 className="card--holder-bar-property-input"
                                 type="text"
+                                value={foodName}
                                 placeholder="What do you want to eat?"
+                                onChange={(evt) =>
+                                    setFoodName(evt.target.value)
+                                }
                             />
                         </li>
                     </>
@@ -118,7 +209,11 @@ export default function EventCardHolder({
                             <input
                                 className="card--holder-bar-property-input"
                                 type="text"
+                                value={hotelsLocation}
                                 placeholder="Where are you starting?"
+                                onChange={(evt) =>
+                                    setHotelsLocation(evt.target.value)
+                                }
                             />
                         </li>
                         <li className="card--holder-bar-property">
@@ -129,7 +224,9 @@ export default function EventCardHolder({
                             <DatePicker
                                 className="card--holder-bar-property-input"
                                 selected={startDate}
-                                onChange={(date: Date) => setStartDate(date)}
+                                onChange={(date: Date) =>
+                                    setHotelsTimeIn(date.toDateString())
+                                }
                                 startDate={startDate}
                                 endDate={endDate}
                                 placeholderText="Add date"
@@ -145,7 +242,9 @@ export default function EventCardHolder({
                             <DatePicker
                                 className="card--holder-bar-property-input"
                                 selected={endDate}
-                                onChange={(date: Date) => setEndDate(date)}
+                                onChange={(date: Date) =>
+                                    setHotelsTimeOut(date.toDateString())
+                                }
                                 startDate={startDate}
                                 endDate={endDate}
                                 placeholderText="Add date"
@@ -166,7 +265,11 @@ export default function EventCardHolder({
                             <input
                                 className="card--holder-bar-property-input"
                                 type="text"
+                                value={attractionKeywords}
                                 placeholder="Where are you starting?"
+                                onChange={(evt) =>
+                                    setAttractionKeywords(evt.target.value)
+                                }
                             />
                         </li>
                     </>
@@ -179,13 +282,36 @@ export default function EventCardHolder({
     function holderExtras() {
         switch (selectedMode) {
             case "Flights":
+                return (
+                    <>
+                        <li className="card--holder-extra-text">
+                            <select
+                                name="num-travelers"
+                                className="card--holder-bar-extra-text"
+                                value={flightsNumTravelers}
+                                onChange={(evt) => {
+                                    setFlightsNumTravelers(evt.target.value);
+                                }}>
+                                <option value="1">1 traveler</option>
+                                <option value="2">2 travelers</option>
+                                <option value="3">3 travelers</option>
+                                <option value="4">4 travelers</option>
+                                {/* Sorry, if you've got more than 4 people then you're wrong */}
+                            </select>
+                        </li>
+                    </>
+                );
             case "Car":
                 return (
                     <>
                         <li className="card--holder-extra-text">
                             <select
                                 name="num-travelers"
-                                className="card--holder-bar-extra-text">
+                                className="card--holder-bar-extra-text"
+                                value={carNumTravelers}
+                                onChange={(evt) => {
+                                    setCarNumTravelers(evt.target.value);
+                                }}>
                                 <option value="1">1 traveler</option>
                                 <option value="2">2 travelers</option>
                                 <option value="3">3 travelers</option>
@@ -201,24 +327,36 @@ export default function EventCardHolder({
                         <li className="card--holder-extra-text">
                             <select
                                 name="diet-restrictions"
-                                className="card--holder-bar-extra-dropdown">
-                                <option value="1">Dietary Restrictions</option>
-                                <option value="2">Peanut Allergy</option>
-                                <option value="3">Lactose Intolerant</option>
-                                <option value="4">Vegan</option>
-                                <option value="5">Halal</option>
+                                className="card--holder-bar-extra-dropdown"
+                                value={foodRestrictions}
+                                onChange={(evt) => {
+                                    setFoodRestrictions(evt.target.value);
+                                }}>
+                                <option value="">Dietary Restrictions</option>
+                                <option value="kids">Kids</option>
+                                <option value="halal">Halal</option>
+                                <option value="vegan">Vegan</option>
+                                <option value="kosher">Kosher</option>
+                                <option value="gluten-free">Gluten Free</option>
                                 {/* TODO: make this into a dropdown so multiple items can be selected */}
                             </select>
                         </li>
                         <li className="card--holder-extra-text card--holder-extra-dropdown">
                             <select
                                 name="food-category"
-                                className="card--holder-bar-extra-dropdown">
-                                <option value="1">Category</option>
-                                <option value="2">Italian</option>
-                                <option value="3">Japanese</option>
-                                <option value="4">Chinese</option>
-                                <option value="5">Indian</option>
+                                className="card--holder-bar-extra-dropdown"
+                                value={foodCategories}
+                                onChange={(evt) => {
+                                    setFoodCategories(evt.target.value);
+                                }}>
+                                <option value="">Category</option>
+                                <option value="breakfast">Breakfast</option>
+                                <option value="lunch">Lunch</option>
+                                <option value="dinner">Dinner</option>
+                                <option value="snacks">Snacks</option>
+                                <option value="drinks">Drinks</option>
+                                <option value="bubbletea">Bubble Tea</option>
+                                <option value="brunch">Brunch</option>
                                 {/* TODO: properly style this section */}
                             </select>
                         </li>
@@ -230,7 +368,11 @@ export default function EventCardHolder({
                         <li className="card--holder-extra-text">
                             <select
                                 name="num-rooms"
-                                className="card--holder-bar-extra-text">
+                                className="card--holder-bar-extra-text"
+                                value={hotelsNumRooms}
+                                onChange={(evt) => {
+                                    setHotelsNumRooms(evt.target.value);
+                                }}>
                                 <option value="1">1 Room</option>
                                 <option value="2">2 Rooms</option>
                                 <option value="3">3 Rooms</option>
@@ -239,7 +381,11 @@ export default function EventCardHolder({
                         <li className="card--holder-extra-text">
                             <select
                                 name="num-adults"
-                                className="card--holder-bar-extra-text">
+                                value={hotelsNumAdults}
+                                className="card--holder-bar-extra-text"
+                                onChange={(evt) => {
+                                    setHotelsNumAdults(evt.target.value);
+                                }}>
                                 <option value="1">1 Adult</option>
                                 <option value="2">2 Adults</option>
                                 <option value="3">3 Adults</option>
@@ -249,7 +395,11 @@ export default function EventCardHolder({
                         <li className="card--holder-extra-text">
                             <select
                                 name="num-children"
-                                className="card--holder-bar-extra-text">
+                                value={hotelsNumKids}
+                                className="card--holder-bar-extra-text"
+                                onChange={(evt) => {
+                                    setHotelsNumKids(evt.target.value);
+                                }}>
                                 <option value="1">0 Children</option>
                                 <option value="2">1 Child</option>
                                 <option value="3">2 Children</option>
@@ -269,8 +419,19 @@ export default function EventCardHolder({
     const [eventCards, setEventCards] = useState(<></>);
 
     function getCardsFromAPI() {
+        setEventCards(<></>);
         switch (selectedMode) {
             case "Flights":
+                console.log(
+                    flightsHome +
+                        " | " +
+                        flightsDate +
+                        " | " +
+                        flightsDest +
+                        " | " +
+                        flightsNumTravelers
+                );
+
                 axiosInstance
                     .get("/api/v1/pois", {
                         params: {
@@ -285,6 +446,16 @@ export default function EventCardHolder({
                     .catch((err) => console.log(err));
                 break;
             case "Car":
+                console.log(
+                    carHome +
+                        " | " +
+                        carDate +
+                        " | " +
+                        carDest +
+                        " | " +
+                        carNumTravelers
+                );
+
                 axiosInstance
                     .get("/transportation/api/v1/short")
                     .then((res) => {
@@ -293,6 +464,10 @@ export default function EventCardHolder({
                     .catch((err) => console.log(err));
                 break;
             case "Food":
+                console.log(
+                    foodName + " | " + foodRestrictions + " | " + foodCategories
+                );
+
                 axiosInstance
                     .get("/dining/api/v1")
                     .then((res) => {
@@ -301,6 +476,20 @@ export default function EventCardHolder({
                     .catch((err) => console.log(err));
                 break;
             case "Hotels":
+                console.log(
+                    hotelsLocation +
+                        " | " +
+                        hotelsTimeIn +
+                        " | " +
+                        hotelsTimeOut +
+                        " | " +
+                        hotelsNumRooms +
+                        " | " +
+                        hotelsNumAdults +
+                        " | " +
+                        hotelsNumKids
+                );
+
                 axiosInstance
                     .get("/accom/api/v1")
                     .then((res) => {
@@ -309,8 +498,16 @@ export default function EventCardHolder({
                     .catch((err) => console.log(err));
                 break;
             case "Attraction":
+                console.log(attractionKeywords);
+
                 axiosInstance
-                    .get("/poi/api/v1")
+                    .get("/api/v1/pois", {
+                        params: {
+                            address: "2500 University Drive NW",
+                            keyword: "Cafe",
+                            radius: 1000,
+                        },
+                    })
                     .then((res) => {
                         console.log(res);
                     })
@@ -321,10 +518,31 @@ export default function EventCardHolder({
         }
     }
 
+    // Update cards whenever a query value gets changed
     useEffect(() => {
         getCardsFromAPI();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedMode]);
+    }, [
+        selectedMode,
+        flightsHome,
+        flightsDate,
+        flightsDest,
+        flightsNumTravelers,
+        carHome,
+        carDate,
+        carDest,
+        carNumTravelers,
+        foodName,
+        foodRestrictions,
+        foodCategories,
+        hotelsLocation,
+        hotelsTimeIn,
+        hotelsTimeOut,
+        hotelsNumRooms,
+        hotelsNumAdults,
+        hotelsNumKids,
+        attractionKeywords,
+    ]);
 
     return (
         <>

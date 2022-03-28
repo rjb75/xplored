@@ -17,7 +17,7 @@ class Home extends React.Component<IProps, IState> {
 
         this.state = {
             view: "planner",
-            mode: "Hotels",
+            mode: "Flights",
         };
 
         this.changeView = this.changeView.bind(this);
