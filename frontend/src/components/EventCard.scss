@@ -377,4 +377,41 @@
             }
         }
     }
+
+    &--flight {
+        display: grid;
+        grid-template-columns: 15% 1fr 15%;
+        grid-template-rows: 50% calc(50% - 1rem);
+        gap: 1rem;
+
+        &-airline-container {
+            grid-column: 1;
+            grid-row-start: 1;
+            grid-row-end: 3;
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: $color-turquoise;
+        }
+
+        &-time-container {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        &-duration {
+            grid-column: 2;
+            grid-row: 2;
+        }
+
+        &-price-container {
+            grid-column: 3;
+            grid-row-start: 1;
+            grid-row-end: 3;
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: $color-turquoise;
+        }
+    }
 }
