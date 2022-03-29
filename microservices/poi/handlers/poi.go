@@ -74,3 +74,53 @@ func GetPointsOfInterest(c *fiber.Ctx) error {
 	// return results
 	return c.Status(200).JSON(nearby)
 }
+
+// endpoint to get points of interest by lat and long
+func GetPointsOfInterestLatLng(c *fiber.Ctx) error {
+
+	// create new request structure
+	req := new(models.POIRequestLatLng)
+
+	err := c.QueryParser(req)
+
+	if err != nil {
+		logs.ErrorLogger.Println("Couldn't parse body of request")
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Body Error", "cause": "Couldn't process body of request"})
+	}
+
+	// check that radius isn't 0
+	if req.Radius == 0 {
+		logs.ErrorLogger.Printf("Invalid or malformed radius")
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Missing Paramater", "cause": "Radius is required for points of interest"})
+	}
+
+	// create google maps client
+	client, err := maps.NewClient(maps.WithAPIKey(os.Getenv("POI_GOOGLE_API_KEY")))
+
+	if err != nil {
+		logs.ErrorLogger.Println("Unable to create google maps client")
+		return c.Status(500).JSON(fiber.Map{"status": "fail", "type": "Server Environment", "cause": "Unable to create maps client"})
+	}
+
+	loc := new(maps.LatLng)
+	loc.Lat = req.Lat
+	loc.Lng = req.Lng
+
+	// format request
+	rq := &maps.NearbySearchRequest{
+		Location: loc,
+		Radius:   uint(req.Radius),
+		Type:     maps.PlaceType(req.Keyword),
+	}
+
+	// execute search to nearby api
+	nearby, err := client.NearbySearch(context.Background(), rq)
+
+	if err != nil {
+		logs.ErrorLogger.Println("Error Searching")
+		return c.Status(500).JSON(fiber.Map{"status": "fail", "type": "Nearby Results", "cause": "Unable to identify nearby locations"})
+	}
+
+	// return results
+	return c.Status(200).JSON(nearby)
+}
