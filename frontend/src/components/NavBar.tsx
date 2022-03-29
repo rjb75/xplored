@@ -180,8 +180,11 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
             </div>
           </div>
           <div className="navbar--right-control">
-            <button className="navbar--profile-link">
-              View Profile <i className="icon-avatar" />
+            <button className="navbar--profile-link" onClick={() => {
+                handleLogout();
+                navigation('/login')
+              }}>
+              Log Out
             </button>
           </div>
         </div>
@@ -200,33 +203,25 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
               />
             );
           })}
-        <div className="navbar--right-control">
-          <button className="navbar--profile-link" onClick={() => {
-              handleLogout();
-              navigation('/login')
-            }}>
-            Log Out <i className="icon-avatar" />
-          </button>
         </div>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <div className="modalContainer">
+            <h1>Add new trip</h1>
+              <InputField
+                className="navbar--trip-field input"
+                name="Destination"
+                placeholder="Seattle Trip"
+                onChangeHandler={setTripName}
+              />
+            <div className="button" onClick={addTrip}><h2>Add Trip</h2></div>
+          </div>
+        </Modal>
       </div>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <div className="modalContainer">
-          <h1>Add new trip</h1>
-            <InputField
-              className="navbar--trip-field input"
-              name="Destination"
-              placeholder="Seattle Trip"
-              onChangeHandler={setTripName}
-            />
-          <div className="button" onClick={addTrip}><h2>Add Trip</h2></div>
-        </div>
-      </Modal>
-    </div>
     </>
   );
 };
