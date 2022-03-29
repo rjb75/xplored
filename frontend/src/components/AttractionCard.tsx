@@ -4,6 +4,7 @@ import "./EventCard.scss";
 import { ItemTypes } from "../utils/PlannerConstants";
 import { useDrag } from "react-dnd";
 import ChevronSmall from "../assets/chevron-small.svg";
+import { eventTypes } from "./EventCard";
 
 interface AttractionCardProps {
     image?: string;
@@ -17,8 +18,17 @@ export default function AttractionCard(props: AttractionCardProps) {
     const [{ isDragging }, drag] = useDrag(() => ({
         type: ItemTypes.EVENT,
         item: {
-            type: "Attraction",
-            title: "Attraction to TEST",
+            event_id: null,
+            type: eventTypes.POI,
+            start_time: null,
+            end_time: null,
+            name: "Visit to " + props.name,
+            address: null,
+            link: null,
+            data: null,
+            photo_url: null,
+            itemType: null,
+            duratation: null,
         },
         collect: (monitor) => ({
             isDragging: !!monitor.isDragging(),

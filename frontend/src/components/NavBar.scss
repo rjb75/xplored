@@ -100,8 +100,12 @@
       }
     }
 
-    &--profile-link {
+    &--logout-link {
       color: $color-grey-light;
+    }
+
+    &--logout-link:hover {
+      color: $color-grey-dark;
     }
 
     &--trip-selector {

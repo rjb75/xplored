@@ -160,6 +160,12 @@ export function dateObjToDisplayTime(date: Date) {
   } else if (hour === 0) hour = 12;
 
   let mins = date.getUTCMinutes();
+
+  if(mins !== 0 && mins !== 30){
+    if(mins < 30) mins = 0;
+    else mins = 30;
+  }
+
   let minsString = mins.toString();
   if (mins < 10) minsString = "0" + mins;
 
@@ -167,6 +173,9 @@ export function dateObjToDisplayTime(date: Date) {
 }
 
 export function displayTimeToDateObj(time: string, month: number, day: number, year: number){
+  console.log(month);
+  console.log(day);
+  console.log(year);
   let hours = parseFloat(time.split(":")[0]);
   let mins = parseFloat(time.split(":")[1].split(" ")[0]);
   let pm = time.split(" ")[1];

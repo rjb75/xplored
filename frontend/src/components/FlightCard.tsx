@@ -11,7 +11,7 @@ export interface FlightCardProps {
     times: string[];
     timeZones: string[];
     price?: string;
-    locations?: string[];
+    locations: string[];
     duration?: string;
     currencyType?: string;
     addCardFunction: Function;
@@ -23,14 +23,14 @@ export default function FlightCard(props: FlightCardProps) {
         item: {
             event_id: null,
             type: eventTypes.FLIGHT,
-            start_time: props.times[0],
-            end_time: props.times[1],
-            name: "Flight to TBD",
+            start_time: new Date(props.times[0]),
+            end_time: new Date(props.times[1]),
+            name: "Flight to " + props.locations[1],
             address: null,
             link: null,
             data: null,
             photo_url: null,
-            itemType: "flight",
+            itemType: "long",
             duratation: null,
         },
         collect: (monitor) => ({
@@ -51,12 +51,12 @@ export default function FlightCard(props: FlightCardProps) {
             </div>
             <div className="card--flight-time-container">
                 <div className="card--flight-home">
-                    <h2 className="card--flight-time">{props.times[0]}</h2>
+                    <h2 className="card--flight-time">{new Date(props.times[0]).toTimeString()}</h2>
                     <p className="card--flight-zone">{props.timeZones[0]}</p>
                 </div>
                 <h2 className="card--flight-time-center">-</h2>
                 <div className="card--flight-dest">
-                    <h2 className="card--flight-time">{props.times[1]}</h2>
+                    <h2 className="card--flight-time">{new Date(props.times[1]).toTimeString()}</h2>
                     <p className="card--flight-zone">{props.timeZones[1]}</p>
                 </div>
             </div>
