@@ -55,6 +55,14 @@ services:
       dockerfile: Docker/Accommodations.Dockerfile
     expose:
       - 3003
+  transportation:
+    tty: true
+    container_name: xplored-ms-transportation
+    build:
+      context: ../
+      dockerfile: Docker/Transportation.Dockerfile
+    expose:
+      - 3001
   gateway:
     tty: true
     container_name: xplored-gateway
