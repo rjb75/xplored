@@ -92,13 +92,18 @@ public class UserControllerTest {
     */
     @Test
     public void getTrip_Success() throws Exception{
-        String tripid = "623bdb2996a983ea8e7168a9";
-        mvc.perform(get(makeUrl("/trip"))
-        .param("id", tripid))
-        .andExpect(status()
-        .isOk())
-        .andExpect(content()
-        .string("{\"trip_id\":\"623bdb2996a983ea8e7168a9\",\"name\":\"Paris Trip\",\"photo_URL\":\"Image Link\",\"events\":[]}"));
+        String expectedTripId = "623bdb2996a983ea8e7168a9";
+        String expectedName = "Paris Trip";
+
+        mvc.perform( MockMvcRequestBuilders
+        .get(makeUrl("/trip"))
+        .param("id", expectedTripId)
+        .accept(MediaType.APPLICATION_JSON))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.trip_id").value(expectedTripId))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(expectedName));
+
     }
 
      /*
@@ -118,6 +123,9 @@ public class UserControllerTest {
         .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
     }
 
+    /*
+    * All trips in mock database is retrieved.  
+    */
     @Test
     public void getAllTrips_Success() throws Exception{
         mvc.perform( MockMvcRequestBuilders
