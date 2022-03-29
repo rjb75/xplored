@@ -24,6 +24,7 @@ func PhotoRoutes(r fiber.Router) {
 // Routes for POI microservice
 func POIsRoutes(r fiber.Router) {
 	r.Get("/pois", handlers.POIsHandler)
+	r.Get("/pois/latlng", handlers.POIsLatLngHandler)
 }
 
 // Routes for recommendations microservice

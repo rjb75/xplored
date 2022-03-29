@@ -1,9 +1,10 @@
 /* Much of the code for this component adapted from: https://developers.google.com/maps/documentation/javascript/react-map#typescript */
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import { isLatLngLiteral } from "@googlemaps/typescript-guards";
 import { createCustomEqual } from "fast-equals";
+import axiosInstance from "../utils/axios";
 
 const render = (status: Status) => {
     return <h1>{status}</h1>;
@@ -122,6 +123,13 @@ function TravelMap() {
         setCenter(m.getCenter()!.toJSON());
         // Get the markers from the api here and update setMarkers
     };
+
+    useEffect(() => {
+        axiosInstance
+        .get("/api/v1/pois/latlng", {params: { radius: 100000, keyword: 'cafe', ...center}})
+        .then((res) => setMarkers(res.data.Results.map((e: any) => e.geometry.location)))
+        .catch((err) => console.error(err))
+    }, [center])
 
     return (
         <div
