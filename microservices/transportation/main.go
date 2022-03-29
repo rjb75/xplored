@@ -5,13 +5,13 @@ import (
 	"log"
 	"os"
 
+	"github.com/Risath18/xplored-transportation/handlers"
 	"github.com/Risath18/xplored-transportation/routes"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 
 	_ "github.com/lib/pq"
 )
-
 
 func main() {
 	app := fiber.New()
@@ -21,6 +21,7 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
+	handlers.InitAirportCodes()
 	//Configure all Routes
 	routes.RegisterRoutes(app)
 
@@ -30,6 +31,3 @@ func main() {
 	app.Listen(port)
 
 }
-
-
-
