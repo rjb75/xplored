@@ -16,6 +16,6 @@ func RegisterRoutes(app *fiber.App) {
 	api := microservice.Group("/api")    // /api
 	v1 := api.Group("/v1")               // /api/v1
 	v1.Get("/", handlers.GetDiningOptions)
-	v1.Get("/latlng/", handlers.GetDiningCoord)
+	v1.Get("/latlng", handlers.GetDiningCoord)
 	// diningRoutes(v1)
 }
