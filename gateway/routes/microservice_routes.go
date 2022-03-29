@@ -13,6 +13,7 @@ func AccommodationsRoutes(r fiber.Router) {
 // Routes for dining microservice
 func DiningRoutes(r fiber.Router) {
 	r.Get("/dining", handlers.DiningHandler)
+	r.Get("/dining/latlng", handlers.DiningLatLngHandler)
 }
 
 // Routes for photo microservice
