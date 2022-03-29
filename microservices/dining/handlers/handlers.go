@@ -107,3 +107,52 @@ func Places(lc maps.GeocodingResult, radius string, keyword string) maps.PlacesS
 
 	return result
 }
+
+/*
+
+ */
+func GetDiningCoord(c *fiber.Ctx) error {
+	req := new(models.Coordinates)
+
+	// data := diningOptions(c.Params("address"), c.Params("radius"), c.Params("keyword"))
+	err := c.QueryParser(req)
+
+	println(req.Latitude)
+
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Body Error", "cause": "Couldn't process body of request"})
+	}
+
+	// check that address isn't null
+	if req.Radius == 0 {
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Missing Paramater", "cause": "Radius is required for dining"})
+	}
+
+	//create google maps client
+	client, err := maps.NewClient(maps.WithAPIKey(os.Getenv("DINING_API")))
+
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{"status": "fail", "type": "Server Environment", "cause": "Unable to create maps client"})
+	}
+
+	loc := new(maps.LatLng)
+	loc.Lat = req.Latitude
+	loc.Lng = req.Longitude
+
+	//format request
+	rq := &maps.NearbySearchRequest{
+		Location: loc,
+		Radius:   uint(req.Radius),
+		Type:     maps.PlaceType(req.Keyword),
+	}
+
+	//execute search to API
+	nearby, err := client.NearbySearch(context.Background(), rq)
+
+	if err != nil {
+		c.Status(500).JSON(fiber.Map{"status": "fail", "type": "Nearby results", "cause": "Unable to identify nearby locations"})
+	}
+
+	return c.Status(200).JSON(nearby)
+
+}
