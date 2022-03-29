@@ -104,7 +104,6 @@ public class UserControllerTest {
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.jsonPath("$.trip_id").value(expectedTripId))
         .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(expectedName));
-
     }
 
      /*
@@ -265,6 +264,79 @@ public class UserControllerTest {
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.jsonPath("$[*].event_id").isNotEmpty())
         .andExpect(MockMvcResultMatchers.jsonPath("$[*].name").isNotEmpty());
+    }
 
+    /*
+    * Failed Trip due to no AuthId in table
+    */
+    @Test
+    public void getAllUserTrips_InvalidAuthId() throws Exception{
+        String authid = "21390ifsdda"; //Does not exist
+
+        mvc.perform( MockMvcRequestBuilders
+        .get(makeUrl("/usertrips"))
+        .param("authid", authid)
+        .accept(MediaType.APPLICATION_JSON))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isInternalServerError());
+    }
+
+    /*
+    * Get All events in a trip
+    */
+    @Test
+    public void getAllEventsInTrip_InvalidTripId() throws Exception{
+        String tripid = "dokspf[spldp[fsd";
+
+        mvc.perform( MockMvcRequestBuilders
+        .get(makeUrl("/alltrips"))
+        .param("tripid", tripid)
+        .accept(MediaType.APPLICATION_JSON))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isInternalServerError());
+    }
+
+     /*
+    * Failed test with bad endpoint
+    */
+    @Test
+    public void deleteEvent_NotFound() throws Exception {
+        String eventid = "6237aae5299bb1be6ea70ed5";
+        String tripid = "518asdasd32r8fjio10934ik";
+        mvc.perform( MockMvcRequestBuilders.
+        delete(makeUrl("/ksaopfaodp[wa"))
+        .param("eventid", eventid)
+        .param("tripid", tripid))
+        .andExpect(status().isNotFound());
+    }
+
+     /*
+    * Failed test with not found id
+    */
+    @Test
+    public void deleteEvent_InvalidEventId() throws Exception {
+        String eventid = "13940iospfdf.msdsdf";
+        String tripid = "518asdasd32r8fjio10934ik";
+        mvc.perform( MockMvcRequestBuilders.
+        delete(makeUrl("/event"))
+        .param("eventid", eventid)
+        .param("tripid", tripid))
+        .andExpect(status().isInternalServerError());
+    }
+
+     /*
+    * Testing bad request 
+    */
+    @Test
+    public void addTrip_BadRequest() throws Exception {
+        String authid ="12j1iej31";
+        String[] eventsOne = {};
+        mvc.perform( MockMvcRequestBuilders
+        .post(makeUrl("/trip"))
+        .param("eventid", authid) //wrong param
+        .content(asJsonString(new Trip(authid, "Malta Trip", "photo Url", eventsOne)))
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
     }
 }
