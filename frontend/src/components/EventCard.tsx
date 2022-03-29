@@ -78,15 +78,15 @@ export const EventCard = ({
   function getIcon(eventType: eventTypes) {
     switch (eventType) {
       case "DIN":
-        return <img src={foodIcon} alt="" />;
+        return <img src={foodIcon} alt="DINIcon" />;
       case "TRANSS":
-        return <img src={carIcon} alt="" />;
+        return <img src={carIcon} alt="TRANSSIcon" />;
       case "TRANSL":
-        return <img src={flightIcon} alt="" />;
+        return <img src={flightIcon} alt="TRANSLIcon" />;
       case "ACC":
-        return <img src={accommodationIcon} alt="" />;
+        return <img src={accommodationIcon} alt="ACCIcon" />;
       case "POI":
-        return <img src={POIIcon} alt="" />;
+        return <img src={POIIcon} alt="POIIcon" />;
       default:
         break;
     }
@@ -169,12 +169,12 @@ export const EventCard = ({
         <div className="middle">
           {getIcon(type)}
           <div className="headerContainers">
-            <h1>{displayTime}</h1>
-            <h2>{name}</h2>
+            <h1 data-testId="eventCardTime">{displayTime}</h1>
+            <h2 data-testId="eventCardTitle">{name}</h2>
           </div>
         </div>
         <div className="right">
-          <p>{duration}</p>
+          <p data-testid="eventCardDuration">{duration}</p>
           <h2 onClick={() => deleteCallBack(event_id)}>x</h2>
         </div>
       </div>
