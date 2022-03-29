@@ -265,7 +265,7 @@ export function dateToMonthString(date: Date) {
   return month;
 }
 
-export function eventAdapter(events: any[], editSizeCallBack: Function): plannerEvent[] {
+export function eventAdapter(events: any[], editSizeCallBack: Function, deleteCallBack: Function): plannerEvent[] {
   let e: plannerEvent[] = [];
   events.forEach((event) => {
     let type: eventTypes;
@@ -312,6 +312,7 @@ export function eventAdapter(events: any[], editSizeCallBack: Function): planner
       data: event.data,
       photo_URL: event.photo_URL,
       editSizeCallBack: editSizeCallBack,
+      deleteCallBack: deleteCallBack,
     });
   });
 

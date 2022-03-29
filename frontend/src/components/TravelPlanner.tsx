@@ -76,10 +76,19 @@ export class TravelPlanner extends React.Component<IProps, IState> {
           },
         })
         .then((res) => {
-          let events = eventAdapter(res.data, this.editEventSize);
-          let earliestEvent = events.sort((item1, item2) => {
-            return item1.start_time.getTime() - item2.start_time.getTime();
-          })[0].start_time;
+          console.log(res.data);
+          let events = eventAdapter(
+            res.data,
+            this.editEventSize,
+            this.deleteEvent
+          );
+
+          let earliestEvent: Date | null = null;
+          if (events.length !== 0) {
+            earliestEvent = events.sort((item1, item2) => {
+              return item1.start_time.getTime() - item2.start_time.getTime();
+            })[0].start_time;
+          }
 
           this.setState({
             events: events,
@@ -92,13 +101,12 @@ export class TravelPlanner extends React.Component<IProps, IState> {
   getWeek(earliestEvent: Date | null): Date[] {
     let ret: Date[] = [];
     let today: Date;
-    if(earliestEvent === null){
-      console.log("U no")
+    if (earliestEvent === null) {
       today = new Date();
-    }else{
+    } else {
       today = earliestEvent;
     }
-    
+
     for (let i = 0; i < 7; i++) {
       let day: Date = new Date(today);
       day.setUTCDate(day.getUTCDate() - day.getUTCDay() + i);
@@ -160,17 +168,18 @@ export class TravelPlanner extends React.Component<IProps, IState> {
     return res;
   }
 
-  deleteEvent(itemid: string){
-    let oldEvents = this.state.events.filter((item) => item.event_id !== itemid);
+  deleteEvent(itemid: string) {
+    let oldEvents = this.state.events.filter(
+      (item) => item.event_id !== itemid
+    );
     this.setState({ events: oldEvents });
 
     axiosInstance.delete("/api/v1/event", {
       params: {
         eventid: itemid,
-        tripid: this.props.tripId
-      }
-    })
-
+        tripid: this.props.tripId,
+      },
+    });
   }
 
   moveEvent(item: plannerEvent, day: number, time: string) {
@@ -265,8 +274,8 @@ export class TravelPlanner extends React.Component<IProps, IState> {
 
   /**
    * Creates a new planner event
-   * @param name name of the event 
-   * @param type type of the event 
+   * @param name name of the event
+   * @param type type of the event
    * @param day what day (0-6 representing sunday-saturday)
    * @param start_time start time in the format of display time (eg. 6:00 am, 8:30 pm)
    * @param duration Optional. Should be in form "x.y Hours" where x is hours and y is remainder (eg. 1.5 hours is one hour, 30 mins)
@@ -324,11 +333,11 @@ export class TravelPlanner extends React.Component<IProps, IState> {
 
   /**
    * Creates a new event with preset start and end time.
-   * @param name 
-   * @param type 
-   * @param day 
-   * @param start_time 
-   * @param end_time 
+   * @param name
+   * @param type
+   * @param day
+   * @param start_time
+   * @param end_time
    */
   newEventSetDate(
     name: string,

@@ -15,7 +15,7 @@ const InputField: React.FC<InputFieldProps> = ({className = '', id = '', name = 
 
     const changeHandler = (e: React.FormEvent<HTMLInputElement>) => {
         if(onChangeHandler != null) {
-            onChangeHandler()
+            onChangeHandler(e.currentTarget.value)
         }
         setValue(e.currentTarget.value)
     }
