@@ -61,7 +61,6 @@ func TestValidPOI_Florida_ThemePark(t *testing.T) {
 	if err != nil {
 		logs.ErrorLogger.Fatalln("Couldn't load environment file")
 	}
-	// err := godotenv.Load("../../../.env")
 
 	if err != nil {
 		assert.Fail(t, "Error loading .env file")
@@ -162,5 +161,69 @@ func TestInvalidPOI_Address(t *testing.T) {
 		assert.Fail(t, "Error parsing test response")
 	}
 
-	assert.Equal(t, string(body), "null", "No dining options should have been returned")
+	assert.Equal(t, "{\"cause\":\"Radius is required for points of interest\",\"status\":\"fail\",\"type\":\"Missing Paramater\"}", string(body), "No POI should have been returned")
+}
+
+func TestInvalidPOI_NullAddress(t *testing.T) {
+	logs.TestLogs()
+	err := godotenv.Load("../../../.env")
+
+	if err != nil {
+		assert.Fail(t, "Error loading .env file")
+	}
+
+	app := fiber.New()
+	app.Get("/", handlers.GetPointsOfInterest)
+
+	req, err := http.NewRequest("GET", "/?address=&keyword=cafe&radius=5000", nil)
+
+	if err != nil {
+		assert.Fail(t, "Error forming test request")
+	}
+
+	res, err := app.Test(req, -1)
+
+	if err != nil {
+		assert.Fail(t, "Error making test request")
+	}
+
+	body, err := ioutil.ReadAll(res.Body)
+
+	if err != nil {
+		assert.Fail(t, "Error parsing test response")
+	}
+
+	assert.Equal(t, "{\"cause\":\"Address is required for points of interest\",\"status\":\"fail\",\"type\":\"Missing Paramater\"}", string(body), "No POI should have been returned")
+}
+
+func TestInvalidPOI_ZeroRadius(t *testing.T) {
+	logs.TestLogs()
+	err := godotenv.Load("../../../.env")
+
+	if err != nil {
+		assert.Fail(t, "Error loading .env file")
+	}
+
+	app := fiber.New()
+	app.Get("/", handlers.GetPointsOfInterest)
+
+	req, err := http.NewRequest("GET", "/?address=2500 University Dr NW, Calgary, AB T2N 1N4&keyword=cafe&radius=0", nil)
+
+	if err != nil {
+		assert.Fail(t, "Error forming test request")
+	}
+
+	res, err := app.Test(req, -1)
+
+	if err != nil {
+		assert.Fail(t, "Error making test request")
+	}
+
+	body, err := ioutil.ReadAll(res.Body)
+
+	if err != nil {
+		assert.Fail(t, "Error parsing test response")
+	}
+
+	assert.Equal(t, "{\"cause\":\"Radius is required for points of interest\",\"status\":\"fail\",\"type\":\"Missing Paramater\"}", string(body), "No POI should have been returned")
 }

@@ -172,3 +172,34 @@ func TestInvalidDiningOption_InvalidAddress(t *testing.T) {
 
 	assert.Equal(t, "{\"cause\":\"Invalid data\",\"status\":\"fail\",\"type\":\"Invalid request\"}", string(body), "No dining options should have been returned")
 }
+
+func TestInvalidDiningOption_ZeroRadius(t *testing.T) {
+	err := godotenv.Load("../../../.env")
+
+	if err != nil {
+		assert.Fail(t, "Error loading .env file")
+	}
+
+	app := fiber.New()
+	app.Get("/", handlers.GetDiningOptions)
+
+	req, err := http.NewRequest("GET", "/?address=20 W 34th St, New York, NY 10001, United States&keyword=burgers&radius=0", nil)
+
+	if err != nil {
+		assert.Fail(t, "Error forming test request")
+	}
+
+	res, err := app.Test(req, -1)
+
+	if err != nil {
+		assert.Fail(t, "Error making test request")
+	}
+
+	body, err := ioutil.ReadAll(res.Body)
+
+	if err != nil {
+		assert.Fail(t, "Error parsing test response")
+	}
+
+	assert.Equal(t, "{\"cause\":\"Radius is required for points of interest\",\"status\":\"fail\",\"type\":\"Missing Paramater\"}", string(body), "No dining options should have been returned")
+}

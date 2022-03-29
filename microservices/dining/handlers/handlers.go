@@ -35,7 +35,7 @@ func GetDiningOptions(c *fiber.Ctx) error {
 	}
 
 	// check that radius isn't 0
-	if req.Radius == "" {
+	if req.Radius == "0" {
 		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Missing Paramater", "cause": "Radius is required for points of interest"})
 	}
 
