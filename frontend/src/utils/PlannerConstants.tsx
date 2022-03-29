@@ -160,6 +160,12 @@ export function dateObjToDisplayTime(date: Date) {
   } else if (hour === 0) hour = 12;
 
   let mins = date.getUTCMinutes();
+
+  if(mins !== 0 && mins !== 30){
+    if(mins < 30) mins = 0;
+    else mins = 30;
+  }
+
   let minsString = mins.toString();
   if (mins < 10) minsString = "0" + mins;
 

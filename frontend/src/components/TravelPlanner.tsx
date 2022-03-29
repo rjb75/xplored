@@ -55,7 +55,11 @@ export class TravelPlanner extends React.Component<IProps, IState> {
         .then((res) => {
           console.log(res.data);
           this.setState({
-            events: eventAdapter(res.data, this.editEventSize),
+            events: eventAdapter(
+              res.data,
+              this.editEventSize,
+              this.deleteEvent
+            ),
           });
         });
     }
@@ -144,8 +148,9 @@ export class TravelPlanner extends React.Component<IProps, IState> {
       let t = dateObjToDisplayTime(e.start_time);
       let inWeek: boolean = false;
 
-      if (this.state.week[day].getUTCDate() === e.start_time.getUTCDate())
+      if (this.state.week[day].getUTCDate() === e.start_time.getUTCDate()) {
         inWeek = true;
+      }
 
       if (e.start_time.getUTCDay() === day && t === time && inWeek) {
         res = (
@@ -326,7 +331,9 @@ export class TravelPlanner extends React.Component<IProps, IState> {
       )
       .then((res) => {
         let oldState = this.state.events;
-        oldState.push(eventAdapter([res.data], this.editEventSize)[0]);
+        oldState.push(
+          eventAdapter([res.data], this.editEventSize, this.deleteEvent)[0]
+        );
         this.setState({ events: oldState });
       });
   }
@@ -361,13 +368,15 @@ export class TravelPlanner extends React.Component<IProps, IState> {
         },
         {
           params: {
-            tripid: this.state.currTripId,
+            tripid: this.props.tripId,
           },
         }
       )
       .then((res) => {
         let oldState = this.state.events;
-        oldState.push(eventAdapter([res.data], this.editEventSize)[0]);
+        oldState.push(
+          eventAdapter([res.data], this.editEventSize, this.deleteEvent)[0]
+        );
         this.setState({ events: oldState });
       });
   }

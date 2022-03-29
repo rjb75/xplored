@@ -105,6 +105,27 @@
                     color: $color-grey-light;
                 }
             }
+
+        }
+
+        &-submit {
+            position: absolute;
+            top: 1rem;
+            right: 8rem;
+            border-radius: 2rem;
+            display: flex;
+            align-items: center;
+            align-content: center;
+            justify-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 10rem;
+            height: 2.5rem;
+            background-color: $color-pink;
+            color: $color-white;
+            &>p {
+                color: $color-white;
+            }
         }
 
         &-extra {

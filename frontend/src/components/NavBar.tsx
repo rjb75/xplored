@@ -180,7 +180,7 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
             </div>
           </div>
           <div className="navbar--right-control">
-            <button className="navbar--profile-link" onClick={() => {
+            <button className="navbar--logout-link" onClick={() => {
                 handleLogout();
                 navigation('/login')
               }}>
