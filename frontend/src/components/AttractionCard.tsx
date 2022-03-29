@@ -33,15 +33,23 @@ export default function AttractionCard(props: AttractionCardProps) {
                 className="card--attraction-image"
                 alt="point of interest view"
             />
+            {/* {props.image && (
+                <div
+                    className="card--attraction-image"
+                    dangerouslySetInnerHTML={{ __html: props.image }}
+                />
+            )} */}
             <div className="card--attraction-text">
                 <h1 className="card--attraction-label">{props.name}</h1>
                 <p className="card--attraction-location">{props.address}</p>
             </div>
-            <a href={props.link} className="card--attraction-link">
-                {/* TODO: make this link to directions? */}
-                <p>Booking</p>
-                <img src={ChevronSmall} alt="follow link"></img>
-            </a>
+            {props.link && (
+                <a href={props.link} className="card--attraction-link">
+                    {/* TODO: make this link to directions? */}
+                    <p>Booking</p>
+                    <img src={ChevronSmall} alt="follow link"></img>
+                </a>
+            )}
         </div>
     );
 }
