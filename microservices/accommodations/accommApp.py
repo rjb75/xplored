@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from dotenv import load_dotenv
 import config, uvicorn, os, datetime, accommFunctions, accommModel
 
@@ -28,6 +28,12 @@ def getHotelInfo(location: str, no_of_adults: int, no_of_children: int, no_of_ro
     hotel_list = []
     location_id = accommFunctions.getLocationID(location)
 
+    today_date = datetime.date.today()
+    no_of_days = checkout - check_in
+
+    if check_in < today_date or checkout < today_date or no_of_days.days < 0:
+        raise HTTPException(status_code=404, detail="Invalid Date")
+
     if order_by is None and no_of_children > 0:
         hotel_search_query = {"dest_id": location_id, "units": "metric", "order_by": "price", "adults_number": no_of_adults, "checkin_date": check_in, 
     "locale": "en-gb", "dest_type": "city", "filter_by_currency": "AED", "room_number": no_of_rooms, "checkout_date": checkout, 
@@ -51,8 +57,8 @@ def getHotelInfo(location: str, no_of_adults: int, no_of_children: int, no_of_ro
 
     for hotel in hotel_information: 
         hotel_list.append({"hotel_name": hotel['hotel_name'], "hotel_information": hotel['unit_configuration_label'], "hotel_longitude": hotel['longitude'], "hotel_latitude": hotel['latitude'], 
-        "hotel_price": float(hotel['min_total_price']) * float(exchange),
-        "hotel_image": hotel['main_photo_url'], "hotel_address": hotel['address'], "hotel_url": hotel['url']})
+        "hotel_price": (float(hotel['min_total_price']) * float(exchange))/no_of_days.days,
+        "hotel_image": hotel['max_photo_url'], "hotel_address": hotel['address'], "hotel_url": hotel['url']})
 
     return {"hotel_information": hotel_list}
 
