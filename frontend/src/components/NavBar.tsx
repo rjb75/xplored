@@ -58,6 +58,17 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
     },
   ];
 
+  function checkTest() {
+    axiosInstance
+      .get("/api/v1/success")
+      .then((res) => console.log(res))
+      .catch((err) => navigation("/login"));
+  }
+
+  useEffect(() => {
+    checkTest();
+  }, []);
+
   interface TripOptions {
     label: string;
     value: string;
@@ -106,8 +117,8 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
     axiosInstance.post("/api/v1/trip", {
       name: tripName,
       events: [],
-      photo_url: "bruh"
-    })
+      photo_url: "bruh",
+    });
     closeModal();
   }
 
@@ -131,7 +142,11 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
               />
               <h1
                 onClick={openModal}
-                style={{ fontSize: `25px`, fontWeight: `600`, cursor: `pointer` }}
+                style={{
+                  fontSize: `25px`,
+                  fontWeight: `600`,
+                  cursor: `pointer`,
+                }}
               >
                 +
               </h1>
@@ -180,10 +195,13 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
             </div>
           </div>
           <div className="navbar--right-control">
-            <button className="navbar--logout-link" onClick={() => {
+            <button
+              className="navbar--logout-link"
+              onClick={() => {
                 handleLogout();
-                navigation('/login')
-              }}>
+                navigation("/login");
+              }}
+            >
               Log Out
             </button>
           </div>
@@ -212,13 +230,15 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
         >
           <div className="modalContainer">
             <h1>Add new trip</h1>
-              <InputField
-                className="navbar--trip-field input"
-                name="Destination"
-                placeholder="Seattle Trip"
-                onChangeHandler={setTripName}
-              />
-            <div className="button" onClick={addTrip}><h2>Add Trip</h2></div>
+            <InputField
+              className="navbar--trip-field input"
+              name="Destination"
+              placeholder="Seattle Trip"
+              onChangeHandler={setTripName}
+            />
+            <div className="button" onClick={addTrip}>
+              <h2>Add Trip</h2>
+            </div>
           </div>
         </Modal>
       </div>
