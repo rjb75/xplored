@@ -1,10 +1,8 @@
 package seng.xplored.tplanner;
 
-// import org.bson.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-import org.yaml.snakeyaml.util.ArrayUtils;
+
 
 import seng.xplored.tplanner.Repositories.*;
 import java.util.*;
@@ -13,13 +11,6 @@ import seng.xplored.tplanner.models.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.bson.json.*;
-
-
-import java.time.LocalDateTime;  
-import java.time.format.DateTimeFormatter; 
-
-// import org.springframework.data.mongodb.util.json.*;
 
 @RestController
 public class RESTManager {
