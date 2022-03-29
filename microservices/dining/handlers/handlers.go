@@ -109,21 +109,20 @@ func Places(lc maps.GeocodingResult, radius string, keyword string) maps.PlacesS
 }
 
 /*
-
- */
+	This function uses lat and long coordinates to find a restaurant and retrieve its address,
+	along with any other necessary information.
+*/
 func GetDiningCoord(c *fiber.Ctx) error {
 	req := new(models.Coordinates)
 
 	// data := diningOptions(c.Params("address"), c.Params("radius"), c.Params("keyword"))
 	err := c.QueryParser(req)
 
-	println(req.Latitude)
-
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Body Error", "cause": "Couldn't process body of request"})
 	}
 
-	// check that address isn't null
+	// check that radius isn't 0
 	if req.Radius == 0 {
 		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Missing Paramater", "cause": "Radius is required for dining"})
 	}
@@ -136,14 +135,18 @@ func GetDiningCoord(c *fiber.Ctx) error {
 	}
 
 	loc := new(maps.LatLng)
-	loc.Lat = req.Latitude
-	loc.Lng = req.Longitude
+	loc.Lat = req.Lat
+	loc.Lng = req.Lng
 
 	//format request
 	rq := &maps.NearbySearchRequest{
+		// Location: loc,
+		// Radius:   uint(req.Radius),
+		// Type:     maps.PlaceType(req.Keyword),
 		Location: loc,
 		Radius:   uint(req.Radius),
-		Type:     maps.PlaceType(req.Keyword),
+		Keyword:  req.Keyword,
+		Type:     "restaurant",
 	}
 
 	//execute search to API
