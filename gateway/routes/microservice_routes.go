@@ -51,3 +51,10 @@ func TPlannerRoutes(r fiber.Router) {
 	r.Post("/event/create", handlers.CreateEvent)
 	r.Post("/trip/user", handlers.CreateUser)
 }
+
+// Routes for transportation planner microservice
+func Transportation(r fiber.Router) {
+	r.Get("/transport/short", handlers.ShortTransportHandler)
+	r.Get("/transport/long", handlers.LongTransportHandler)
+	r.Get("/airportcodes", handlers.AirportCodesHandler)
+}

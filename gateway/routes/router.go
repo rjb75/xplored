@@ -59,4 +59,5 @@ func RegisterRoutes(app *fiber.App) {
 	RecommendationsRoutes(v1)
 	ReviewsRoutes(v1)
 	TPlannerRoutes(v1)
+	Transportation(v1)
 }
