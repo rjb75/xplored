@@ -52,6 +52,10 @@ func GetPointsOfInterest(c *fiber.Ctx) error {
 	// get latitude and longitude
 	loc := Latlon(req, client)
 
+	if loc.Lat == 0.0 && loc.Lng == 0.0 {
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Invalid Address", "cause": "Address either doesn't exist or is invalid"})
+	}
+
 	// format request
 	rq := &maps.NearbySearchRequest{
 		Location: &loc,
