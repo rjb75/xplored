@@ -47,13 +47,27 @@ public class UserControllerTest {
         String[] tripsOne = {"623bdb2996a983ea8e7168a9", "623fa6b5f8832461dcd44bca"};
         userRepository.save(new User("6237ac6b299bb1be6ea70ed8", "12j1iej31", tripsOne));
 
-        //Create a
-        String[] eventsOne = {};
+        //Create Events
+        eventRepository.save(new Event("6237a5c8299bb1be6ea70ed3", Type.DIN, "2022-05-02T20:00:00Z", "2022-05-02T21:00:00Z", "McDonalds McLeod Trail", "9311 Macleod Trail SW, Calgary, AB T2J 0P6", "https://www.mcdonalds.com/ca/en-ca/restaurant-locator.html?y_source=1_MTQ1MTkzOTgtNzE1LWxvY2F0aW9uLndlYnNpdGU%3D", "", "aaabbb111.ca"));
+        eventRepository.save(new Event("6237aa07299bb1be6ea70ed4", Type.TRANSL, "2022-06-03T08:00:00Z", "2022-06-04T14:00:00Z", "Air Canada Flight to Rio De Janiero", "2000 Airport Rd NE, Calgary, AB T2E 6W5", "aircanada.ca", "Please arrive to your gate at a minimum of 1 hour before departure.", "aircanada.ca"));
+        eventRepository.save(new Event("6237aae5299bb1be6ea70ed5", Type.ACC, "2022-09-02T11:00:00Z", "2022-08-12T21:00:00Z", "Sheraton Center Toronto Hotel", "123 Queen St W, Toronto, ON M5H 2M9", "https://www.marriott.com/en-us/hotels/yyztc-sheraton-centre-toronto-hotel/overview/?scid=bb1a189a-fec3-4d19-a255-54ba596febe2&y_source=1_MTcxNDk4NC03MTUtbG9jYXRpb24ud2Vic2l0ZQ%3D%3D", "Check-in is at 2pm and checkout is at 11a.m", "xyz.com"));
+        //Create Trips
+        String[] eventsOne = {
+            "6237a5c8299bb1be6ea70ed3",
+            "6237aa07299bb1be6ea70ed4",
+        };
+
+        String [] eventsTwo = {
+            "6237aae5299bb1be6ea70ed5" 
+        };
+
+        String [] eventsThree = {};
+
         tripRepository.save(new Trip("623bdb2996a983ea8e7168a9", "Paris Trip", "Image Link",eventsOne ));
 
-        tripRepository.save(new Trip("518asdasd32r8fjio10934ik", "Berlin Trip", "Image Link",eventsOne ));
+        tripRepository.save(new Trip("518asdasd32r8fjio10934ik", "Berlin Trip", "Image Link", eventsTwo ));
 
-        tripRepository.save(new Trip("901t3itifesmfodfjk8314fd", "Sydney Trip", "Image Link",eventsOne ));
+        tripRepository.save(new Trip("901t3itifesmfodfjk8314fd", "Sydney Trip", "Image Link",eventsThree ));
 
         // //Create Second User
         // String[] tripsTwo = {};
@@ -79,14 +93,6 @@ public class UserControllerTest {
         return "/planner/api/v1" + url;
     }
  
-    // @Test
-    // public void test_getById_successfull() throws Exception {
-    //     mvc.perform(get("/").param("id", "1")).andExpect(status().isOk()).andExpect(content().string("{\"id\":1,\"firstName\":\"James\",\"lastName\":\"Bond\"}"));;
-    //     mvc.perform(get("/").param("id", "2")).andExpect(status().isOk()).andExpect(content().string("{\"id\":2,\"firstName\":\"James\",\"lastName\":\"Farley\"}"));        ;
-    //     mvc.perform(get("/").param("id", "3")).andExpect(status().isOk()).andExpect(content().string("{\"id\":3,\"firstName\":\"Marley\",\"lastName\":\"Hemp\"}"));
-    //     mvc.perform(get("/").param("id", "4")).andExpect(status().isOk()).andExpect(content().string("{\"id\":4,\"firstName\":\"James\",\"lastName\":\"Bond\"}"));        ;
-    // }
-
     /*
     * Testing getTrip with an id. Trip was created in the setup stage of testing. 
     */
@@ -136,7 +142,85 @@ public class UserControllerTest {
       .andExpect(MockMvcResultMatchers.jsonPath("$[*].trip_id").isNotEmpty());
     }
 
+    
+    /*
+    * Testing getEvent with an id. Event was created in the setup stage of testing. 
+    */
+    @Test
+    public void getEvent_Success() throws Exception{
+        String expectedEventid = "6237aae5299bb1be6ea70ed5";
+        String expectedName = "Sheraton Center Toronto Hotel";
 
+        mvc.perform( MockMvcRequestBuilders
+        .get(makeUrl("/event"))
+        .param("eventid", expectedEventid)
+        .accept(MediaType.APPLICATION_JSON))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.event_id").value(expectedEventid))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(expectedName));
+
+    }
+
+    /*
+    * All trips in mock database is retrieved.  
+    */
+    @Test
+    public void getAllEvents_Success() throws Exception{
+        mvc.perform( MockMvcRequestBuilders
+      .get(makeUrl("/events"))
+      .accept(MediaType.APPLICATION_JSON))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(status().isOk())
+      .andExpect(MockMvcResultMatchers.jsonPath("$[*].event_id").isNotEmpty());
+    }
+
+    /*
+    * Testing post request with event on pre-created trip.
+    */
+    @Test
+    public void addEvent_Success() throws Exception {
+        String tripid ="623bdb2996a983ea8e7168a9";
+        mvc.perform( MockMvcRequestBuilders
+        .post(makeUrl("/event"))
+        .param("tripid", tripid)
+        .content(asJsonString(new Event("624110d96d61765a335d95f9", Type.POI, "2022-04-03T18:30:00.000Z", "2022-04-03T19:30:00.000Z", "Rock Climbing at the Calgary Climbing Center", "9311 Macleod Trail SW, Calgary, AB T2J 0P6", "https://www.mcdonalds.com/ca/en-ca/restaurant-locator.html?y_source=1_MTQ1MTkzOTgtNzE1LWxvY2F0aW9uLndlYnNpdGU%3D", "", "")))
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.trip_id").value(tripid));
+    }
+
+     /*
+    * Editing a pre-existing event.
+    */
+    @Test
+    public void editEvent_Success() throws Exception {
+        String eventid ="6237a5c8299bb1be6ea70ed3";
+        String[] eventsOne = {};
+        mvc.perform( MockMvcRequestBuilders
+        .post(makeUrl("/editevent"))
+        .param("eventid", eventid)
+        .content(asJsonString(new Event("6237a5c8299bb1be6ea70ed3", Type.POI, "2022-04-03T18:30:00.000Z", "2022-04-03T19:30:00.000Z", "Rock Climbing at the Calgary Climbing Center", "9311 Macleod Trail SW, Calgary, AB T2J 0P6", "https://www.mcdonalds.com/ca/en-ca/restaurant-locator.html?y_source=1_MTQ1MTkzOTgtNzE1LWxvY2F0aW9uLndlYnNpdGU%3D", "", "")))
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.event_id").value(eventid));
+    }
+
+    /*
+    * Deleting a pre-existing event from mock database. Verifying success status.
+    */
+    @Test
+    public void deleteEvent_Success() throws Exception {
+        String eventid = "6237aae5299bb1be6ea70ed5";
+        String tripid = "518asdasd32r8fjio10934ik";
+        mvc.perform( MockMvcRequestBuilders.
+        delete(makeUrl("/event"))
+        .param("eventid", eventid)
+        .param("tripid", tripid))
+        .andExpect(status().isOk());
+    }
 
     // @Test
     // public void test_getByFirstName_successfull() throws Exception {
