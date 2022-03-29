@@ -128,6 +128,13 @@ export default function EventCardHolder({
                                 }
                             />
                         </li>
+                        <li className="card--holder-bar-submit">
+                            <button onClick={() => getCardsFromAPI()}>
+                                <p className="card--holder-bar-property-label">
+                                    Search
+                                </p>
+                            </button>
+                        </li>
                     </>
                 );
             case "Car":
@@ -265,6 +272,13 @@ export default function EventCardHolder({
                                 dateFormat="dd-MM-yyyy"
                                 wrapperClassName="card--holder-bar-property-input"
                             />
+                        </li>
+                        <li className="card--holder-bar-submit">
+                            <button onClick={() => getCardsFromAPI()}>
+                                <p className="card--holder-bar-property-label">
+                                    Search
+                                </p>
+                            </button>
                         </li>
                     </>
                 );
@@ -486,19 +500,22 @@ export default function EventCardHolder({
                 );
 
                 axiosInstance
-                    .get("/transportation/api/v1/short")
+                    .get("/api/v1/transportation/short", {
+                        params: {
+                            origin: carHome,
+                            destination: carDest,
+                            departuretime: carDate,
+                            mode: "Driving"
+                        },
+                    })
                     .then((res) => {
                         console.log(res);
                     })
                     .catch((err) => console.log(err));
                 break;
             case "Food":
-                console.log(
-                    foodName + " | " + foodRestrictions + " | " + foodCategories
-                );
-
                 axiosInstance
-                    .get("/v1/dining/api", {
+                    .get("/api/v1/dining", {
                         params: {
                             Address: foodLocation,
                             Radius: 1500,
@@ -518,9 +535,13 @@ export default function EventCardHolder({
                                     return (
                                         <FoodCard
                                             key={i}
+                                            priceTier={e.price_level}
                                             name={e.name}
-                                            image={e.photos[0].photo_reference}
-                                            location={e.hotel_address}
+                                            extras={e.types}
+                                            rating={e.rating}
+                                            hours={e.opening_hours.open_now}
+                                            image={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${e.photos[0].photo_reference}&key=${process.env.FRONTEND_MAPS_API}`}
+                                            location={e.vicinity}
                                             addCardFunction={eventHandler}
                                         />
                                     );
@@ -603,14 +624,14 @@ export default function EventCardHolder({
 
     // Update cards whenever a query value gets changed
     useEffect(() => {
-        getCardsFromAPI();
+        if (selectedMode !== "Flights" && selectedMode !== "Hotels") {
+            getCardsFromAPI();
+        } else {
+            setEventCards(<></>);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         selectedMode,
-        flightsHome,
-        flightsDate,
-        flightsDest,
-        flightsNumTravelers,
         carHome,
         carDate,
         carDest,
@@ -618,12 +639,6 @@ export default function EventCardHolder({
         foodName,
         foodRestrictions,
         foodCategories,
-        hotelsLocation,
-        hotelsTimeIn,
-        hotelsTimeOut,
-        hotelsNumRooms,
-        hotelsNumAdults,
-        hotelsNumKids,
         attractionKeywords,
         attractionLocation,
     ]);
@@ -663,7 +678,8 @@ export default function EventCardHolder({
                             airline={"Air Canada"}
                             airlineLogo={Chevron}
                             flightCode={"AC 513"}
-                            times={["8:00 AM", "2:00 PM"]}
+                            locations={["Calgary, AB", "Toronto, ON"]}
+                            times={["2022-04-06T15:25:00",  "2022-04-06T17:40:00"]}
                             timeZones={[
                                 "Mountain Standard Time",
                                 "Central European Standard Time",
@@ -678,6 +694,7 @@ export default function EventCardHolder({
                             duration="10 Minutes"
                             distance="11.2 KM"
                             link="a"
+                            name={"Calgary"}
                             addCardFunction={eventHandler}
                         />
                         {eventCards}

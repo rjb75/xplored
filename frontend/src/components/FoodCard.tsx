@@ -4,6 +4,7 @@ import "./EventCard.scss";
 import { ItemTypes } from "../utils/PlannerConstants";
 import { useDrag } from "react-dnd";
 import ChevronSmall from "../assets/chevron-small.svg";
+import { eventTypes } from "./EventCard";
 
 interface FoodCardProps {
     price?: string;
@@ -21,8 +22,17 @@ export default function FoodCard(props: FoodCardProps) {
     const [{ isDragging }, drag] = useDrag(() => ({
         type: ItemTypes.EVENT,
         item: {
-            type: "Food",
-            title: "Food to TEST",
+            event_id: null,
+            type: eventTypes.FOOD,
+            start_time: null,
+            end_time: null,
+            name: "Eating at " + props.name,
+            address: null,
+            link: null,
+            data: null,
+            photo_url: null,
+            itemType: null,
+            duratation: null,
         },
         collect: (monitor) => ({
             isDragging: !!monitor.isDragging(),

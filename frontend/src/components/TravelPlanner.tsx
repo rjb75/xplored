@@ -44,7 +44,9 @@ export class TravelPlanner extends React.Component<IProps, IState> {
       currTripId: this.props.tripId,
     };
 
-    if (this.props.tripId !== "") {
+    console.log(this.props.tripId)
+
+    if (this.props.tripId.length > 1) {
       console.log(this.props.tripId);
       axiosInstance
         .get("/api/v1/trip/events", {
@@ -55,7 +57,11 @@ export class TravelPlanner extends React.Component<IProps, IState> {
         .then((res) => {
           console.log(res.data);
           this.setState({
-            events: eventAdapter(res.data, this.editEventSize),
+            events: eventAdapter(
+              res.data,
+              this.editEventSize,
+              this.deleteEvent
+            ),
           });
         });
     }
@@ -68,7 +74,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
   }
 
   componentDidUpdate(prevProps: IProps) {
-    if (prevProps.tripId !== this.props.tripId) {
+    if (prevProps.tripId !== this.props.tripId && this.props.tripId?.length > 0) {
       axiosInstance
         .get("/api/v1/trip/events", {
           params: {
@@ -144,8 +150,9 @@ export class TravelPlanner extends React.Component<IProps, IState> {
       let t = dateObjToDisplayTime(e.start_time);
       let inWeek: boolean = false;
 
-      if (this.state.week[day].getUTCDate() === e.start_time.getUTCDate())
+      if (this.state.week[day].getUTCDate() === e.start_time.getUTCDate()) {
         inWeek = true;
+      }
 
       if (e.start_time.getUTCDay() === day && t === time && inWeek) {
         res = (
@@ -289,14 +296,15 @@ export class TravelPlanner extends React.Component<IProps, IState> {
   ) {
     let start = displayTimeToDateObj(
       start_time,
-      this.state.week[day].getUTCDay(),
-      day,
+      this.state.week[day].getUTCMonth(),
+      this.state.week[day].getUTCDate(),
       this.state.week[day].getUTCFullYear()
     );
+    console.log(start);
     let end: Date = displayTimeToDateObj(
       start_time,
-      this.state.week[day].getUTCDay(),
-      day,
+      this.state.week[day].getUTCMonth(),
+      this.state.week[day].getUTCDate(),
       this.state.week[day].getUTCFullYear()
     );
     if (duration !== undefined) {
@@ -320,14 +328,37 @@ export class TravelPlanner extends React.Component<IProps, IState> {
         },
         {
           params: {
-            tripid: this.state.currTripId,
+            tripid: this.props.tripId,
           },
         }
       )
       .then((res) => {
-        let oldState = this.state.events;
-        oldState.push(eventAdapter([res.data], this.editEventSize)[0]);
-        this.setState({ events: oldState });
+        axiosInstance
+          .get("/api/v1/trip/events", {
+            params: {
+              tripid: this.props.tripId,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            let events = eventAdapter(
+              res.data,
+              this.editEventSize,
+              this.deleteEvent
+            );
+
+            let earliestEvent: Date | null = null;
+            if (events.length !== 0) {
+              earliestEvent = events.sort((item1, item2) => {
+                return item1.start_time.getTime() - item2.start_time.getTime();
+              })[0].start_time;
+            }
+
+            this.setState({
+              events: events,
+              week: this.getWeek(earliestEvent),
+            });
+          });
       });
   }
 
@@ -361,14 +392,37 @@ export class TravelPlanner extends React.Component<IProps, IState> {
         },
         {
           params: {
-            tripid: this.state.currTripId,
+            tripid: this.props.tripId,
           },
         }
       )
       .then((res) => {
-        let oldState = this.state.events;
-        oldState.push(eventAdapter([res.data], this.editEventSize)[0]);
-        this.setState({ events: oldState });
+        axiosInstance
+          .get("/api/v1/trip/events", {
+            params: {
+              tripid: this.props.tripId,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            let events = eventAdapter(
+              res.data,
+              this.editEventSize,
+              this.deleteEvent
+            );
+
+            let earliestEvent: Date | null = null;
+            if (events.length !== 0) {
+              earliestEvent = events.sort((item1, item2) => {
+                return item1.start_time.getTime() - item2.start_time.getTime();
+              })[0].start_time;
+            }
+
+            this.setState({
+              events: events,
+              week: this.getWeek(earliestEvent),
+            });
+          });
       });
   }
 

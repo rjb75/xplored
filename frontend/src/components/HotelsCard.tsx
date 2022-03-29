@@ -4,6 +4,7 @@ import "./EventCard.scss";
 import { ItemTypes } from "../utils/PlannerConstants";
 import { useDrag } from "react-dnd";
 import ChevronSmall from "../assets/chevron-small.svg";
+import { eventTypes } from "./EventCard";
 
 interface HotelsCardProps {
     price?: string;
@@ -18,8 +19,17 @@ export default function HotelsCard(props: HotelsCardProps) {
     const [{ isDragging }, drag] = useDrag(() => ({
         type: ItemTypes.EVENT,
         item: {
-            type: "Hotels",
-            title: "Hotels to TEST",
+            event_id: null,
+            type: eventTypes.ACCOMODATION,
+            start_time: null,
+            end_time: null,
+            name: "Stay at " + props.name,
+            address: null,
+            link: null,
+            data: null,
+            photo_url: null,
+            itemType: null,
+            duratation: null,
         },
         collect: (monitor) => ({
             isDragging: !!monitor.isDragging(),
