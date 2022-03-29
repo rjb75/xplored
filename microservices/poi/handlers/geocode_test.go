@@ -12,6 +12,10 @@ import (
 	"googlemaps.github.io/maps"
 )
 
+/*
+	This test will test a POI with the latitude and longitude of U of C.
+	This test should return the correct latitude and longitude of the location.
+*/
 func Test_latlon_UofC(t *testing.T) {
 
 	logs.TestLogs()
@@ -38,6 +42,10 @@ func Test_latlon_UofC(t *testing.T) {
 	utils.AssertEqual(t, -114.1297544, loc.Lng, "Longitude")
 }
 
+/*
+	This test will test a POI with the latitude and longitude of an invalid location.
+	This test should return the latitude and longitude as 0.0.
+*/
 func Test_latlon_Invalid(t *testing.T) {
 
 	logs.TestLogs()

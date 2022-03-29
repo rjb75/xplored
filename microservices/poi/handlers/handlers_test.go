@@ -13,6 +13,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+/*
+	This test will test a valid POI, with the U of C address looking for
+	a cafe in a 5km radius. This test should return a JSON object that is
+	not null.
+*/
 func TestValidPOI_University_Cafe(t *testing.T) {
 	logs.TestLogs()
 
@@ -50,9 +55,13 @@ func TestValidPOI_University_Cafe(t *testing.T) {
 
 	assert.NotNil(t, body, "POI options should be returned")
 	assert.NotEqual(t, "null", string(body), "Result should not be null")
-
 }
 
+/*
+	This test will test a valid POI, with an address in Kissimmee, Florida, looking for
+	a theme park in a 20km radius. This test should return a JSON object that is
+	not null.
+*/
 func TestValidPOI_Florida_ThemePark(t *testing.T) {
 	logs.TestLogs()
 
@@ -92,6 +101,11 @@ func TestValidPOI_Florida_ThemePark(t *testing.T) {
 
 }
 
+/*
+	This test will test a valid POI, in a generic location of Paris, looking for
+	no particular type of POI, in a 20km radius. This test should return a JSON object that is
+	not null.
+*/
 func TestValidPOI_Paris_Blank(t *testing.T) {
 	logs.TestLogs()
 
@@ -132,6 +146,10 @@ func TestValidPOI_Paris_Blank(t *testing.T) {
 
 }
 
+/*
+	This test will test a POI, with an invalid address.
+	This test should return a JSON object that is empty .
+*/
 func TestInvalidPOI_Address(t *testing.T) {
 	logs.TestLogs()
 	err := godotenv.Load("../../../.env")
@@ -143,7 +161,7 @@ func TestInvalidPOI_Address(t *testing.T) {
 	app := fiber.New()
 	app.Get("/", handlers.GetPointsOfInterest)
 
-	req, err := http.NewRequest("GET", "/?address=Kanananaskakis&keyword=&radius=", nil)
+	req, err := http.NewRequest("GET", "/?address=Kanananaskakis&keyword=cafe&radius=1000", nil)
 
 	if err != nil {
 		assert.Fail(t, "Error forming test request")
@@ -161,9 +179,14 @@ func TestInvalidPOI_Address(t *testing.T) {
 		assert.Fail(t, "Error parsing test response")
 	}
 
-	assert.Equal(t, "{\"cause\":\"Radius is required for points of interest\",\"status\":\"fail\",\"type\":\"Missing Paramater\"}", string(body), "No POI should have been returned")
+	assert.Equal(t, "{\"Results\":[],\"HTMLAttributions\":[],\"NextPageToken\":\"\"}", string(body), "No POI should have been returned")
 }
 
+/*
+	This test will test a POI, with a missing address.
+	This test should return a JSON object that is an error code stating
+	that there was a missing address.
+*/
 func TestInvalidPOI_NullAddress(t *testing.T) {
 	logs.TestLogs()
 	err := godotenv.Load("../../../.env")
@@ -196,6 +219,11 @@ func TestInvalidPOI_NullAddress(t *testing.T) {
 	assert.Equal(t, "{\"cause\":\"Address is required for points of interest\",\"status\":\"fail\",\"type\":\"Missing Paramater\"}", string(body), "No POI should have been returned")
 }
 
+/*
+	This test will test a POI, with a radius of zero.
+	This test should return a JSON object that is an error code stating
+	that there was a missing radius.
+*/
 func TestInvalidPOI_ZeroRadius(t *testing.T) {
 	logs.TestLogs()
 	err := godotenv.Load("../../../.env")
