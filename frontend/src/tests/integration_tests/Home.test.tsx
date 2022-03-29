@@ -4,6 +4,20 @@ import { act } from "react-dom/test-utils";
 import "@testing-library/jest-dom";
 import Home from "../../pages/Home";
 import MockedMap from "../../components/TravelMap";
+import MockedNav from "../../components/NavBar";
+import MockedPlanner from "../../components/TravelPlanner";
+
+jest.mock("../../components/TravelPlanner", () => {
+  return function DummyTravelPlanner(props: any){
+    return <div data-testid="TravelPlanner"></div>
+  }
+})
+
+jest.mock("../../components/NavBar", () =>  {
+  return function DummyNavBar(props: any){
+    return <div data-testid="NavBar"></div>
+  }
+})
 
 jest.mock("../../components/TravelMap", () => {
   return function DummyMap(props: any) {
