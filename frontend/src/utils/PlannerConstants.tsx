@@ -173,6 +173,9 @@ export function dateObjToDisplayTime(date: Date) {
 }
 
 export function displayTimeToDateObj(time: string, month: number, day: number, year: number){
+  console.log(month);
+  console.log(day);
+  console.log(year);
   let hours = parseFloat(time.split(":")[0]);
   let mins = parseFloat(time.split(":")[1].split(" ")[0]);
   let pm = time.split(" ")[1];

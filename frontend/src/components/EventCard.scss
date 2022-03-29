@@ -188,13 +188,14 @@
             padding: 0 2rem;
             gap: 1rem;
             align-items: center;
+            max-width: 100%;
         }
 
         &-image {
             width: 5rem;
             height: 5rem;
             grid-column: 1;
-            background-color: $color-dark-yellow;
+            background-color: $color-grey-light;
             border-radius: 1rem;
         }
 
@@ -203,6 +204,7 @@
             flex-direction: column;
             grid-column: 2;
             gap: 0.25rem;
+            width: 100%;
         }
 
         &-label {
@@ -212,6 +214,10 @@
             margin: 0;
             font-family: Manrope;
             line-height: 100%;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         &-location {
@@ -221,6 +227,10 @@
             margin: 0;
             font-family: Manrope;
             line-height: 100%;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         &-rating {
@@ -234,6 +244,9 @@
             display: flex;
             flex-direction: row;
             gap: 0.5rem;
+            max-width: 100%;
+            overflow: hidden;
+            flex-wrap: wrap;
 
             &-item {
                 display: inline-block;

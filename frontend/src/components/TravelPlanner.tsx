@@ -44,7 +44,9 @@ export class TravelPlanner extends React.Component<IProps, IState> {
       currTripId: this.props.tripId,
     };
 
-    if (this.props.tripId !== "") {
+    console.log(this.props.tripId)
+
+    if (this.props.tripId.length > 1) {
       console.log(this.props.tripId);
       axiosInstance
         .get("/api/v1/trip/events", {
@@ -72,7 +74,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
   }
 
   componentDidUpdate(prevProps: IProps) {
-    if (prevProps.tripId !== this.props.tripId) {
+    if (prevProps.tripId !== this.props.tripId && this.props.tripId?.length > 0) {
       axiosInstance
         .get("/api/v1/trip/events", {
           params: {
@@ -294,14 +296,15 @@ export class TravelPlanner extends React.Component<IProps, IState> {
   ) {
     let start = displayTimeToDateObj(
       start_time,
-      this.state.week[day].getUTCDay(),
-      day,
+      this.state.week[day].getUTCMonth(),
+      this.state.week[day].getUTCDate(),
       this.state.week[day].getUTCFullYear()
     );
+    console.log(start);
     let end: Date = displayTimeToDateObj(
       start_time,
-      this.state.week[day].getUTCDay(),
-      day,
+      this.state.week[day].getUTCMonth(),
+      this.state.week[day].getUTCDate(),
       this.state.week[day].getUTCFullYear()
     );
     if (duration !== undefined) {
@@ -325,7 +328,7 @@ export class TravelPlanner extends React.Component<IProps, IState> {
         },
         {
           params: {
-            tripid: this.state.currTripId,
+            tripid: this.props.tripId,
           },
         }
       )

@@ -29,7 +29,7 @@ export default function CarCard(props: CarCardProps) {
             link: null,
             data: null,
             photo_url: null,
-            itemType: null,
+            itemType: "",
             duratation: null,
         },
         collect: (monitor) => ({

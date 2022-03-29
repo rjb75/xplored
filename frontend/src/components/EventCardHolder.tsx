@@ -500,7 +500,14 @@ export default function EventCardHolder({
                 );
 
                 axiosInstance
-                    .get("/transportation/api/v1/short")
+                    .get("/api/v1/transportation/short", {
+                        params: {
+                            origin: carHome,
+                            destination: carDest,
+                            departuretime: carDate,
+                            mode: "Driving"
+                        },
+                    })
                     .then((res) => {
                         console.log(res);
                     })
@@ -528,9 +535,13 @@ export default function EventCardHolder({
                                     return (
                                         <FoodCard
                                             key={i}
+                                            priceTier={e.price_level}
                                             name={e.name}
-                                            image={e.photos[0].photo_reference}
-                                            location={e.hotel_address}
+                                            extras={e.types}
+                                            rating={e.rating}
+                                            hours={e.opening_hours.open_now}
+                                            image={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${e.photos[0].photo_reference}&key=${process.env.FRONTEND_MAPS_API}`}
+                                            location={e.vicinity}
                                             addCardFunction={eventHandler}
                                         />
                                     );
