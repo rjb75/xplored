@@ -43,15 +43,13 @@ public class UserControllerTest {
  
     @BeforeAll
     public void setup(){
-        //Create First User
-        String[] tripsOne = {"623bdb2996a983ea8e7168a9", "623fa6b5f8832461dcd44bca"};
-        userRepository.save(new User("6237ac6b299bb1be6ea70ed8", "12j1iej31", tripsOne));
-
+        
         //Create Events
         eventRepository.save(new Event("6237a5c8299bb1be6ea70ed3", Type.DIN, "2022-05-02T20:00:00Z", "2022-05-02T21:00:00Z", "McDonalds McLeod Trail", "9311 Macleod Trail SW, Calgary, AB T2J 0P6", "https://www.mcdonalds.com/ca/en-ca/restaurant-locator.html?y_source=1_MTQ1MTkzOTgtNzE1LWxvY2F0aW9uLndlYnNpdGU%3D", "", "aaabbb111.ca"));
         eventRepository.save(new Event("6237aa07299bb1be6ea70ed4", Type.TRANSL, "2022-06-03T08:00:00Z", "2022-06-04T14:00:00Z", "Air Canada Flight to Rio De Janiero", "2000 Airport Rd NE, Calgary, AB T2E 6W5", "aircanada.ca", "Please arrive to your gate at a minimum of 1 hour before departure.", "aircanada.ca"));
         eventRepository.save(new Event("6237aae5299bb1be6ea70ed5", Type.ACC, "2022-09-02T11:00:00Z", "2022-08-12T21:00:00Z", "Sheraton Center Toronto Hotel", "123 Queen St W, Toronto, ON M5H 2M9", "https://www.marriott.com/en-us/hotels/yyztc-sheraton-centre-toronto-hotel/overview/?scid=bb1a189a-fec3-4d19-a255-54ba596febe2&y_source=1_MTcxNDk4NC03MTUtbG9jYXRpb24ud2Vic2l0ZQ%3D%3D", "Check-in is at 2pm and checkout is at 11a.m", "xyz.com"));
-        //Create Trips
+       
+        //Setup event arrays for Trip Creation
         String[] eventsOne = {
             "6237a5c8299bb1be6ea70ed3",
             "6237aa07299bb1be6ea70ed4",
@@ -63,24 +61,19 @@ public class UserControllerTest {
 
         String [] eventsThree = {};
 
+        //Create Trips
         tripRepository.save(new Trip("623bdb2996a983ea8e7168a9", "Paris Trip", "Image Link",eventsOne ));
-
         tripRepository.save(new Trip("518asdasd32r8fjio10934ik", "Berlin Trip", "Image Link", eventsTwo ));
-
         tripRepository.save(new Trip("901t3itifesmfodfjk8314fd", "Sydney Trip", "Image Link",eventsThree ));
 
-        // //Create Second User
-        // String[] tripsTwo = {};
-        // userRepository.save(new User("623fd6980763831fac69fee0", "test123", tripsTwo));
+        //Setup trips array for User Creation
+        String[] tripsOne = {"901t3itifesmfodfjk8314fd", "518asdasd32r8fjio10934ik"};
 
-        // //Create Third User
-        // String[] tripsThree = {"62410f506d61765a335d95f8", "trip4"};
-        // userRepository.save(new User("62410f2c6d61765a335d95f7", "RI8UnOawe7Md9Mw56GSSd8KYvB42", tripsThree));
-
-
-  
+        //Create User
+        userRepository.save(new User("6237ac6b299bb1be6ea70ed8", "12j1iej31", tripsOne));
     }
 
+    //Helper Function to convert object to Json
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
@@ -89,6 +82,8 @@ public class UserControllerTest {
         }
     }
 
+
+    //Create URL For Planner API
     public String makeUrl(String url){
         return "/planner/api/v1" + url;
     }
@@ -222,11 +217,54 @@ public class UserControllerTest {
         .andExpect(status().isOk());
     }
 
-    // @Test
-    // public void test_getByFirstName_successfull() throws Exception {
- 
-    //     mvc.perform(get("/").param("firstName", "James")).andExpect(status().isOk()).andExpect(content().string("[{\"id\":1,\"firstName\":\"James\",\"lastName\":\"Bond\"},{\"id\":2,\"firstName\":\"James\",\"lastName\":\"Farley\"},{\"id\":4,\"firstName\":\"James\",\"lastName\":\"Bond\"}]"));
- 
-    //     mvc.perform(get("/").param("firstName", "Marley")).andExpect(status().isOk()).andExpect(content().string("[{\"id\":3,\"firstName\":\"Marley\",\"lastName\":\"Hemp\"}]"));        ;
-    // }
+    /*
+    * Testing post request with user with user auth id with no events on user. Also verifies id generation
+    */
+    @Test
+    public void addUser_Success() throws Exception {
+        String authid ="1590ifjad21";
+        String[] trips = {};
+        mvc.perform( MockMvcRequestBuilders
+        .post(makeUrl("/user"))
+        .param("authid", authid)
+        .content(asJsonString(new User(null, authid, trips)))
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
+    }
+    
+    /*
+    * All trips in mock database is retrieved.  
+    */
+    @Test
+    public void getAllUserTrips_Success() throws Exception{
+        String authid = "12j1iej31";
+
+        mvc.perform( MockMvcRequestBuilders
+        .get(makeUrl("/usertrips"))
+        .param("authid", authid)
+        .accept(MediaType.APPLICATION_JSON))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$[*].trip_id").isNotEmpty());
+    }
+
+    /*
+    * Get All events in a trip
+    */
+    @Test
+    public void getAllEventsInTrip_Success() throws Exception{
+        String tripid = "623bdb2996a983ea8e7168a9";
+
+        mvc.perform( MockMvcRequestBuilders
+        .get(makeUrl("/alltrips"))
+        .param("tripid", tripid)
+        .accept(MediaType.APPLICATION_JSON))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$[*].event_id").isNotEmpty())
+        .andExpect(MockMvcResultMatchers.jsonPath("$[*].name").isNotEmpty());
+
+    }
 }
