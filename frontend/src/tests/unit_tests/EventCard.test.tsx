@@ -36,6 +36,8 @@ it.each`
     let start;
     let end;
     let expected = "";
+
+    // eslint-disable-next-line
     act(() => {
       start = new Date(time);
       end = start;
@@ -59,7 +61,9 @@ it.each`
       );
     });
 
-    expect(await screen.findByTestId("eventCardTitle")).toHaveTextContent(title);
+    expect(await screen.findByTestId("eventCardTitle")).toHaveTextContent(
+      title
+    );
     expect(await screen.findByAltText(IconType + "Icon")).toBeVisible();
   }
 );
