@@ -23,24 +23,23 @@ afterEach(() => {
 });
 
 it.each`
-  IconType    | Time                                                            | expectedDisplayTime | Title            | Duration
-  ${"DIN"}    | ${"Sun Apr 03 2022 12:30:00 GMT-0600 (Mountain Daylight Time)"} | ${"6:30 pm"}        | ${"Test Title0"} | ${30}
-  ${"TRANSS"} | ${"Sun Apr 03 2022 12:30:00 GMT-0600 (Mountain Daylight Time)"} | ${"6:30 pm"}        | ${"Test Title1"} | ${30}
-  ${"TRANSL"} | ${"Sun Apr 03 2022 12:30:00 GMT-0600 (Mountain Daylight Time)"} | ${"6:30 pm"}        | ${"Test Title2"} | ${30}
-  ${"ACC"}    | ${"Sun Apr 03 2022 12:30:00 GMT-0600 (Mountain Daylight Time)"} | ${"6:30 pm"}        | ${"Test Title3"} | ${30}
-  ${"POI"}    | ${"Sun Apr 03 2022 12:30:00 GMT-0600 (Mountain Daylight Time)"} | ${"6:30 pm"}        | ${"Test Title4"} | ${30}
+  IconType    | time                                                            | expectedDisplayTime | title            | duration
+  ${"DIN"}    | ${"Sun Apr 03 2022 12:00:00 GMT-0600 (Mountain Daylight Time)"} | ${"6:30 pm"}        | ${"Test Title0"} | ${30}
+  ${"TRANSS"} | ${"Sun Apr 03 2022 12:00:00 GMT-0600 (Mountain Daylight Time)"} | ${"6:30 pm"}        | ${"Test Title1"} | ${30}
+  ${"TRANSL"} | ${"Sun Apr 03 2022 12:00:00 GMT-0600 (Mountain Daylight Time)"} | ${"6:30 pm"}        | ${"Test Title2"} | ${30}
+  ${"ACC"}    | ${"Sun Apr 03 2022 12:00:00 GMT-0600 (Mountain Daylight Time)"} | ${"6:30 pm"}        | ${"Test Title3"} | ${30}
+  ${"POI"}    | ${"Sun Apr 03 2022 12:00:00 GMT-0600 (Mountain Daylight Time)"} | ${"6:30 pm"}        | ${"Test Title4"} | ${30}
 `(
   "Test correct card content",
-  async ({ IconType, Time, expectedDisplayTime, Title, Duration }) => {
+  async ({ IconType, time, expectedDisplayTime, title, duration }) => {
     // eslint-disable-next-line
     let start;
     let end;
     let expected = "";
     act(() => {
-      start = new Date(Time);
-      expected = dateObjToDisplayTime(start)
+      start = new Date(time);
       end = start;
-      end.setMinutes(start.getMinutes() + Duration);
+      end.setMinutes(start.getMinutes() + duration);
       render(
         <DndProvider backend={HTML5Backend}>
           <EventCard
@@ -60,6 +59,7 @@ it.each`
       );
     });
 
+    expect(await screen.findByTestId("eventCardTitle")).toHaveTextContent(title);
     expect(await screen.findByAltText(IconType + "Icon")).toBeVisible();
   }
 );

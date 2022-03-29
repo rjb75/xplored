@@ -169,8 +169,8 @@ export const EventCard = ({
         <div className="middle">
           {getIcon(type)}
           <div className="headerContainers">
-            <h1 data-testId="eventCardTime">{displayTime}</h1>
-            <h2 data-testId="eventCardTitle">{name}</h2>
+            <h1 data-testid="eventCardTime">{displayTime}</h1>
+            <h2 data-testid="eventCardTitle">{name}</h2>
           </div>
         </div>
         <div className="right">
