@@ -320,7 +320,7 @@ func DeleteEventById(c *fiber.Ctx) error {
 
 // create trip
 func CreateTrip(c *fiber.Ctx) error {
-	PlannerURI := fmt.Sprintf("http://%s:%s/planner/api/v1/editevent", os.Getenv("GATEWAY_TPLANNER_HOST"), os.Getenv("TPLANNER_PORT"))
+	PlannerURI := fmt.Sprintf("http://%s:%s/planner/api/v1/trip", os.Getenv("GATEWAY_TPLANNER_HOST"), os.Getenv("TPLANNER_PORT"))
 
 	body_reader := bytes.NewReader(c.Request().Body())
 	query, err := http.NewRequest("POST", PlannerURI, body_reader)

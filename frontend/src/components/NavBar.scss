@@ -109,3 +109,36 @@
     }
   }
 }
+
+.modalContainer{
+  display: grid;
+  grid-template-areas: "title button"
+                       "input button";
+  gap: 5px;
+  
+  h1{
+    font-size: 25px;
+    font-family: 'Roboto';
+    grid-area: title;
+  }
+
+  .button{
+    grid-area: button;
+    height: 20px;
+    width: 60px;
+    background-color: $color-purple;
+    border-radius: 20px;
+    align-self: center;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: fit-content;
+    width: fit-content;
+    cursor: pointer;
+
+    h2{
+      color: white;
+    }
+  }
+}

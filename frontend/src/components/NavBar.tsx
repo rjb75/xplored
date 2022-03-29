@@ -2,19 +2,30 @@ import React, { useEffect, useState } from "react";
 import InputField from "./inputs/InputField";
 import DatePicker from "react-datepicker";
 import "./NavBar.scss";
-import "bootstrap/dist/css/bootstrap.min.css";
+import Modal from "react-modal";
 
 //@ts-ignore
 import Logo from "../images/logo.svg";
 import Select from "react-select";
 import axiosInstance from "../utils/axios";
-import { Modal, Button, OverlayTrigger, Popover } from "react-bootstrap";
 
 interface NavProps {
   mode: string;
   changeMode: Function;
   changeTripId: Function;
 }
+
+const customStyles = {
+  content: {
+    top: "20%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "10px",
+  },
+};
 
 const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
   const travelTypes = [
@@ -50,9 +61,9 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
     value: string;
   }
 
-  const [showNewTrip, setShowNewTrip] = useState<boolean>(false);
-  const handleShow = () => setShowNewTrip(true);
-  const handleClose = () => setShowNewTrip(false);
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
 
   const [trips, setTrips] = useState<Array<TripOptions>>([]);
   const [currTrip, setCurrTrip] = useState<TripOptions>();
@@ -78,6 +89,7 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
 
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
+  const [tripName, setTripName] = useState<string>();
 
   function updateCurrentTrip(e: any) {
     if (e.value && e.label) {
@@ -86,21 +98,18 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
     }
   }
 
-  function addTrip() {}
+  function addTrip() {
+    axiosInstance.post("/api/v1/trip", {
+      name: tripName,
+      events: [],
+      photo_url: "bruh"
+    })
+    closeModal();
+  }
 
   useEffect(() => {
     changeTripId(currTrip?.value);
   }, [currTrip]);
-
-  const popover = (
-    <Popover id="popover-basic">
-      <Popover.Header as="h3">Popover right</Popover.Header>
-      <Popover.Body>
-        And here's some <strong>amazing</strong> content. It's very engaging.
-        right?
-      </Popover.Body>
-    </Popover>
-  );
 
   return (
     <>
@@ -116,13 +125,12 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
                 value={currTrip}
                 onChange={updateCurrentTrip}
               />
-              <OverlayTrigger
-                trigger="click"
-                placement="right"
-                overlay={popover}
+              <h1
+                onClick={openModal}
+                style={{ fontSize: `25px`, fontWeight: `600`, cursor: `pointer` }}
               >
-                <h1 style={{ fontSize: `25px`, fontWeight: `600` }}>+</h1>
-              </OverlayTrigger>
+                +
+              </h1>
             </div>
           </div>
           <div className="navbar--trip-fields">
@@ -190,19 +198,22 @@ const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
           })}
         </div>
       </div>
-      <Modal show={showNewTrip} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <div className="modalContainer">
+          <h1>Add new trip</h1>
+            <InputField
+              className="navbar--trip-field input"
+              name="Destination"
+              placeholder="Seattle Trip"
+              onChangeHandler={setTripName}
+            />
+          <div className="button" onClick={addTrip}><h2>Add Trip</h2></div>
+        </div>
       </Modal>
     </>
   );
