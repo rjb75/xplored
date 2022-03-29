@@ -13,34 +13,39 @@ interface NavProps {
   changeTripId: Function;
 }
 
-const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
-  const travelTypes = [
-    {
-      name: "Flights",
-      icon: "flight",
-      action: () => {},
-    },
-    {
-      name: "Car",
-      icon: "automotive",
-      action: () => {},
-    },
-    {
-      name: "Food",
-      icon: "food",
-      action: () => {},
-    },
-    {
-      name: "Hotels",
-      icon: "accommodation",
-      action: () => {},
-    },
-    {
-      name: "Attraction",
-      icon: "attraction",
-      action: () => {},
-    },
-  ];
+const NavBar = ({ mode, changeMode }: NavProps) => {
+    const travelTypes = [
+        {
+            name: "Flights",
+            icon: "flight",
+            action: () => {},
+        },
+        {
+            name: "Car",
+            icon: "automotive",
+            action: () => {},
+        },
+        {
+            name: "Food",
+            icon: "food",
+            action: () => {},
+        },
+        {
+            name: "Hotels",
+            icon: "accommodation",
+            action: () => {},
+        },
+        {
+            name: "Attraction",
+            icon: "attraction",
+            action: () => {},
+        },
+        {
+            name: "Reviews",
+            icon: "reviews",
+            action: () => {},
+        },
+    ];
 
   interface TripOptions {
     label: string;
