@@ -6,6 +6,8 @@ import EventCard from "../../components/EventCard";
 import { eventTypes } from "../../components/EventCard";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { title } from "process";
+import { dateObjToDisplayTime } from "../../utils/PlannerConstants";
 
 let container: any = null;
 
@@ -21,33 +23,43 @@ afterEach(() => {
 });
 
 it.each`
-  IconType           | Time          | Title            | Duration
-  ${"food"}          | ${"6:00 am"}  | ${"Test Title0"} | ${"0.5 Hour"}
-  ${"car"}           | ${"12:00 pm"} | ${"Test Title1"} | ${"1 Hour"}
-  ${"flight"}        | ${"12:00 am"} | ${"Test Title2"} | ${"2 Hour"}
-  ${"accommodation"} | ${"8:00 pm"}  | ${"Test Title3"} | ${"2.5 Hour"}
-  ${"poi"}           | ${"10:00 am"} | ${"Test Title4"} | ${"5 Hour"}
-`("Test correct card content", async ({ IconType, Time, Title, Duration }) => {
-  // eslint-disable-next-line
-  act(() => {
-    render(
-      <DndProvider backend={HTML5Backend}>
-        <EventCard
-          type={IconType}
-          time={Time}
-          title={Title}
-          duration={Duration}
-          date="1"
-          id="test"
-        />
-      </DndProvider>
-    );
-  });
+  IconType    | Time                                                            | expectedDisplayTime | Title            | Duration
+  ${"DIN"}    | ${"Sun Apr 03 2022 12:30:00 GMT-0600 (Mountain Daylight Time)"} | ${"6:30 pm"}        | ${"Test Title0"} | ${30}
+  ${"TRANSS"} | ${"Sun Apr 03 2022 12:30:00 GMT-0600 (Mountain Daylight Time)"} | ${"6:30 pm"}        | ${"Test Title1"} | ${30}
+  ${"TRANSL"} | ${"Sun Apr 03 2022 12:30:00 GMT-0600 (Mountain Daylight Time)"} | ${"6:30 pm"}        | ${"Test Title2"} | ${30}
+  ${"ACC"}    | ${"Sun Apr 03 2022 12:30:00 GMT-0600 (Mountain Daylight Time)"} | ${"6:30 pm"}        | ${"Test Title3"} | ${30}
+  ${"POI"}    | ${"Sun Apr 03 2022 12:30:00 GMT-0600 (Mountain Daylight Time)"} | ${"6:30 pm"}        | ${"Test Title4"} | ${30}
+`(
+  "Test correct card content",
+  async ({ IconType, Time, expectedDisplayTime, Title, Duration }) => {
+    // eslint-disable-next-line
+    let start;
+    let end;
+    let expected = "";
+    act(() => {
+      start = new Date(Time);
+      expected = dateObjToDisplayTime(start)
+      end = start;
+      end.setMinutes(start.getMinutes() + Duration);
+      render(
+        <DndProvider backend={HTML5Backend}>
+          <EventCard
+            event_id={"test"}
+            type={IconType}
+            start_time={start}
+            end_time={end}
+            name={title}
+            address={"000"}
+            link={""}
+            data={""}
+            photo_URL={""}
+            editSizeCallBack={() => {}}
+            deleteCallBack={() => {}}
+          />
+        </DndProvider>
+      );
+    });
 
-  expect(await screen.findByAltText(IconType + "Icon")).toBeVisible();
-  expect(await screen.findByTestId("eventCardTime")).toHaveTextContent(Time);
-  expect(await screen.findByTestId("eventCardTitle")).toHaveTextContent(Title);
-  expect(await screen.findByTestId("eventCardDuration")).toHaveTextContent(
-    Duration
-  );
-});
+    expect(await screen.findByAltText(IconType + "Icon")).toBeVisible();
+  }
+);
