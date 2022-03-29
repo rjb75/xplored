@@ -594,7 +594,7 @@ export default function EventCardHolder({
                                         <AttractionCard
                                             key={i}
                                             name={e.name}
-                                            image={e.photos[0].photo_reference}
+                                            image={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${e.photos[0].photo_reference}&key=${process.env.FRONTEND_MAPS_API}`}
                                             link={e.link}
                                             address={e.hotel_address}
                                             addCardFunction={eventHandler}
@@ -668,7 +668,7 @@ export default function EventCardHolder({
                             airlineLogo={Chevron}
                             flightCode={"AC 513"}
                             locations={["Calgary, AB", "Toronto, ON"]}
-                            times={["2022-04-6T15:25:00",  "2022-04-6T017:40:00"]}
+                            times={["2022-04-06T15:25:00",  "2022-04-06T17:40:00"]}
                             timeZones={[
                                 "Mountain Standard Time",
                                 "Central European Standard Time",

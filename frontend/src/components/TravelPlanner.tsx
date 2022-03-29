@@ -330,11 +330,32 @@ export class TravelPlanner extends React.Component<IProps, IState> {
         }
       )
       .then((res) => {
-        let oldState = this.state.events;
-        oldState.push(
-          eventAdapter([res.data], this.editEventSize, this.deleteEvent)[0]
-        );
-        this.setState({ events: oldState });
+        axiosInstance
+          .get("/api/v1/trip/events", {
+            params: {
+              tripid: this.props.tripId,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            let events = eventAdapter(
+              res.data,
+              this.editEventSize,
+              this.deleteEvent
+            );
+
+            let earliestEvent: Date | null = null;
+            if (events.length !== 0) {
+              earliestEvent = events.sort((item1, item2) => {
+                return item1.start_time.getTime() - item2.start_time.getTime();
+              })[0].start_time;
+            }
+
+            this.setState({
+              events: events,
+              week: this.getWeek(earliestEvent),
+            });
+          });
       });
   }
 
@@ -373,11 +394,32 @@ export class TravelPlanner extends React.Component<IProps, IState> {
         }
       )
       .then((res) => {
-        let oldState = this.state.events;
-        oldState.push(
-          eventAdapter([res.data], this.editEventSize, this.deleteEvent)[0]
-        );
-        this.setState({ events: oldState });
+        axiosInstance
+          .get("/api/v1/trip/events", {
+            params: {
+              tripid: this.props.tripId,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            let events = eventAdapter(
+              res.data,
+              this.editEventSize,
+              this.deleteEvent
+            );
+
+            let earliestEvent: Date | null = null;
+            if (events.length !== 0) {
+              earliestEvent = events.sort((item1, item2) => {
+                return item1.start_time.getTime() - item2.start_time.getTime();
+              })[0].start_time;
+            }
+
+            this.setState({
+              events: events,
+              week: this.getWeek(earliestEvent),
+            });
+          });
       });
   }
 
