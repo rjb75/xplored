@@ -16,15 +16,20 @@ func Latlon(req *models.POIRequest, cli *maps.Client) maps.LatLng {
 		// Region:  req.Region,
 	}
 
+	var loc maps.LatLng
+
 	place, err := cli.Geocode(context.Background(), r)
 
 	if err != nil {
 		logs.ErrorLogger.Println("Error geocoding")
 	}
 
-	loc := maps.LatLng{
-		Lat: place[0].Geometry.Location.Lat,
-		Lng: place[0].Geometry.Location.Lng,
+	if len(place) > 0 {
+		loc.Lat = place[0].Geometry.Location.Lat
+		loc.Lng = place[0].Geometry.Location.Lng
+	} else {
+		loc.Lat = 0.0
+		loc.Lng = 0.0
 	}
 
 	return loc
