@@ -17,4 +17,5 @@ func RegisterRoutes(app *fiber.App) {
 // function to mount poi routes
 func PointsOfInterest(v fiber.Router) {
 	v.Get("/pois", handlers.GetPointsOfInterest)
+	v.Get("/pois/latlng", handlers.GetPointsOfInterestLatLng)
 }
