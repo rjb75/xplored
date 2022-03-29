@@ -584,7 +584,7 @@ export default function EventCardHolder({
                                         <AttractionCard
                                             key={i}
                                             name={e.name}
-                                            image={e.photos[0].photo_reference}
+                                            image={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${e.photos[0].photo_reference}&key=${process.env.FRONTEND_MAPS_API}`}
                                             link={e.link}
                                             address={e.hotel_address}
                                             addCardFunction={eventHandler}

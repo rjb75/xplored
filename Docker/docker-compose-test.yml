@@ -1,0 +1,43 @@
+services:
+  reviews:
+    tty: true
+    container_name: xplored-ms-reviews-test
+    build:
+      context: ../
+      dockerfile: Docker/Reviews.test.Dockerfile
+  poi:
+    tty: true
+    container_name: xplored-ms-poi-test
+    build:
+      context: ../
+      dockerfile: Docker/POI.test.Dockerfile
+  dining:
+    tty: true
+    container_name: xplored-ms-dining-test
+    build:
+      context: ../
+      dockerfile: Docker/Dining.test.Dockerfile
+  photo:
+    tty: true
+    container_name: xplored-ms-photogallery-test
+    build:
+      context: ../
+      dockerfile: Docker/Photogallery.test.Dockerfile
+  recom:
+    tty: true
+    container_name: xplored-ms-recommendations-test
+    build:
+      context: ../
+      dockerfile: Docker/Recommendations.test.Dockerfile
+  # tplanner:
+  #   tty: true
+  #   container_name: xplored-ms-tplanner-test
+  #   build:
+  #     context: ../
+  #     dockerfile: Docker/TPlanner.test.Dockerfile
+  accommodations:
+    tty: true
+    container_name: xplored-ms-accommodations-test
+    build:
+      context: ../
+      dockerfile: Docker/Accommodations.test.Dockerfile

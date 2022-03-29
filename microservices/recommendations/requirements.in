@@ -3,3 +3,4 @@ pydantic
 pymongo[srv]
 python-dotenv
 uvicorn
+requests
