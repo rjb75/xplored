@@ -13,7 +13,7 @@ interface NavProps {
   changeTripId: Function;
 }
 
-const NavBar = ({ mode, changeMode }: NavProps) => {
+const NavBar = ({ mode, changeMode, changeTripId }: NavProps) => {
     const travelTypes = [
         {
             name: "Flights",
