@@ -62,6 +62,7 @@ export default function EventCardHolder({
     const [foodName, setFoodName] = useState("");
     const [foodRestrictions, setFoodRestrictions] = useState("");
     const [foodCategories, setFoodCategories] = useState("");
+    const [foodLocation, setFoodLocation] = useState("");
 
     // Hotels Properties //
     const [hotelsLocation, setHotelsLocation] = useState("");
@@ -72,7 +73,8 @@ export default function EventCardHolder({
     const [hotelsNumKids, setHotelsNumKids] = useState("0");
 
     // Attraction Properties //
-    const [attractionKeywords, setAttractionKeywords] = useState("second");
+    const [attractionKeywords, setAttractionKeywords] = useState("");
+    const [attractionLocation, setAttractionLocation] = useState("");
 
     function holderProperties() {
         // Okay listen I could do this way better with map but I don't feel like it >:(
@@ -180,6 +182,21 @@ export default function EventCardHolder({
                     <>
                         <li className="card--holder-bar-property">
                             <p className="card--holder-bar-property-label">
+                                Location
+                            </p>
+                            <i className="icon-home card--holder-bar-property-icon" />
+                            <input
+                                className="card--holder-bar-property-input"
+                                type="text"
+                                value={foodLocation}
+                                placeholder="Where are you looking for?"
+                                onChange={(evt) =>
+                                    setFoodLocation(evt.target.value)
+                                }
+                            />
+                        </li>
+                        <li className="card--holder-bar-property">
+                            <p className="card--holder-bar-property-label">
                                 Search for Restaurant?
                             </p>
                             <i className="icon-home card--holder-bar-property-icon" />
@@ -256,6 +273,21 @@ export default function EventCardHolder({
                     <>
                         <li className="card--holder-bar-property">
                             <p className="card--holder-bar-property-label">
+                                Location
+                            </p>
+                            <i className="icon-home card--holder-bar-property-icon" />
+                            <input
+                                className="card--holder-bar-property-input"
+                                type="text"
+                                value={attractionLocation}
+                                placeholder="Where are you starting?"
+                                onChange={(evt) =>
+                                    setAttractionLocation(evt.target.value)
+                                }
+                            />
+                        </li>
+                        <li className="card--holder-bar-property">
+                            <p className="card--holder-bar-property-label">
                                 Key words
                             </p>
                             <i className="icon-home card--holder-bar-property-icon" />
@@ -263,7 +295,7 @@ export default function EventCardHolder({
                                 className="card--holder-bar-property-input"
                                 type="text"
                                 value={attractionKeywords}
-                                placeholder="Where are you starting?"
+                                placeholder="Where are you looking for?"
                                 onChange={(evt) =>
                                     setAttractionKeywords(evt.target.value)
                                 }
@@ -466,27 +498,39 @@ export default function EventCardHolder({
                 );
 
                 axiosInstance
-                    .get("/dining/api/v1")
+                    .get("/v1/dining/api", {
+                        params: {
+                            Address: foodLocation,
+                            Radius: 1500,
+                            Keyword:
+                                foodName +
+                                " " +
+                                foodRestrictions +
+                                " " +
+                                foodCategories,
+                        },
+                    })
                     .then((res) => {
                         console.log(res);
+                        setEventCards(
+                            <>
+                                {res.data.Results.map((e, i) => {
+                                    return (
+                                        <FoodCard
+                                            key={i}
+                                            name={e.name}
+                                            image={e.photos[0].photo_reference}
+                                            location={e.hotel_address}
+                                            addCardFunction={eventHandler}
+                                        />
+                                    );
+                                })}
+                            </>
+                        );
                     })
                     .catch((err) => console.log(err));
                 break;
             case "Hotels":
-                console.log(
-                    hotelsLocation +
-                        " | " +
-                        hotelsTimeIn +
-                        " | " +
-                        hotelsTimeOut +
-                        " | " +
-                        hotelsNumRooms +
-                        " | " +
-                        hotelsNumAdults +
-                        " | " +
-                        hotelsNumKids
-                );
-
                 axiosInstance
                     .get("/api/v1/accommodations", {
                         params: {
@@ -500,7 +544,6 @@ export default function EventCardHolder({
                         },
                     })
                     .then((res) => {
-                        console.log(res);
                         setEventCards(
                             <>
                                 {res.data.hotel_information.map((e, i) => {
@@ -524,12 +567,32 @@ export default function EventCardHolder({
                     .catch((err) => console.log(err));
                 break;
             case "Attraction":
-                console.log(attractionKeywords);
-
                 axiosInstance
-                    .get("/api/v1/pois")
+                    .get("/api/v1/pois", {
+                        params: {
+                            Address: attractionLocation,
+                            Radius: 1500,
+                            Keyword: attractionKeywords,
+                        },
+                    })
                     .then((res) => {
                         console.log(res);
+                        setEventCards(
+                            <>
+                                {res.data.Results.map((e, i) => {
+                                    return (
+                                        <AttractionCard
+                                            key={i}
+                                            name={e.name}
+                                            image={e.photos[0].photo_reference}
+                                            link={e.link}
+                                            address={e.hotel_address}
+                                            addCardFunction={eventHandler}
+                                        />
+                                    );
+                                })}
+                            </>
+                        );
                     })
                     .catch((err) => console.log(err));
                 break;
@@ -562,6 +625,7 @@ export default function EventCardHolder({
         hotelsNumAdults,
         hotelsNumKids,
         attractionKeywords,
+        attractionLocation,
     ]);
 
     return (
