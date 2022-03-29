@@ -12,6 +12,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+/*
+	This test will test a valid dining option, with the U of C address,
+	vegan food, in a 5km radius. This test should return a JSON object that is
+	not null.
+*/
 func TestValidDiningOption_Vegan_5000(t *testing.T) {
 	err := godotenv.Load("../../../.env")
 
@@ -45,6 +50,11 @@ func TestValidDiningOption_Vegan_5000(t *testing.T) {
 
 }
 
+/*
+	This test will test a valid dining option, with the U of C address,
+	Mexican food, in a 10km radius. This test should return a JSON object that is
+	not null.
+*/
 func TestValidDiningOption_Mexican_10000(t *testing.T) {
 	err := godotenv.Load("../../../.env")
 
@@ -78,6 +88,11 @@ func TestValidDiningOption_Mexican_10000(t *testing.T) {
 
 }
 
+/*
+	This test will test a valid dining option, with an address in New York, looking to eat
+	pizza, in a 10km radius. This test should return a JSON object that is
+	not null.
+*/
 func TestValidDiningOption_NewYork_Pizza(t *testing.T) {
 	err := godotenv.Load("../../../.env")
 
@@ -111,6 +126,11 @@ func TestValidDiningOption_NewYork_Pizza(t *testing.T) {
 
 }
 
+/*
+	This test will test a dining option, with a missing address.
+	This test should return a JSON object that is an error code stating
+	that there was a missing address.
+*/
 func TestInvalidDiningOption_MissingAddress(t *testing.T) {
 	err := godotenv.Load("../../../.env")
 
@@ -142,6 +162,11 @@ func TestInvalidDiningOption_MissingAddress(t *testing.T) {
 	assert.Equal(t, "{\"cause\":\"Address is required for points of interest\",\"status\":\"fail\",\"type\":\"Missing Paramater\"}", string(body), "No dining options should have been returned")
 }
 
+/*
+	This test will test a dining option, with an invalid address.
+	This test should return a JSON object that is an error code stating
+	that there was an invalid request made.
+*/
 func TestInvalidDiningOption_InvalidAddress(t *testing.T) {
 	err := godotenv.Load("../../../.env")
 
@@ -173,6 +198,11 @@ func TestInvalidDiningOption_InvalidAddress(t *testing.T) {
 	assert.Equal(t, "{\"cause\":\"Invalid data\",\"status\":\"fail\",\"type\":\"Invalid request\"}", string(body), "No dining options should have been returned")
 }
 
+/*
+	This test will test a dining option, with a radius of zero.
+	This test should return a JSON object that is an error code stating
+	that there was a missing radius.
+*/
 func TestInvalidDiningOption_ZeroRadius(t *testing.T) {
 	err := godotenv.Load("../../../.env")
 
