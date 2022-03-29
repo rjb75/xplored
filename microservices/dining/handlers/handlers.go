@@ -39,8 +39,16 @@ func GetDiningOptions(c *fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Missing Paramater", "cause": "Radius is required for points of interest"})
 	}
 
-	// data := diningOptions(c.Params("address"), c.Params("radius"), c.Params("keyword"))
-	data := diningOptions(req)
+	var data maps.PlacesSearchResponse
+
+	//Calculate Longitude & Latitude
+	var lc []maps.GeocodingResult = GeoCode(req.Address)
+	if len(lc) > 0 {
+		data = Places(lc[0], req.Radius, req.Keyword)
+		// return Result
+	} else {
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Invalid request", "cause": "Invalid data"})
+	}
 
 	return c.Status(200).JSON(fiber.Map{"status": err, "data": data})
 }
@@ -52,14 +60,14 @@ func GetDiningOptions(c *fiber.Ctx) error {
 func GeoCode(address string) []maps.GeocodingResult {
 	c, err := maps.NewClient(maps.WithAPIKey(os.Getenv("DINING_API")))
 	if err != nil {
-		log.Fatalf("fatal error: %s", err)
+		log.Printf("fatal error: %s", err)
 	}
 	r := &maps.GeocodingRequest{
 		Address: address,
 	}
 	result, err := c.Geocode(context.Background(), r)
 	if err != nil {
-		log.Fatalf("fatal error: %s", err)
+		log.Printf("fatal error: %s", err)
 	}
 
 	return result
@@ -73,7 +81,7 @@ func GeoCode(address string) []maps.GeocodingResult {
 func Places(lc maps.GeocodingResult, radius string, keyword string) maps.PlacesSearchResponse {
 	c, err := maps.NewClient(maps.WithAPIKey(os.Getenv("DINING_API")))
 	if err != nil {
-		log.Fatalf("fatal error: %s", err)
+		log.Printf("fatal error: %s", err)
 	}
 
 	loc := &maps.LatLng{
@@ -83,7 +91,7 @@ func Places(lc maps.GeocodingResult, radius string, keyword string) maps.PlacesS
 
 	i, err := strconv.ParseUint(radius, 10, 64)
 	if err != nil {
-		log.Fatalf("fatal error: %s", err)
+		log.Printf("fatal error: %s", err)
 	}
 
 	r := &maps.NearbySearchRequest{
@@ -94,30 +102,8 @@ func Places(lc maps.GeocodingResult, radius string, keyword string) maps.PlacesS
 	}
 	result, err := c.NearbySearch(context.Background(), r)
 	if err != nil {
-		log.Fatalf("fatal error: %s", err)
+		log.Printf("fatal error: %s", err)
 	}
 
 	return result
-}
-
-/*
-* diningOptions with Given Information
- */
-func diningOptions(din *models.DiningRequest) maps.PlacesSearchResponse {
-	//Format Address
-	// plusFormattedAddress := strings.ReplaceAll("+"+street_address, " ", "+")
-
-	plusFormattedAddress := din.Address
-
-	//Format Keyword
-	// plusFormattedKeyword := strings.ReplaceAll("+"+keyword, " ", "+")
-	plusFormattedKeyword := din.Keyword
-
-	//Calculate Longitude & Latitude
-	var lc maps.GeocodingResult = GeoCode(plusFormattedAddress)[0]
-	//Get Dining Data
-	println(din.Radius + din.Address + din.Keyword)
-	Result := Places(lc, din.Radius, plusFormattedKeyword)
-	//	pretty.Println(Result)//Debugging Print Statement
-	return Result
 }

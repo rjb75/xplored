@@ -18,7 +18,3 @@ func RegisterRoutes(app *fiber.App) {
 	v1.Get("/", handlers.GetDiningOptions)
 	// diningRoutes(v1)
 }
-
-// func diningRoutes(v fiber.Router) {
-// 	v.Get("/dining", handlers.GetDiningOptions)
-// }
