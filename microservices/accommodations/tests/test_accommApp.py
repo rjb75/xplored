@@ -66,11 +66,6 @@ def test_accommodationFunctionLocationIDInvalidParameter():
         accommFunctions.getLocationID("invalidlocation")
     assert err.value.status_code == 404
 
-# Test the accommodation function getCurrencyExchange with valid parameters.
-def test_accommodationFunctionCurrencyValidParameters():
-    currencyExchange = accommFunctions.getCurrencyExchange("CAD", "EUR")
-    assert currencyExchange == "0.72751325"
-
 # Test the accommodation function getCurrencyExchange with valid parameters but the parameters are the same.
 def test_accommodationFunctionSameCurrencyValidParameters():
     currencyExchange = accommFunctions.getCurrencyExchange("SAR", "SAR")

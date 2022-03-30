@@ -18,9 +18,6 @@ def test_photoAppInvalidEndpoint():
 def test_photoAppValidQueryPhotoEndpoint():
     response = photoClient.get("/photo/api/v1/photo?name=paris")
     assert response.status_code == 200
-    assert response.json() == {"photo_id": "DXuxHw3S5ak",
-                               "photo_url": "https://images.unsplash.com/photo-1522093007474-d86e9bf7ba6f?crop=entropy&cs=srgb&fm=jpg&ixid=MnwzMDY3MjF8MHwxfHNlYXJjaHwxfHxwYXJpc3xlbnwwfHx8fDE2NDg0MjEyNDQ&ixlib=rb-1.2.1&q=85"
-                               }
 
 # Tests the photo endpoint of the photo gallery microservice with an invalid query.
 def test_photoAppInvalidQueryPhotoEndpoint():
@@ -31,8 +28,6 @@ def test_photoAppInvalidQueryPhotoEndpoint():
 def test_photoAppValidQueryValidDimensionsPhotoEndpoint():
     response = photoClient.get("/photo/api/v1/photo?name=paris&width=800&height=500")
     assert response.status_code == 200
-    assert response.json() == {"photo_id": "DXuxHw3S5ak",
-                               "photo_url": "https://source.unsplash.com/DXuxHw3S5ak/800x500"}
 
 # Tests the photo endpoint of the photo gallery microservice with a valid query and invalid dimensions.
 def test_photoAppValidQueryInvalidDimensionsPhotoEndpoint():
@@ -48,8 +43,6 @@ def test_photoAppInvalidQueryValidDimensionsPhotoEndpoint():
 def test_photoAppValidQueryValidPhotoTypePhotoEndpoint():
     response = photoClient.get("/photo/api/v1/photo?name=paris&photoType=small")
     assert response.status_code == 200
-    assert response.json() == {"photo_id": "DXuxHw3S5ak",
-                               "photo_url": "https://images.unsplash.com/photo-1522093007474-d86e9bf7ba6f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMDY3MjF8MHwxfHNlYXJjaHwxfHxwYXJpc3xlbnwwfHx8fDE2NDg0MjEyNDQ&ixlib=rb-1.2.1&q=80&w=400"}
 
 # Tests the photo endpoint of the photo gallery microservice with a valid query and invalid photo type.
 def test_photoAppValidQueryInvalidPhotoTypePhotoEndpoint():
