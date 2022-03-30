@@ -5,7 +5,6 @@ import { useDrag } from "react-dnd";
 import { eventTypes } from "./EventCard";
 
 export interface FlightCardProps {
-    airline?: string;
     airlineLogo?: string;
     flightCode?: string;
     times: string[];

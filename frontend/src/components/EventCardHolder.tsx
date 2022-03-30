@@ -6,6 +6,7 @@ import CarCard from "./CarCard";
 import FoodCard from "./FoodCard";
 import HotelsCard from "./HotelsCard";
 import AttractionCard from "./AttractionCard";
+import ShortTransportCards from "./ShortTransportCards";
 import Chevron from "../assets/chevron.svg";
 import axiosInstance from "../utils/axios";
 import { getSystemErrorName } from "util";
@@ -476,15 +477,50 @@ export default function EventCardHolder({
                 );
 
                 axiosInstance
-                    .get("/api/v1/pois", {
+                    .get("/api/v1/airportcodes", {
                         params: {
-                            address: "2500 University Drive NW",
-                            keyword: "Cafe",
-                            radius: 1000,
+                            name: flightsHome
                         },
                     })
                     .then((res) => {
-                        console.log(res);
+                        if (flightsDest) {
+                            axiosInstance.get("api/v1/airportcodes", {
+                                params: {
+                                    name: flightsDest
+                                }
+                            }).then((res2) => {
+                                axiosInstance.get("api/v1/transport/long", {
+                                    params: {
+                                        origin: res.data.data[Object.keys(res.data.data)[0]].Code,
+                                        destination: res2.data.data[Object.keys(res2.data.data)[0]].Code,
+                                        departuredate: flightsDate.toISOString().slice(0, 10),
+                                        adults: flightsNumTravelers,
+                                        currency: "CAD"
+                                    }
+                                }).then((res3) => {
+                                    setEventCards(
+                                        <>
+                                            {res.data.data.itineraries.buckets.map((e, i) => {
+                                                return (
+                                                <FlightCard 
+                                                    key={i} 
+                                                    airlineLogo={e.items[0].legs[0].carriers.marketing.logoUrl}
+                                                    flightCode={e.items[0].legs[0].carriers.marketing.name}
+                                                    times={[Date.parse(e.items[0].legs[0].departure).toLocaleString('en-US', {hour: 'numeric', hour12: true}), Date.parse(e.items[0].legs[0].departure).toLocaleString('en-US', {hour: 'numeric', hour12: true})]}
+                                                    timeZones={[]}
+                                                    price={"$" + e.items[0].price.raw} 
+                                                    locations={[flightsHome, flightsDest]}
+                                                    duration={e.items[0].legs[0].durationInMinutes}
+                                                    currencyType="CAD" 
+                                                    addCardFunction={eventHandler} 
+                                                />);
+                                                // e.items[0].legs[0]
+                                            })}
+                                        </>
+                                    )
+                                }).catch((err) => console.log(err));
+                            }).catch((err) => console.log(err));
+                        }
                     })
                     .catch((err) => console.log(err));
                 break;
@@ -498,20 +534,52 @@ export default function EventCardHolder({
                         " | " +
                         carNumTravelers
                 );
-
+                
                 axiosInstance
-                    .get("/api/v1/transportation/short", {
+                    .get("/api/v1/transport/allshort", {
                         params: {
                             origin: carHome,
                             destination: carDest,
-                            departuretime: carDate,
-                            mode: "Driving"
+                            departuretime: carDate.getTime(),
                         },
                     })
                     .then((res) => {
                         console.log(res);
+                        setEventCards(<>{res.data.data.map((e, i) => {
+                                let transportType;
+                                switch (i) {
+                                    case 1:
+                                        transportType = "driving";
+                                        break;
+                                    case 2:
+                                        transportType = "cycling"
+                                        break;
+                                    case 3:
+                                        transportType = "transit"
+                                        break;
+                                    case 4:
+                                        transportType = "walking"
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                if (e[0]) {
+                                return (
+                                    <CarCard 
+                                        key={i} 
+                                        distance={e[0].legs[0].distance.text}
+                                        name={"Short Trip"}
+                                        type={transportType}
+                                        duration={e[0].legs[0].duration.text}
+                                        addCardFunction={eventHandler}
+                                    />
+                                )} else {
+                                    return (<></>);
+                                }
+                        })}</>)
                     })
                     .catch((err) => console.log(err));
+
                 break;
             case "Food":
                 axiosInstance
@@ -674,7 +742,7 @@ export default function EventCardHolder({
                         </ul>
                     </div>
                     <ul className="card--holder-list">
-                        <FlightCard
+                        {/* <FlightCard
                             airline={"Air Canada"}
                             airlineLogo={Chevron}
                             flightCode={"AC 513"}
@@ -696,7 +764,7 @@ export default function EventCardHolder({
                             link="a"
                             name={"Calgary"}
                             addCardFunction={eventHandler}
-                        />
+                        /> */}
                         {eventCards}
                     </ul>
                 </div>

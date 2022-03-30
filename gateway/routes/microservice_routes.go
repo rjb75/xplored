@@ -56,6 +56,7 @@ func TPlannerRoutes(r fiber.Router) {
 // Routes for transportation planner microservice
 func Transportation(r fiber.Router) {
 	r.Get("/transport/short", handlers.ShortTransportHandler)
+	r.Get("/transport/allshort", handlers.AllShortTransportHandler)
 	r.Get("/transport/long", handlers.LongTransportHandler)
 	r.Get("/airportcodes", handlers.AirportCodesHandler)
 }
