@@ -229,3 +229,103 @@ func GetTransLong(c *fiber.Ctx) error {
 	return c.Status(200).JSON(fiber.Map{"status": err, "data": jsonMap})
 
 }
+
+
+/*
+* Short Distance travel with Google API
+ */
+ func GetAllModes(c *fiber.Ctx) error {
+	request := new(models.AllShortRequest)
+	err := c.QueryParser(request)
+
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Body Error", "cause": "Couldn't process body of request"})
+	}
+
+	if request.Origin == "" || request.Destination == "" {
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Missing Paramater"})
+	}
+
+	client, err := maps.NewClient(maps.WithAPIKey(os.Getenv("TRANSPORTATION_GOOGLE_API_KEY")))
+
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": "Failed to connect with API"})
+
+	}
+
+	var modes[4] maps.Mode
+	modes[0] = "driving"
+	modes[1] = "bicycling"
+	modes[2] = "transit"
+	modes[3] = "walking"
+
+	var results[4][] maps.Route
+	var waypoints[4][] maps.GeocodedWaypoint
+
+	//Driving
+	r := &maps.DirectionsRequest{
+		Origin:        request.Origin,
+		Destination:   request.Destination,
+		DepartureTime: request.DepartureTime,
+		ArrivalTime:   request.ArrivalTime,
+		Mode:          modes[0],
+	}
+
+	tempResultOne, tempWaypointOne, errOne := client.Directions(context.Background(), r)
+	if errOne == nil {
+		results[0] = tempResultOne
+		waypoints[0] = tempWaypointOne
+	}
+
+	//Bicycling
+	r = &maps.DirectionsRequest{
+		Origin:        request.Origin,
+		Destination:   request.Destination,
+		DepartureTime: request.DepartureTime,
+		ArrivalTime:   request.ArrivalTime,
+		Mode:          modes[1],
+	}
+
+	tempResultTwo, tempWaypointTwo, errTwo := client.Directions(context.Background(), r)
+	if errTwo == nil {
+		results[1] = tempResultTwo
+		waypoints[1] = tempWaypointTwo
+	}
+
+	//transit
+	r = &maps.DirectionsRequest{
+		Origin:        request.Origin,
+		Destination:   request.Destination,
+		DepartureTime: request.DepartureTime,
+		ArrivalTime:   request.ArrivalTime,
+		Mode:          modes[2],
+	}
+
+	tempResultThree, tempWaypointThree, errThree := client.Directions(context.Background(), r)
+	if errThree == nil {
+		results[2] = tempResultThree
+		waypoints[2] = tempWaypointThree
+	}
+
+	//walking
+	r = &maps.DirectionsRequest{
+		Origin:        request.Origin,
+		Destination:   request.Destination,
+		DepartureTime: request.DepartureTime,
+		ArrivalTime:   request.ArrivalTime,
+		Mode:          modes[3],
+	}
+
+	tempResultFour, tempWaypointFour, errFour := client.Directions(context.Background(), r)
+	if errFour == nil {
+		results[3] = tempResultFour
+		waypoints[3] = tempWaypointFour
+	}
+
+	//May not do anything
+	if len(results) == 0 {
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "type": err})
+	}
+
+	return c.Status(200).JSON(fiber.Map{"status": err, "data": results, "waypoint": waypoints})
+}
