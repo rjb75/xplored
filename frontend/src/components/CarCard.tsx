@@ -57,7 +57,7 @@ export default function CarCard(props: CarCardProps) {
             logo = BikeIcon;
             break;
         default:
-            break;
+            logo = BikeIcon;
     }
 
     return (
