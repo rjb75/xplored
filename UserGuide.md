@@ -1,16 +1,18 @@
-# Official *Xplore* User Guide
+# Official *Xplored* User Guide
 
 
 
 ## Getting Started
 
-To use *Xplore*, you will need to be logged in with a valid account. If you don't have a valid account or you have not logged in prior to accessing *Xplore*, you will be redirected to the the login page and asked to enter your username and password.
+To use *Xplored* you will need to be logged in with a valid account. If you don't have a valid account or you have not logged in prior to accessing *Xplored* you will be redirected to the the login page and asked to enter your username and password.
 
-> **Tip!** Ensure your brower is set to accept cookies so you remain logged in throughout your session using *Xplore*
+> **Tip!** Ensure your brower is set to accept cookies so you remain logged in throughout your session using *Xplored*
 
 ### Making An Account
 
-Making an account can be done at the *Sign Up page* (below).![Sign Up page](./readme-assets/signupPage.jpeg) To make an account, you'll need to put in an email that will act as your username, and create a password. Make sure both password fields match, or your account won't be created and you'll be asked to enter your information again.
+Making an account can be done at the *Sign Up page* (below).![Sign Up page](./readme-assets/signupPage.jpeg) To make an account, you'll need to put in an email that will act as your username, and create a password.
+
+ Make sure both password fields match and that your password is at least 6 characters, or your account won't be created and you'll be asked to enter your information again.
 
 Once you're signed up, you'll need to navigate to the Login page. This can be done by clicking the link in the top right corner of the screen. Then, follow the instructions below for logging in.
 
@@ -26,9 +28,9 @@ To log in, enter the email you used to sign up for your account as your username
 
 ## Managing Your Trips
 
-To manage your trips, ensure you are on the [*Xplore homepage*](www.ADDRESSHERE.com). If you aren't, be sure to follow the [guide to getting started](#getting-started).
+To manage your trips, ensure you are on the [*Xplored homepage*](www.ADDRESSHERE.com). If you aren't, be sure to follow the [guide to getting started](#getting-started).
 
-All trip management is done from the *Xplore* homepage (below)
+All trip management is done from the *Xplored* homepage (below)
 
 ![Home page and travel planner](./readme-assets/homePage.jpeg)
 

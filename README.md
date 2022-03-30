@@ -126,7 +126,7 @@ All source code for the project will be contained within this GitHub repository.
 
 Our git tree requires linear history, so all pull requests should be rebased if there are any conflicts.
 
-## Naming conventions for commits and pull requests should follow the [Convectional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standards.
+## Naming conventions for commits and pull requests should follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standards.
 
 ### **License**
 
