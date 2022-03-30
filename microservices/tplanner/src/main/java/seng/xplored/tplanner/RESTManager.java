@@ -255,6 +255,8 @@ public class RESTManager {
 
         events = stringEvents.toArray(new String[0]);
         trip.setEvents(events); //change the events in the trip
+
+        
         tripRepository.save(trip); //save the trip edit
         
         eventRepository.deleteById(eventid); //delete event
