@@ -41,3 +41,9 @@ services:
     build:
       context: ../
       dockerfile: Docker/Accommodations.test.Dockerfile
+  frontend:
+    tty: true
+    container_name: xplored-ms-frontend-test
+    build:
+      context: ../
+      dockerfile: Docker/Frontend.test.Dockerfile

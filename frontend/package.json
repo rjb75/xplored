@@ -40,7 +40,7 @@
   "scripts": {
     "start": "webpack",
     "build": "webpack",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watch-all",
     "dev": "webpack"
   },
   "eslintConfig": {
