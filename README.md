@@ -3,7 +3,7 @@
 
 ---
 
-## ![Xplored](Banner.png)
+## ![Xplored](assets/Banner.png)
 
 ---
 
@@ -108,7 +108,7 @@ _Note:_ this will run your container in detached mode (i.e. in the background). 
 
 ---
 
-## ![Diagram](ArchitectureDiagram.png)
+## ![Diagram](assets/ArchitectureDiagram.png)
 
 ### **Code implementation**
 
