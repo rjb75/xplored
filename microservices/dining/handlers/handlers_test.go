@@ -103,7 +103,7 @@ func TestValidDiningOption_NewYork_Pizza(t *testing.T) {
 	app := fiber.New()
 	app.Get("/", handlers.GetDiningOptions)
 
-	req, err := http.NewRequest("GET", "/?address=20 W 34th St, New York, NY 10001, United States&keyword=vegan&radius=10000", nil)
+	req, err := http.NewRequest("GET", "/?address=20 W 34th St, New York, NY 10001, United States&keyword=pizza&radius=10000", nil)
 
 	if err != nil {
 		assert.Fail(t, "Error forming test request")
