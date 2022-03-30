@@ -35,3 +35,10 @@ $ docker run -d -p <app port>:<local port> <container tag>
 ```
 
 *Note:* this will run your container in detached mode (i.e. in the background). Omitting the `-d` flag in the above command will show the output of the container in your current terminal.
+
+## Running Test Cases
+To run all of the test cases with the exception of Maven Test cases run the following:
+
+```bash
+$ docker-compose -f Docker/docker-compose-test.yml
+```
