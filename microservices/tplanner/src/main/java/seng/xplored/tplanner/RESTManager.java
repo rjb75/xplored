@@ -96,6 +96,8 @@ public class RESTManager {
     @PostMapping(baseURL + "/user")
     public ResponseEntity<User> addUser(@RequestBody User user){
         HttpHeaders responseHeaders = new HttpHeaders();
+        String[] temp = {};
+        user.setTrips(temp);
         userRepository.save(user);
         return ResponseEntity.ok().headers(responseHeaders).body(user);
     }
@@ -112,6 +114,7 @@ public class RESTManager {
         }
 
         tripRepository.save(trip); //Add Trip
+        
         String[] trips= user.getTrips(); //Gets users Trips
         List<String> stringTrips=new ArrayList<>(Arrays.asList(trips));
 
