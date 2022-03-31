@@ -38,6 +38,10 @@ export default function EventCardHolder({
                 return "Accomodation";
             case "Attraction":
                 return "POI";
+            case "Reviews":
+                return "Reviews";
+            case "Recommendations":
+                return "Recommendations";
             default:
                 return "";
         }
@@ -76,6 +80,13 @@ export default function EventCardHolder({
     // Attraction Properties //
     const [attractionKeywords, setAttractionKeywords] = useState("");
     const [attractionLocation, setAttractionLocation] = useState("");
+
+    // Reviews Properties
+    const [reviewLocation, setReviewLocation] = useState("");
+    const [reviewText, setReviewText] = useState("");
+
+    // Recommendations Properties
+    const [reccomCountry, setReccomCountry] = useState("paris");
 
     function holderProperties() {
         // Okay listen I could do this way better with map but I don't feel like it >:(
@@ -318,6 +329,44 @@ export default function EventCardHolder({
                         </li>
                     </>
                 );
+            case "Reviews":
+                return (
+                    <>
+                        <li className="card--holder-bar-property">
+                            <p className="card--holder-bar-property-label">
+                                Enter a Location
+                            </p>
+                            <i className="icon-home card--holder-bar-property-icon" />
+                            <input
+                                className="card--holder-bar-property-input"
+                                type="text"
+                                value={reviewLocation}
+                                placeholder="Where should we add a review to?"
+                                onChange={(evt) => setReviewLocation(evt.target.value)}
+                            />
+                        </li>
+                        <li className="card--holder-bar-property card--holder-bar-property-textarea">
+                            <p className="card--holder-bar-property-label">
+                                Enter a Review
+                            </p>
+                            <i className="icon-home card--holder-bar-property-icon" />
+                            <textarea
+                                className="card--holder-bar-property-input"
+                                value={reviewText}
+                                placeholder="What is your review?"
+                                onChange={(evt) => setReviewText(evt.target.value)}
+                            />
+                        </li>
+                    </>
+                )
+            case "Reccomendations":
+                return (
+                    <>
+                        <li className="card--holder-bar-property">
+                            <button className="card--holder-bar-property-input">Back</button>
+                        </li>
+                    </>
+                )
             default:
                 return <></>;
         }
@@ -684,6 +733,24 @@ export default function EventCardHolder({
                         );
                     })
                     .catch((err) => console.log(err));
+                break;
+            case "Recommendations":
+                axiosInstance
+                .get(`/api/v1/recommendations`, {params: { location_name: reccomCountry }})
+                .then((res) => setEventCards(res.data['details'].map((e: any, i: number) => {return(<p key={i}>{e}</p>)})))
+                .catch((err) => {
+                    setEventCards(<p>No recommendations found</p>)
+                })
+                break;
+
+            case "Reviews":
+                axiosInstance
+                .get("/api/v1/reviews/all")
+                .then((res) => setEventCards(res.data.map((e: any, i: number) => {return(<p key={i}>{e?.description}</p>)})))
+                .catch((err) => {
+                    console.error(err)
+                    setEventCards(<p>No reviews found</p>)
+                });
                 break;
             default:
                 break;
