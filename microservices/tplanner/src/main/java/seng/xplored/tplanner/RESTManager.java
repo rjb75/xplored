@@ -97,7 +97,7 @@ public class RESTManager {
     public ResponseEntity<User> addUser(@RequestBody User user){
         HttpHeaders responseHeaders = new HttpHeaders();
         String[] temp = {}; //Prevents error due to api gateway issues
-        user.setTrips(temp);
+        user.setTrips(temp); //Fixing this bug
         userRepository.save(user);
         return ResponseEntity.ok().headers(responseHeaders).body(user);
     }
