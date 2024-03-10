@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"fmt"
+	"os"
 
 	firebase "firebase.google.com/go"
 )
@@ -10,6 +11,7 @@ import (
 type AuthConfig struct {
 	FirebaseApp *firebase.App
 	IgnorePaths []string
+	Token       string
 }
 
 // default configuration settings
@@ -19,6 +21,8 @@ func configDefault(config ...AuthConfig) AuthConfig {
 	if cfg.FirebaseApp == nil {
 		fmt.Errorf("Firebase app not declared")
 	}
+
+	cfg.Token = os.Getenv("AUTH_TOKEN")
 
 	return cfg
 

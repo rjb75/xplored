@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"regexp"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -28,6 +29,15 @@ func NewAuth(config AuthConfig) fiber.Handler {
 
 		if len(IDToken) == 0 {
 			return c.Status(401).JSON(fiber.Map{"error": "Invalid access token"})
+		}
+
+		if strings.Compare(IDToken, cfg.Token) == 0 {
+			user, ok := c.GetReqHeaders()["X-User"]
+			if !ok {
+				return c.Status(401).JSON(fiber.Map{"error": "X-User not provided"})
+			}
+			c.Locals("user_id", user)
+			return c.Next()
 		}
 
 		firebaseAuth, err := cfg.FirebaseApp.Auth(context.Background())
